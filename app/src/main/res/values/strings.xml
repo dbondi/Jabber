@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Jab</string>
+    <string name="select_your_age">Select your age</string>
+    <string name="by_continuing_you_agree_to_out_terms_and_privacy_policy">By continuing, you agree to out Terms and Privacy Policy</string>
+    <string name="jabber">Jabber</string>
+    <string name="new_account_login">New Account? Login</string>
+    <string name="jab">Jab</string>
+    <string name="string_remember">Remember me</string>
+    <string name="login">Login</string>
+    <string name="string_incorrect_login">Your email and/or password you entered is incorrect</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_user">Username or Phone</string>
+    <string name="prompt_first_name">First Name</string>
+    <string name="prompt_last_name">Last Name</string>
+    <string name="string_forgot_pass">Forgot Password</string>
+    <string name="user_login_details">UserLoginDetails</string>
+    <string name="string_enter_email">Enter your account email.</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_phone">Phone Number</string>
+    <string name="prompt_repassword">Retype Password</string>
+    <string name="prompt_email">Email</string>
+    <string name="invalid_email">Your email address is not valid</string>
+    <string name="invalidPhone">Your phone number is not valid</string>
+    <string name="password_match">Your passwords dont match</string>
+    <string name="password_requirements">Password requires 8 characters</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register">Register</string>
+    <string name="verify">Verify</string>
+    <string name="send_code">Send code</string>
+    <string name="verify_code">Verify code</string>
+    <string name="incorrect_code">Incorrect code</string>
+    <string name="local">Local</string>
+    <string name="area">Area</string>
+</resources>

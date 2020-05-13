@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "336102098337",
+    "firebase_url": "https://jabdatabase.firebaseio.com",
+    "project_id": "jabdatabase",
+    "storage_bucket": "jabdatabase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:336102098337:android:b80326c085b140ebd0f7e0",
+        "android_client_info": {
+          "package_name": "com.example.jab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "336102098337-noici6d5urvqqjh8c58g49n0379r5o8t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jab",
+            "certificate_hash": "162de03c6d6542ee889b665f5c1de93a67dd8c75"
+          }
+        },
+        {
+          "client_id": "336102098337-n2cgr3ogogv7g7ul6tjt8am4omjio450.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeJypQ7_EQCOLTgeA1nr0wRRvzODFyMN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "336102098337-n2cgr3ogogv7g7ul6tjt8am4omjio450.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

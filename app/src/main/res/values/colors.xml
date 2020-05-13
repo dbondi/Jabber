@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#C2185B</color>
+    <color name="colorPrimaryDark">#C2185B</color>
+    <color name="colorAccent">#E91E63</color>
+    <color name="colorYellow">#ffbe4f</color>
+    <color name="colorTeal">#0ea7b5</color>
+    <color name="colorDarkBlue">#0c457d</color>
+    <color name="colorOrange">#e8702a</color>
+    <color name="colorSkyBlue">#6bd2db</color>
+    <color name="buttonGrey">#330033</color>
+</resources>
