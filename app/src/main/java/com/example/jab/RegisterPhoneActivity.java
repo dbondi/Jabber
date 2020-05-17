@@ -94,7 +94,7 @@ public class RegisterPhoneActivity extends AppCompatActivity implements View.OnC
         invCode.setVisibility(View.INVISIBLE);
 
 
-        noPhoneUser = (NoPhoneUser) getIntent().getParcelableExtra("NoPhoneUser");
+        noPhoneUser = getIntent().getParcelableExtra("NoPhoneUser");
 
 
 
@@ -210,7 +210,7 @@ public class RegisterPhoneActivity extends AppCompatActivity implements View.OnC
                 String codeVal = code.getText().toString();
 
                 if (TextUtils.isEmpty(codeVal)) {
-                    invPhone.setVisibility(View.VISIBLE);;
+                    invPhone.setVisibility(View.VISIBLE);
                     return;
                 }
                 System.out.println("VerificationID");
@@ -266,7 +266,7 @@ public class RegisterPhoneActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
                     startActivity(intent);
                 } else {
                     String message = task.getException().getMessage();
@@ -312,22 +312,16 @@ public class RegisterPhoneActivity extends AppCompatActivity implements View.OnC
 
     private boolean validateUSPhoneNumber() {
         String phoneNumber = phone.getText().toString();
+        //TODO
         if (TextUtils.isEmpty(phoneNumber)) {
             return false;
         }
-        else if(phoneNumber.length() != 12){
-            //TODO
-            return false;
-        }
-        return true;
+        else return phoneNumber.length() == 12;
     }
 
     private boolean testPhone(){
         String phoneNumber = phone.getText().toString();
-        if(phoneNumber.equals("13022990143")){
-            return true;
-        }
-        return false;
+        return phoneNumber.equals("13022990143");
     }
 
 

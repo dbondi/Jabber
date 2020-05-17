@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#11293f"
-            android:id="@+id/rc_messages"/>
+        android:layout_height="match_parent"
+        android:background="#11293f">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -55,44 +53,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.70"
+                android:layout_weight=".93"
                 android:textColor='@android:color/white'>
-            </LinearLayout>
-            <LinearLayout
-
-                android:layout_weight="0.1"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:weightSum="1"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/newMessageTextLeft"
-                    android:layout_width="1dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColor='@android:color/white'>
-                </TextView>
-                <Button
-                    android:id="@+id/new_message"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/round_button_green">
-                </Button>
-
-                <TextView
-                    android:id="@+id/newMessageTextRight"
-                    android:layout_width="4dp"
-                    android:layout_height="match_parent"
-                    android:textColor='@android:color/white'>
-                </TextView>
-
+                    android:background="#11293f"
+                    android:id="@+id/searchRec"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.11"
-                android:textColor='@android:color/white'>
-            </LinearLayout>
 
 
         </LinearLayout>
@@ -202,4 +171,5 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>

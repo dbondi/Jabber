@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.jab.HomeActivity;
+import com.example.jab.ChatActivity;
 import com.example.jab.LoginActivity;
 import com.example.jab.RegisterPhoneActivity;
 import com.google.android.gms.tasks.Task;
@@ -32,7 +32,7 @@ public class RegisterPhoneController {
     public void clickVerify(Users user) {
         Bundle bundle = new Bundle();
         bundle.putParcelable("User",user);
-        Intent intent = new Intent(context, HomeActivity.class);
+        Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }

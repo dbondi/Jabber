@@ -31,4 +31,12 @@
     <string name="incorrect_code">Incorrect code</string>
     <string name="local">Local</string>
     <string name="area">Area</string>
+    <string name="new_message_local">Say something to college court...</string>
+    <string name="new_message_city">Say something to Madison...</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoiZGJvbmRpMTYiLCJhIjoiY2s5MHB4OG9iMDRkZzNrcTBuMnljNXR0OCJ9.0ZAv8ComOuD4BNBE2xTyGA</string>
+    <string name="click_on_map_instruction">Click on map</string>
+    <string name="query_feature_no_properties_found">No Properties Found</string>
+    <string name="query_feature_marker_title">Mark Title</string>
+    <string name="load_data_base">Load database info</string>
+    <string name="map_style">mapbox://styles/dbondi16/cka6eizjc0hbh1ilozkegcfl3</string>
 </resources>

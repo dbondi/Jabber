@@ -3,6 +3,8 @@
     package="com.example.jab">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
 
     <application
@@ -11,6 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:noHistory="true"
         android:theme="@style/AppTheme">
         <activity android:name=".WelcomeActivity">
             <intent-filter>
@@ -23,7 +26,10 @@
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".RegisterPhoneActivity"/>
         <activity android:name=".LoginActivity"/>
-        <activity android:name=".HomeActivity"/>
+        <activity android:name=".ChatActivity"/>
+        <activity android:name=".SearchActivity"/>
+        <activity android:name=".NewMessageActivity"/>
+        <activity android:name=".MapActivity"/>
     </application>
 
 </manifest>

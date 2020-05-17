@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:windowSoftInputMode="adjustPan"
     android:orientation="vertical"
     android:background="@drawable/background_gradient"
     tools:context=".WelcomeActivity">
@@ -24,7 +25,17 @@
 
         <TextView android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.5"/>
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/auth_load"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#004f4f4f"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="@string/load_data_base"
+            android:textColor="#f2e9eb"></Button>
 
         <Button
             android:id="@+id/b_Login"
@@ -35,6 +46,7 @@
             android:fontFamily="sans-serif-condensed-medium"
             android:text="@string/new_account_login"
             android:textColor="#f2e9eb"></Button>
+
 
     </LinearLayout>
 
