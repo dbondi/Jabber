@@ -4,8 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.jab.ChatActivity;
-import com.example.jab.NewMessageActivity;
+import com.example.jab.HomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class NewMessageController {
@@ -20,7 +19,7 @@ public class NewMessageController {
     public void goBackToHome(int local_city) {
         Bundle bundle = new Bundle();
         bundle.putInt("LocalCity",local_city);
-        Intent intent = new Intent(context, ChatActivity.class);
+        Intent intent = new Intent(context, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
         intent.putExtras(bundle);
         context.startActivity(intent);

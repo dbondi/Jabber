@@ -10,7 +10,14 @@ import com.example.jab.RegisterActivity;
 import com.example.jab.RegisterPhoneActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
@@ -18,6 +25,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,13 +58,13 @@ public class WelcomeController {
         return false;//auth.getCurrentUser() != null;
     }
 
-    public void loadDataBase() {
+    public void loadDataBase() throws FileNotFoundException {
         FirebaseFirestore db;
         Map<String, Object> citiesData = new HashMap<>();
         JSONParser parser = new JSONParser();
         try {
             //TODO change path if on new device
-            Object obj = parser.parse(new FileReader("C:\\Users\\dbond\\Desktop\\JabberName\\Locations\\Cities\\cities.json"));
+            Object obj = parser.parse(new FileReader("JabberName\\Locations\\Cities\\cities.json"));
             System.out.println(obj.toString());
             // A JSON object. Key value pairs are unordered. JSONObject supports java.util.Map interface.
             JSONObject jsonObject = (JSONObject) obj;
@@ -98,16 +107,16 @@ public class WelcomeController {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // Write was successful!
-                        // ...
+                        System.out.println("Did work");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // Write failed
-                        // ...
+                        System.out.println("Didnt work");
                     }
                 });
+
+
     }
 }

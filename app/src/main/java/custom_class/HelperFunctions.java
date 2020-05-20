@@ -1,5 +1,8 @@
 package custom_class;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class HelperFunctions
 {
 
@@ -7,7 +10,7 @@ public class HelperFunctions
     // caused overflow problems)
     static int INF = 10000;
 
-    static class Point
+    public static class Point implements Parcelable
     {
         double x;
         double y;
@@ -16,6 +19,34 @@ public class HelperFunctions
         {
             this.x = x;
             this.y = y;
+        }
+
+        protected Point(Parcel in) {
+            x = in.readDouble();
+            y = in.readDouble();
+        }
+
+        public static final Creator<Point> CREATOR = new Creator<Point>() {
+            @Override
+            public Point createFromParcel(Parcel in) {
+                return new Point(in);
+            }
+
+            @Override
+            public Point[] newArray(int size) {
+                return new Point[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeDouble(x);
+            dest.writeDouble(y);
         }
     }
 
@@ -96,9 +127,10 @@ public class HelperFunctions
 
     // Returns true if the point p lies
     // inside the polygon[] with n vertices
-    static boolean isInside(Point[] polygon, int n, Point p)
+    public static boolean isInside(Point[] polygon, Point p)
     {
         // There must be at least 3 vertices in polygon[]
+        int n = polygon.length;
         if (n < 3)
         {
             return false;

@@ -113,7 +113,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
             public void onComplete(@NonNull Task<AuthResult> task) {
                 loadingBar.setVisibility(View.INVISIBLE);
                 if (task.isSuccessful()) {
-                    Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
                     controller.saveUserAndPass(email.getText().toString(), password.getText().toString(), remember.isChecked());
                 } else {

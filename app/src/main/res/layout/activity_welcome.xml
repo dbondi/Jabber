@@ -25,17 +25,7 @@
 
         <TextView android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
-        <Button
-            android:id="@+id/auth_load"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#004f4f4f"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:text="@string/load_data_base"
-            android:textColor="#f2e9eb"></Button>
+            android:layout_weight="1.5"/>
 
         <Button
             android:id="@+id/b_Login"

@@ -1,13 +1,13 @@
 package custom_class;
 
-public class SearchColumn {
+public class SearchRow {
     private SearchTab leftTab;
     private SearchTab rightTab;
 
-    public SearchColumn(){
+    public SearchRow(){
 
     }
-    public SearchColumn(SearchTab leftTab, SearchTab rightTab){
+    public SearchRow(SearchTab leftTab, SearchTab rightTab){
         this.leftTab = leftTab;
         this.rightTab = rightTab;
     }

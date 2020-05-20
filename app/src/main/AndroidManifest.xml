@@ -26,7 +26,7 @@
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".RegisterPhoneActivity"/>
         <activity android:name=".LoginActivity"/>
-        <activity android:name=".ChatActivity"/>
+        <activity android:name=".HomeActivity"/>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".NewMessageActivity"/>
         <activity android:name=".MapActivity"/>

@@ -34,8 +34,6 @@ import java.util.concurrent.TimeUnit;
 import controllers.RegisterPhoneController;
 import custom_class.NoPhoneUser;
 import custom_class.Users;
-import models.RegisterModel;
-import controllers.RegisterController;
 import models.RegisterPhoneModel;
 
 public class RegisterPhoneActivity extends AppCompatActivity implements View.OnClickListener {
@@ -266,7 +264,7 @@ public class RegisterPhoneActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(intent);
                 } else {
                     String message = task.getException().getMessage();

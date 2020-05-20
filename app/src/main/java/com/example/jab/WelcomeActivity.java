@@ -18,7 +18,6 @@ public class WelcomeActivity extends AppCompatActivity implements NumberPicker.O
     NumberPicker np_Age;
     Button b_Login;
     Button tv_Select_age;
-    Button loaddata;
     private WelcomeController controller;
     private FirebaseAuth auth;
 
@@ -32,14 +31,12 @@ public class WelcomeActivity extends AppCompatActivity implements NumberPicker.O
 
         np_Age = findViewById(R.id.np_Age);
         b_Login = findViewById(R.id.b_Login);
-        loaddata = findViewById(R.id.auth_load);
 
         tv_Select_age = findViewById(R.id.tv_Select_age);
         tv_Select_age.setEnabled(false);
 
         b_Login.setOnClickListener(this);
         tv_Select_age.setOnClickListener(this);
-        loaddata.setOnClickListener(this);
 
 
         auth = FirebaseAuth.getInstance();
@@ -65,9 +62,6 @@ public class WelcomeActivity extends AppCompatActivity implements NumberPicker.O
                 break;
             case R.id.tv_Select_age:
                 controller.clickCreate();
-                break;
-            case R.id.auth_load:
-                controller.loadDataBase();
                 break;
 
         }

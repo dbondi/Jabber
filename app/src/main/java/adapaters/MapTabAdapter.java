@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 import custom_class.MapTab;
-import custom_class.SearchColumn;
+import custom_class.SearchRow;
 import custom_class.SearchTab;
 
 import static com.mapbox.mapboxsdk.style.layers.Property.ICON_ANCHOR_BOTTOM;
@@ -81,7 +81,7 @@ public class MapTabAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     }
 
-    public void update(ArrayList<SearchColumn> columnTabs){
+    public void update(ArrayList<SearchRow> columnTabs){
         //this.columnTabs = columnTabs;
     }
 

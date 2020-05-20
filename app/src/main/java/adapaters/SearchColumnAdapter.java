@@ -14,13 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import custom_class.SearchColumn;
+import custom_class.SearchRow;
 import custom_class.SearchTab;
 
 public class SearchColumnAdapter extends RecyclerView.Adapter<SearchColumnAdapter.ViewHolder> {
-    private ArrayList<SearchColumn> columnTabs;
+    private ArrayList<SearchRow> columnTabs;
 
-    public SearchColumnAdapter(ArrayList<SearchColumn> columnTabs){
+    public SearchColumnAdapter(ArrayList<SearchRow> columnTabs){
         this.columnTabs = columnTabs;
     }
 
@@ -32,13 +32,13 @@ public class SearchColumnAdapter extends RecyclerView.Adapter<SearchColumnAdapte
         return holder;
     }
 
-    public void update(ArrayList<SearchColumn> columnTabs){
+    public void update(ArrayList<SearchRow> columnTabs){
         this.columnTabs = columnTabs;
     }
 
     @Override
     public void onBindViewHolder(@NonNull SearchColumnAdapter.ViewHolder holder, int position) {
-        SearchColumn columnTab = columnTabs.get(position);
+        SearchRow columnTab = columnTabs.get(position);
         SearchTab leftSearchTab = columnTab.getLeftTab();
         SearchTab rightSearchTab = columnTab.getRightTab();
         if (leftSearchTab != null){
