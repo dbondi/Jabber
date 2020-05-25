@@ -11,7 +11,9 @@ import com.example.jab.SearchActivity;
 import com.example.jab.StoriesActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
-import custom_class.HelperFunctions;
+import java.util.ArrayList;
+
+import custom_class.PointMap;
 import custom_class.User;
 
 public class HomeController {
@@ -24,19 +26,20 @@ public class HomeController {
         this.context = context;
     }
 
-    public void searchBtn(String cityLocation, HelperFunctions.Point[] cityCoordinates, String cityLocationKey, String localLocation, HelperFunctions.Point[] localCoordinates, String localLocationKey, User user) {
+    public void searchBtn(String cityLocation, ArrayList<PointMap> cityCoordinates, String cityLocationKey, String localLocation, ArrayList<PointMap> localCoordinates, String localLocationKey, User user) {
         Bundle bundle = new Bundle();
         bundle.putString("CityLocation",cityLocation);
-        bundle.putParcelableArray("CityCoordinates", cityCoordinates);
+        bundle.putParcelableArrayList("CityCoordinates", cityCoordinates);
         bundle.putString("CityLocationKey",cityLocationKey);
 
         bundle.putString("LocalLocation",localLocation);
-        bundle.putParcelableArray("LocalCoordinates",localCoordinates);
+        bundle.putParcelableArrayList("LocalCoordinates",localCoordinates);
         bundle.putString("LocalLocationKey",localLocationKey);
 
         bundle.putParcelable("User",user);
 
         Intent intent = new Intent(context, SearchActivity.class);
+        intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
         context.startActivity(intent);
     }

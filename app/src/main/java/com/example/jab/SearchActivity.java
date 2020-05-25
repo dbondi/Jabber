@@ -25,15 +25,16 @@ import com.mapbox.mapboxsdk.Mapbox;
 import java.util.ArrayList;
 import java.util.Map;
 
-import adapaters.MapTabAdapter;
 import adapaters.SearchAdapter;
-import adapaters.SearchColumnAdapter;
 import controllers.SearchController;
-import custom_class.HelperFunctions;
 import custom_class.MapTab;
+import custom_class.PointMap;
 import custom_class.SearchRow;
 import custom_class.SearchTab;
+import custom_class.User;
 import models.SearchModel;
+
+import static custom_class.HelperFunctions.isInside;
 
 public class SearchActivity extends AppCompatActivity implements LocationListener{
     private SearchController controller;
@@ -59,13 +60,18 @@ public class SearchActivity extends AppCompatActivity implements LocationListene
 
     //locationData
     private String cityLocation = null;
-    private HelperFunctions.Point[] cityCoordinates = null;
+    private ArrayList<PointMap> cityCoordinates = null;
     private String cityLocationKey = null;
 
     //localData
     private String localLocation = null;
-    private HelperFunctions.Point[] localCoordinates = null;
+    private ArrayList<PointMap> localCoordinates = null;
     private String localLocationKey = null;
+
+    private User user = null;
+    private boolean autoUpdate = false;
+    Bundle bundle = null;
+    Intent intent = null;
 
     @Override
     public void onCreate(Bundle saveInstanceState) {
@@ -77,23 +83,29 @@ public class SearchActivity extends AppCompatActivity implements LocationListene
 
         setContentView(R.layout.activity_search);
 
-        Intent intent = getIntent();
+        intent = getIntent();
+        bundle = intent.getExtras();
 
-        cityLocation = intent.getStringExtra("CityLocation");
-        cityCoordinates = (HelperFunctions.Point[]) intent.getParcelableArrayExtra("CityCoordinates");
-        cityLocationKey = intent.getStringExtra("CityLocationKey");
+        cityLocation = bundle.getString("CityLocation");
+        cityCoordinates = bundle.getParcelableArrayList("CityCoordinates");
+        cityLocationKey = bundle.getString("CityLocationKey");
 
-        localLocation = intent.getStringExtra("LocalLocation");
-        localCoordinates = (HelperFunctions.Point[]) intent.getParcelableArrayExtra("LocalCoordinates");
-        localLocationKey = intent.getStringExtra("LocalLocationKey");
+        localLocation = bundle.getString("LocalLocation");
+        localCoordinates = bundle.getParcelableArrayList("LocalCoordinates");
+        localLocationKey = bundle.getString("LocalLocationKey");
+
+        user = bundle.getParcelable("User");
+
 
         if(cityLocationKey == null || localLocationKey == null){
-            find_location();
+            autoUpdate = true;
         }
+        find_location();
 
         // Mapbox access token is configured here. This needs to be called either in your application
 
         // This contains the MapView in XML and needs to be called after the access token is configured.
+
 
 
         controller = new SearchController(auth, this);
@@ -158,66 +170,127 @@ public class SearchActivity extends AppCompatActivity implements LocationListene
         }
         try {
 
-            model.findCityLocation(new SearchActivity.FirestoreCallBack(){
+            if(needUpdated()) {
 
-                @Override
-                public void onCallback(Map<String,Object> locationData) {
-                    cityLocation = (String) locationData.get("Name");
-                    cityCoordinates = (HelperFunctions.Point[]) locationData.get("Coordinates");
-                    cityLocationKey = (String) locationData.get("LocationKey");
+                model.findCityLocation(new SearchActivity.FirestoreCallBackFirst() {
 
-                    //find local Location
-                    model.findLocalLocation(new SearchActivity.FirestoreCallBack(){
+                    @Override
+                    public void onCallback(Map<String, Object> locationData) {
+                        cityLocation = (String) locationData.get("Name");
+                        cityCoordinates = (ArrayList<PointMap>) locationData.get("Coordinates");
+                        cityLocationKey = (String) locationData.get("LocationKey");
 
-                        @Override
-                        public void onCallback(Map<String,Object> locationData) {
-                            localLocation = (String) locationData.get("Name");
-                            localCoordinates = (HelperFunctions.Point[]) locationData.get("Coordinates");
-                            localLocationKey = (String) locationData.get("LocationKey");
+                        //find local Location
+                        model.findLocalLocation(new SearchActivity.FirestoreCallBackSecond() {
+
+                            @Override
+                            public void onCallback(Map<String, Object> locationData) {
+                                localLocation = (String) locationData.get("Name");
+                                localCoordinates = (ArrayList<PointMap>) locationData.get("Coordinates");
+                                localLocationKey = (String) locationData.get("LocationKey");
 
 
-                            //loadTiles
+                                //loadTiles
 
-                            ArrayList<String> tabStrings = new ArrayList<>();
-                            ArrayList<SearchRow> searchTabs = new ArrayList<>();
+                                ArrayList<String> tabStrings = new ArrayList<>();
+                                ArrayList<SearchRow> searchRows = new ArrayList<>();
 
-                            ArrayList<Object> columnTabs = new ArrayList<Object>();
+                                SearchTab dealsChat = new SearchTab();
+                                dealsChat.setName("Deals");
+                                dealsChat.setID("Deals");
 
-                            MapTab mTab = new MapTab();
+                                SearchTab localChat = new SearchTab();
+                                localChat.setName(localLocation);
+                                localChat.setID("LocalChat");
 
-                            columnTabs.add(mTab);
+                                SearchTab cityChat = new SearchTab();
+                                cityChat.setName(cityLocation);
+                                cityChat.setID("CityChat");
 
-                            for(int i = 0; i < Math.floor(searchTabs.size()/2); i++){
+                                SearchTab connectChat = new SearchTab();
+                                connectChat.setName("Connect");
+                                connectChat.setID("Connect");
+
+                                SearchTab localEventsChat = new SearchTab();
+                                localEventsChat.setName("Local Events");
+                                localEventsChat.setID("LocalEvents");
+
+                                SearchTab trendingChat = new SearchTab();
+                                trendingChat.setName("Trending");
+                                trendingChat.setID("Trending");
+
+                                SearchRow row1 = new SearchRow(dealsChat, localChat);
+                                SearchRow row2 = new SearchRow(cityChat, connectChat);
+                                SearchRow row3 = new SearchRow(localEventsChat, trendingChat);
+
+                                searchRows.add(row1);
+                                searchRows.add(row2);
+                                searchRows.add(row3);
+
+                                ArrayList<Object> columnTabs = new ArrayList<Object>();
+
+                                MapTab mTab = new MapTab();
+
+                                columnTabs.add(mTab);
+
+                                columnTabs.add(row1);
+                                columnTabs.add(row2);
+                                columnTabs.add(row3);
+
+                            /*
+                            for(int i = 0; i < Math.floor(searchRows.size()/2); i++){
+                                System.out.println(i);
                                 SearchTab leftTab = new SearchTab();
                                 SearchTab rightTab = new SearchTab();
 
                                 leftTab.setName(tabStrings.get(2*i));
 
-                                if (2*i + 1 < searchTabs.size()){
+                                if (2*i + 1 < searchRows.size()){
                                     rightTab.setName(tabStrings.get(2*i + 1));
                                 }
 
                                 SearchRow column = new SearchRow(leftTab, rightTab);
-                                searchTabs.add(column);
+                                searchRows.add(column);
 
                             }
-                            searchColumnAdapter = new SearchAdapter(columnTabs,saveInstanceState,getContext());
-                            searchView.setAdapter(searchColumnAdapter);
-                            searchView.setLayoutManager(new LinearLayoutManager(getContext()));
+                            */
+                                bundle.putString("CityLocation",cityLocation);
+                                bundle.putParcelableArrayList("CityCoordinates", cityCoordinates);
+                                bundle.putString("CityLocationKey",cityLocationKey);
 
-                            //end loadTiles
+                                bundle.putString("LocalLocation",localLocation);
+                                bundle.putParcelableArrayList("LocalCoordinates",localCoordinates);
+                                bundle.putString("LocalLocationKey",localLocationKey);
+
+                                bundle.putParcelable("User",user);
+                                intent.putExtras(bundle);
+
+                                System.out.println("This far?");
+
+                                searchColumnAdapter = new SearchAdapter(columnTabs, bundle, getContext());
+                                searchView.setAdapter(searchColumnAdapter);
+                                searchView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                                //end loadTiles
 
 
+                            }
+                        }, userLocation, cityLocationKey);
+                    }
 
-                        }
-                    },userLocation, cityLocationKey);
-                }
-
-            },userLocation);
+                }, userLocation);
+            }
 
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean needUpdated() {
+        if (autoUpdate){
+            return true;
+        }
+        return !(isInside(localCoordinates,userLocation) && isInside(cityCoordinates,userLocation));
     }
 
     @Override
@@ -236,9 +309,13 @@ public class SearchActivity extends AppCompatActivity implements LocationListene
     }
 
 
-    public interface FirestoreCallBack{
+    public interface FirestoreCallBackFirst{
         void onCallback(Map<String,Object> locationData);
     }
+    public interface FirestoreCallBackSecond{
+        void onCallback(Map<String,Object> locationData);
+    }
+
 
 
     @Override

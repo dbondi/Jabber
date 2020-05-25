@@ -8,6 +8,28 @@ public class User implements Parcelable {
     private String UID;
     private Bitmap profileImageBitmap;
     private String profileName;
+    private String phoneNumber;
+    //fix name
+
+    public User(String UID, Bitmap profileImageBitmap, String profileName, String phoneNumber) {
+        this.UID = UID;
+        this.profileImageBitmap = profileImageBitmap;
+        this.profileName = profileName;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhone_number() {
+        return phoneNumber;
+    }
+
+    public void setPhone_number(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public static Creator<User> getCREATOR() {
+        return CREATOR;
+    }
+
 
     public User(String UID, Bitmap profileImageBitmap, String profileName) {
         this.UID = UID;
@@ -19,6 +41,7 @@ public class User implements Parcelable {
         UID = in.readString();
         profileImageBitmap = in.readParcelable(Bitmap.class.getClassLoader());
         profileName = in.readString();
+        phoneNumber = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -32,6 +55,10 @@ public class User implements Parcelable {
             return new User[size];
         }
     };
+
+    public User() {
+
+    }
 
     public String getUID() {
         return UID;
@@ -67,5 +94,6 @@ public class User implements Parcelable {
         dest.writeString(UID);
         dest.writeParcelable(profileImageBitmap, flags);
         dest.writeString(profileName);
+        dest.writeString(phoneNumber);
     }
 }

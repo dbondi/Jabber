@@ -1,59 +1,17 @@
 package custom_class;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.location.Location;
+
+import java.util.ArrayList;
 
 public class HelperFunctions
 {
-
-    // Define Infinite (Using INT_MAX
-    // caused overflow problems)
     static int INF = 10000;
-
-    public static class Point implements Parcelable
-    {
-        double x;
-        double y;
-
-        public Point(double x, double y)
-        {
-            this.x = x;
-            this.y = y;
-        }
-
-        protected Point(Parcel in) {
-            x = in.readDouble();
-            y = in.readDouble();
-        }
-
-        public static final Creator<Point> CREATOR = new Creator<Point>() {
-            @Override
-            public Point createFromParcel(Parcel in) {
-                return new Point(in);
-            }
-
-            @Override
-            public Point[] newArray(int size) {
-                return new Point[size];
-            }
-        };
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeDouble(x);
-            dest.writeDouble(y);
-        }
-    }
 
     // Given three colinear points p, q, r,
     // the function checks if point q lies
     // on line segment 'pr'
-    static boolean onSegment(Point p, Point q, Point r)
+    public static boolean onSegment(PointMap p, PointMap q, PointMap r)
     {
         return q.x <= Math.max(p.x, r.x) &&
                 q.x >= Math.min(p.x, r.x) &&
@@ -66,7 +24,7 @@ public class HelperFunctions
     // 0 --> p, q and r are colinear
     // 1 --> Clockwise
     // 2 --> Counterclockwise
-    static int orientation(Point p, Point q, Point r)
+    public static int orientation(PointMap p, PointMap q, PointMap r)
     {
         double val = (q.y - p.y) * (r.x - q.x)
                 - (q.x - p.x) * (r.y - q.y);
@@ -80,8 +38,8 @@ public class HelperFunctions
 
     // The function that returns true if
     // line segment 'p1q1' and 'p2q2' intersect.
-    static boolean doIntersect(Point p1, Point q1,
-                               Point p2, Point q2)
+    public static boolean doIntersect(PointMap p1, PointMap q1,
+                                      PointMap p2, PointMap q2)
     {
         // Find the four orientations needed for
         // general and special cases
@@ -127,17 +85,17 @@ public class HelperFunctions
 
     // Returns true if the point p lies
     // inside the polygon[] with n vertices
-    public static boolean isInside(Point[] polygon, Point p)
+    public static boolean isInside(ArrayList<PointMap> polygon, PointMap p)
     {
         // There must be at least 3 vertices in polygon[]
-        int n = polygon.length;
+        int n = polygon.size();
         if (n < 3)
         {
             return false;
         }
 
         // Create a point for line segment from p to infinite
-        Point extreme = new Point(INF, p.y);
+        PointMap extreme = new PointMap(INF, p.y);
 
         // Count intersections of the above line
         // with sides of polygon
@@ -149,15 +107,15 @@ public class HelperFunctions
             // Check if the line segment from 'p' to
             // 'extreme' intersects with the line
             // segment from 'polygon[i]' to 'polygon[next]'
-            if (doIntersect(polygon[i], polygon[next], p, extreme))
+            if (doIntersect(polygon.get(i), polygon.get(next), p, extreme))
             {
                 // If the point 'p' is colinear with line
                 // segment 'i-next', then check if it lies
                 // on segment. If it lies, return true, otherwise false
-                if (orientation(polygon[i], p, polygon[next]) == 0)
+                if (orientation(polygon.get(i), p, polygon.get(next)) == 0)
                 {
-                    return onSegment(polygon[i], p,
-                            polygon[next]);
+                    return onSegment(polygon.get(i), p,
+                            polygon.get(next));
                 }
 
                 count++;
@@ -168,6 +126,52 @@ public class HelperFunctions
         // Return true if count is odd, false otherwise
         return (count % 2 == 1); // Same as (count%2 == 1)
     }
+
+    // Returns true if the point p lies
+    // inside the polygon[] with n vertices
+    public static boolean isInside(ArrayList<PointMap> polygon, Location pLoc)
+    {
+        PointMap p = new PointMap(pLoc.getLatitude(),pLoc.getLongitude());
+        // There must be at least 3 vertices in polygon[]
+        int n = polygon.size();
+        if (n < 3)
+        {
+            return false;
+        }
+
+        // Create a point for line segment from p to infinite
+        PointMap extreme = new PointMap(INF, p.y);
+
+        // Count intersections of the above line
+        // with sides of polygon
+        int count = 0, i = 0;
+        do
+        {
+            int next = (i + 1) % n;
+
+            // Check if the line segment from 'p' to
+            // 'extreme' intersects with the line
+            // segment from 'polygon[i]' to 'polygon[next]'
+            if (doIntersect(polygon.get(i), polygon.get(i), p, extreme))
+            {
+                // If the point 'p' is colinear with line
+                // segment 'i-next', then check if it lies
+                // on segment. If it lies, return true, otherwise false
+                if (orientation(polygon.get(i), p, polygon.get(i)) == 0)
+                {
+                    return onSegment(polygon.get(i), p,
+                            polygon.get(i));
+                }
+
+                count++;
+            }
+            i = next;
+        } while (i != 0);
+
+        // Return true if count is odd, false otherwise
+        return (count % 2 == 1); // Same as (count%2 == 1)
+    }
+
 
 
 

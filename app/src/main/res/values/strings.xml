@@ -34,9 +34,12 @@
     <string name="new_message_local">Say something to college court...</string>
     <string name="new_message_city">Say something to Madison...</string>
     <string name="mapbox_access_token">pk.eyJ1IjoiZGJvbmRpMTYiLCJhIjoiY2s5MHB4OG9iMDRkZzNrcTBuMnljNXR0OCJ9.0ZAv8ComOuD4BNBE2xTyGA</string>
+    <string name="GIPHY_API_KEY">elNv51lWUpNZUzzV0F765to450cpeuUV</string>
     <string name="click_on_map_instruction">Click on map</string>
     <string name="query_feature_no_properties_found">No Properties Found</string>
     <string name="query_feature_marker_title">Mark Title</string>
     <string name="load_data_base">Load database info</string>
     <string name="map_style">mapbox://styles/dbondi16/cka6eizjc0hbh1ilozkegcfl3</string>
+    <string name="connect_with_phone">Connect with phone</string>
+    <string name="name">Name</string>
 </resources>

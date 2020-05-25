@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import custom_class.HelperFunctions;
+import custom_class.PointMap;
 
 import static custom_class.HelperFunctions.isInside;
 
@@ -27,26 +27,24 @@ public class SearchModel {
         this.auth = auth;
     }
 
-    public void findCityLocation(final SearchActivity.FirestoreCallBack callback, Location userLocation) throws InterruptedException {
+    public void findCityLocation(final SearchActivity.FirestoreCallBackFirst callback, Location userLocation) throws InterruptedException {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Locations/Cities");
 
+
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UIs
                 Map<String, Object> post = (Map<String, Object>) dataSnapshot.getValue();
-                System.out.println(post);
                 for (String key : post.keySet()) {
-                    System.out.println(key);
                     Map<String, Object> secondMap = (Map<String, Object>) post.get(key);
                     ArrayList<Object> coordinates = (ArrayList<Object>) secondMap.get("Coordinates");
-                    System.out.println(coordinates);
-                    HelperFunctions.Point[] points = new HelperFunctions.Point[coordinates.size()];
+                    ArrayList<PointMap> points = new ArrayList<>();
                     for (int i = 0; i < coordinates.size(); i++) {
                         Map<String, Double> coordinate = (Map<String, Double>) coordinates.get(i);
-                        points[i] = new HelperFunctions.Point(coordinate.get("latitude"), coordinate.get("longitude"));
+                        points.add(new PointMap(coordinate.get("latitude"), coordinate.get("longitude")));
                     }
-                    HelperFunctions.Point pointLocation = new HelperFunctions.Point(userLocation.getLatitude(), userLocation.getLongitude());
+                    PointMap pointLocation = new PointMap(userLocation.getLatitude(), userLocation.getLongitude());
                     boolean inside = isInside(points, pointLocation);
                     if (inside) {
                         String loc = (String) secondMap.get("Name");
@@ -64,39 +62,38 @@ public class SearchModel {
                 // Getting Post failed, log a message
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
                 // ...
+
+                callback.onCallback(null);
             }
         });
-
-        callback.onCallback(null);
     }
 
-    public void findLocalLocation(final SearchActivity.FirestoreCallBack callback, Location userLocation, String keyCityLocation) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Locations/Local/" + keyCityLocation);
-
+    public void findLocalLocation(final SearchActivity.FirestoreCallBackSecond callback, Location userLocation, String keyCityLocation) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Locations/Local/" + keyCityLocation + "/features");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UIs
-                Map<String, Object> post = (Map<String, Object>) dataSnapshot.getValue();
-                System.out.println(post);
-                for (String key : post.keySet()) {
-                    System.out.println(key);
-                    Map<String, Object> secondMap = (Map<String, Object>) post.get(key);
-                    ArrayList<Object> coordinates = (ArrayList<Object>) secondMap.get("Coordinates");
-                    System.out.println(coordinates);
-                    HelperFunctions.Point[] points = new HelperFunctions.Point[coordinates.size()];
+                ArrayList<Object> post = (ArrayList<Object>) dataSnapshot.getValue();
+                int key = -1;
+                for (int j = 0; j < post.size(); j++) {
+                    Map<String, Object> main = ((Map<String, Object>) post.get(j));
+                    key = j;
+                    ArrayList<Object> secondMap = (ArrayList<Object>) ((Map<String, Object>) ((Map<String, Object>) post.get(key)).get("geometry")).get("coordinates");
+                    ArrayList<Object> coordinates = (ArrayList<Object>) secondMap.get(0);
+                    ArrayList<PointMap> points = new ArrayList<>();
                     for (int i = 0; i < coordinates.size(); i++) {
-                        Map<String, Double> coordinate = (Map<String, Double>) coordinates.get(i);
-                        points[i] = new HelperFunctions.Point(coordinate.get("latitude"), coordinate.get("longitude"));
+                        ArrayList<Object> coordinate = (ArrayList<Object>) coordinates.get(i);
+                        points.add(new PointMap((double)coordinate.get(0), (double)coordinate.get(1)));
                     }
-                    HelperFunctions.Point pointLocation = new HelperFunctions.Point(userLocation.getLatitude(), userLocation.getLongitude());
+                    PointMap pointLocation = new PointMap(userLocation.getLatitude(), userLocation.getLongitude());
                     boolean inside = isInside(points, pointLocation);
                     if (inside) {
-                        String loc = (String) secondMap.get("Name");
+                        String loc = (String) ((Map<String, Object>) main.get("properties")).get("Name");
                         Map<String, Object> locationData = new HashMap<>();
                         locationData.put("Name", loc);
                         locationData.put("Coordinates", points);
-                        locationData.put("LocationKey", key);
+                        locationData.put("LocationKey", main.get("id"));
                         callback.onCallback(locationData);
                     }
                 }
@@ -105,11 +102,13 @@ public class SearchModel {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Getting Post failed, log a message
+                System.out.println("Whoops");
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // ...
+                System.out.println(databaseError.toException());
+                callback.onCallback(null);
+
             }
         });
 
-        callback.onCallback(null);
     }
 }

@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -22,10 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.nightonke.jellytogglebutton.JellyToggleButton;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import controllers.HomeController;
-import custom_class.HelperFunctions;
+import custom_class.User;
+import custom_class.PointMap;
 import models.HomeModel;
 
 public class HomeActivity extends AppCompatActivity implements LocationListener {
@@ -52,14 +53,16 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
 
     protected Location userLocation;
 
+    private User user;
+
     //locationData
     private String cityLocation = null;
-    private HelperFunctions.Point[] cityCoordinates = null;
+    private ArrayList<PointMap> cityCoordinates = null;
     private String cityLocationKey = null;
 
     //localData
     private String localLocation = null;
-    private HelperFunctions.Point[] localCoordinates = null;
+    private ArrayList<PointMap> localCoordinates = null;
     private String localLocationKey = null;
 
     @Override
@@ -74,11 +77,13 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
 
         // This contains the MapView in XML and needs to be called after the access token is configured.
 
-        setContentView(R.layout.local_overlay);
+        setContentView(R.layout.activity_main);
         auth = FirebaseAuth.getInstance();
 
         controller = new HomeController(auth, this);
         model = new HomeModel(auth, db);
+
+        user = getIntent().getExtras().getParcelable("User");
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -86,9 +91,9 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
         int heightScreen = size.y;
 
         double buttonWidth = heightScreen * .1;
-        textLeft = findViewById(R.id.newMessageTextLeft);
-        textRight = findViewById(R.id.newMessageTextRight);
-        messageBtn = findViewById(R.id.new_message);
+        //textLeft = findViewById(R.id.newMessageTextLeft);
+        //textRight = findViewById(R.id.newMessageTextRight);
+        //messageBtn = findViewById(R.id.new_message);
 
         chatTabBtn = findViewById(R.id.chat_tab);
         searchTabBtn = findViewById(R.id.search_tab);
@@ -96,26 +101,26 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
         localLocationText = findViewById(R.id.localLocationText);
 
 
-        ViewGroup.LayoutParams messageBtnLayoutParams = messageBtn.getLayoutParams();
-        messageBtnLayoutParams.width = (int) buttonWidth;
+        //ViewGroup.LayoutParams messageBtnLayoutParams = messageBtn.getLayoutParams();
+        //messageBtnLayoutParams.width = (int) buttonWidth;
 
-        messageBtn.setLayoutParams(messageBtnLayoutParams);
-
-
-        ViewGroup.LayoutParams textLeftLayoutParams = textLeft.getLayoutParams();
-        textLeftLayoutParams.width = widthScreen - ((int) buttonWidth) - 30;
-
-        textLeft.setLayoutParams(textLeftLayoutParams);
+        //messageBtn.setLayoutParams(messageBtnLayoutParams);
 
 
-        ViewGroup.LayoutParams textRightLayoutParams = textRight.getLayoutParams();
-        textRightLayoutParams.width = 30;
+        //ViewGroup.LayoutParams textLeftLayoutParams = textLeft.getLayoutParams();
+        //textLeftLayoutParams.width = widthScreen - ((int) buttonWidth) - 30;
 
-        textRight.setLayoutParams(textRightLayoutParams);
+        //textLeft.setLayoutParams(textLeftLayoutParams);
+
+
+        //ViewGroup.LayoutParams textRightLayoutParams = textRight.getLayoutParams();
+        //textRightLayoutParams.width = 30;
+
+        //textRight.setLayoutParams(textRightLayoutParams);
 
         local_city = getIntent().getIntExtra("LocalCity", 0);
 
-        messageBtn.setBackground(getResources().getDrawable(R.drawable.round_bound_pink));
+        //messageBtn.setBackground(getResources().getDrawable(R.drawable.round_bound_pink));
 
 
         //Request Location
@@ -134,17 +139,13 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
         searchTabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controller.searchBtn(cityLocation,cityCoordinates,cityLocationKey,localLocation,localCoordinates,localLocationKey);
+                System.out.println("go to search tab");
+                System.out.println(cityCoordinates);
+                System.out.println(localCoordinates);
+                controller.searchBtn(cityLocation,cityCoordinates,cityLocationKey,localLocation,localCoordinates,localLocationKey,user);
             }
         });
 
-        messageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println(local_city);
-                controller.createMessage(local_city);
-            }
-        });
     }
 
     private void find_location() {
@@ -178,29 +179,31 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
         }
         try {
 
-            model.findCityLocation(new HomeActivity.FirestoreCallBack(){
+            model.findCityLocation(new HomeActivity.FirestoreCallBackFirst(){
 
                 @Override
                 public void onCallback(Map<String,Object> locationData) {
-                    cityLocation = (String) locationData.get("Name");
-                    cityCoordinates = (HelperFunctions.Point[]) locationData.get("Coordinates");
-                    cityLocationKey = (String) locationData.get("LocationKey");
+                    if (locationData != null) {
+                        cityLocation = (String) locationData.get("Name");
+                        cityCoordinates = (ArrayList<PointMap>) locationData.get("Coordinates");
+                        cityLocationKey = (String) locationData.get("LocationKey");
 
-                    localLocationText.setText(cityLocation);
+                        localLocationText.setText(cityLocation);
 
-                    //find local Location
-                    model.findLocalLocation(new HomeActivity.FirestoreCallBack(){
+                        //find local Location
+                        model.findLocalLocation(new HomeActivity.FirestoreCallBackSecond() {
 
-                        @Override
-                        public void onCallback(Map<String,Object> locationData) {
-                            localLocation = (String) locationData.get("Name");
-                            localCoordinates = (HelperFunctions.Point[]) locationData.get("Coordinates");
-                            localLocationKey = (String) locationData.get("LocationKey");
+                            @Override
+                            public void onCallback(Map<String, Object> locationLocalData) {
+                                localLocation = (String) locationLocalData.get("Name");
+                                localCoordinates = (ArrayList<PointMap>) locationLocalData.get("Coordinates");
+                                localLocationKey = (String) locationLocalData.get("LocationKey");
 
-                            localLocationText.setText(localLocation);
+                                localLocationText.setText(localLocation);
 
-                        }
-                    },userLocation, cityLocationKey);
+                            }
+                        }, userLocation, cityLocationKey);
+                    }
                 }
 
             },userLocation);
@@ -210,8 +213,12 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
         }
     }
 
-    public interface FirestoreCallBack{
+    public interface FirestoreCallBackFirst{
         void onCallback(Map<String,Object> locationData);
+    }
+
+    public interface FirestoreCallBackSecond{
+        void onCallback(Map<String,Object> locationLocalData);
     }
 
     @Override

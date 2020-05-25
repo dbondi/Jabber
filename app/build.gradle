@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.example.jab"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 29
         multiDexEnabled true
         versionCode 1
@@ -21,6 +22,11 @@ android {
     compileOptions {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
+    }
+    repositories {
+        maven {
+            url "http://giphy.bintray.com/giphy-sdk"
+        }
     }
 
 
@@ -54,6 +60,16 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:21.4.2'
     implementation 'com.nightonke:jellytogglebutton:1.0.2'
     implementation 'com.google.firebase:firebase-database:18.0.1'
+
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'com.firebaseui:firebase-ui-storage:6.2.0'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
+    implementation 'com.android.support:support-annotations:27.1.1'
+    annotationProcessor 'com.android.support:support-annotations:27.1.1'
+    implementation 'com.giphy.sdk:ui:1.2.8'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
 }
 apply plugin: 'com.google.gms.google-services'

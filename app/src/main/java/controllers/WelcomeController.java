@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.example.jab.LoginActivity;
 import com.example.jab.RegisterActivity;
 import com.example.jab.RegisterPhoneActivity;
+import com.example.jab.RegisterWithPhoneActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
@@ -118,5 +119,10 @@ public class WelcomeController {
                 });
 
 
+    }
+
+    public void clickCreateWithPhone() {
+        Intent register = new Intent(context, RegisterWithPhoneActivity.class);
+        context.startActivity(register);
     }
 }

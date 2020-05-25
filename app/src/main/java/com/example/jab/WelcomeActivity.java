@@ -13,10 +13,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import controllers.WelcomeController;
 
-public class WelcomeActivity extends AppCompatActivity implements NumberPicker.OnValueChangeListener,View.OnClickListener {
+public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
 
-    NumberPicker np_Age;
+    //NumberPicker np_Age;
     Button b_Login;
+    Button b_login_phone;
     Button tv_Select_age;
     private WelcomeController controller;
     private FirebaseAuth auth;
@@ -29,26 +30,28 @@ public class WelcomeActivity extends AppCompatActivity implements NumberPicker.O
 
         Log.d("Life Cycle Event: ", "In onCreate()");
 
-        np_Age = findViewById(R.id.np_Age);
+        b_login_phone = findViewById(R.id.connect_with_phone);
         b_Login = findViewById(R.id.b_Login);
 
-        tv_Select_age = findViewById(R.id.tv_Select_age);
-        tv_Select_age.setEnabled(false);
+        //tv_Select_age = findViewById(R.id.tv_Select_age);
+        //tv_Select_age.setEnabled(false);
 
         b_Login.setOnClickListener(this);
-        tv_Select_age.setOnClickListener(this);
+        //tv_Select_age.setOnClickListener(this);
 
 
         auth = FirebaseAuth.getInstance();
         controller = new WelcomeController(this,auth);
 
-        final NumberPicker np = np_Age;
-        np.setMaxValue(101);
-        np.setMinValue(1);
-        np.setValue(16);
-        np.setWrapSelectorWheel(false);
+        b_login_phone.setOnClickListener(this);
+
+        //final NumberPicker np = np_Age;
+        //np.setMaxValue(101);
+        //np.setMinValue(1);
+        //np.setValue(16);
+        //np.setWrapSelectorWheel(false);
         //np.setTextColor(0);
-        np.setOnValueChangedListener(this);
+        //np.setOnValueChangedListener(this);
         //setNumberPickerTextColor(np_Age,Integer.parseInt("f2e9eb",16));
 
 
@@ -57,11 +60,8 @@ public class WelcomeActivity extends AppCompatActivity implements NumberPicker.O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.b_Login:
-                controller.clickLogin();
-                break;
-            case R.id.tv_Select_age:
-                controller.clickCreate();
+            case R.id.connect_with_phone:
+                controller.clickCreateWithPhone();
                 break;
 
         }
@@ -157,18 +157,4 @@ public class WelcomeActivity extends AppCompatActivity implements NumberPicker.O
         });
     }
     */
-    @Override
-    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        if(newVal >= 21 && oldVal < 21){
-            tv_Select_age.setEnabled(true);
-            tv_Select_age.setText("Create Account");
-            tv_Select_age.setBackground(getResources().getDrawable(R.drawable.round_button_roy));
-        }
-
-        if(newVal < 21 && oldVal >= 21){
-            tv_Select_age.setEnabled(false);
-            tv_Select_age.setText("Select your age");
-            tv_Select_age.setBackgroundColor(Integer.parseInt("004f4f4f",16));
-        }
-    }
 }

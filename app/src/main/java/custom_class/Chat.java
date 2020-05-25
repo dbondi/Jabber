@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -13,44 +14,54 @@ public class Chat {
     private GeoPoint location;
     private Timestamp timestamp;
     private String userUID;
+    private String userName;
+    private ArrayList<String> likeList;
+    private ArrayList<Comment> commentList;
     private Bitmap profilePicBitmap;
     private String profileName;
+    private Integer commentNumber;
+    private Integer likeNumber;
+    private Bitmap imageBitmap;
+    private StorageReference gsReference;
+    private StorageReference profPicReference;
+    private Integer imageWidth;
+    private Integer imageHeight;
+    private String messageID;
 
-    public Chat(String content, String imageID, GeoPoint location, Timestamp timestamp, String userUID, Bitmap profilePicBitmap, String profileName, Integer commentNumber, Integer likeNumber, Bitmap imageBitmap, ArrayList<Comment> comments) {
+
+    public Chat(String content, String imageID, GeoPoint location, Timestamp timestamp, String userUID, String profileName, Integer commentNumber, Integer likeNumber, ArrayList<String> likeList, StorageReference gsReference, StorageReference profPicReference) {
+
         this.content = content;
         this.imageID = imageID;
         this.location = location;
         this.timestamp = timestamp;
         this.userUID = userUID;
-        this.profilePicBitmap = profilePicBitmap;
         this.profileName = profileName;
         this.commentNumber = commentNumber;
         this.likeNumber = likeNumber;
-        this.imageBitmap = imageBitmap;
-        this.comments = comments;
+        this.likeList = likeList;
+        this.gsReference = gsReference;
+        this.profPicReference = profPicReference;
     }
 
-    public Chat(String content, String imageID, GeoPoint location, Timestamp timestamp, String userUID, Integer commentNumber, Integer likeNumber) {
+    public Chat(String content, String imageID, GeoPoint location, Timestamp timestamp, String userUID, String profileName, Integer commentNumber, Integer likeNumber, ArrayList<String> likeList, StorageReference gsReference, StorageReference profPicReference,Integer imageWidth, Integer imageHeight, String messageID) {
+
         this.content = content;
         this.imageID = imageID;
         this.location = location;
         this.timestamp = timestamp;
         this.userUID = userUID;
-        this.comments = comments;
+        this.profileName = profileName;
         this.commentNumber = commentNumber;
         this.likeNumber = likeNumber;
+        this.likeList = likeList;
+        this.gsReference = gsReference;
+        this.profPicReference = profPicReference;
+        this.imageWidth = imageWidth;
+        this.imageHeight = imageHeight;
+        this.messageID = messageID;
     }
 
-    public Chat(String content, String imageID, GeoPoint location, Timestamp timestamp, String userUID, ArrayList<Comment> comments, Integer commentNumber, Integer likeNumber) {
-        this.content = content;
-        this.imageID = imageID;
-        this.location = location;
-        this.timestamp = timestamp;
-        this.userUID = userUID;
-        this.comments = comments;
-        this.commentNumber = commentNumber;
-        this.likeNumber = likeNumber;
-    }
 
     public Bitmap getProfilePicBitmap() {
         return profilePicBitmap;
@@ -68,10 +79,6 @@ public class Chat {
         this.profileName = profileName;
     }
 
-    private Integer commentNumber;
-    private Integer likeNumber;
-    private Bitmap imageBitmap;
-    private ArrayList<Comment> comments;
 
     public Chat(){
 
@@ -138,15 +145,79 @@ public class Chat {
         return userUID;
     }
 
+    public ArrayList<String> getLikeList() {
+        return likeList;
+    }
+
+    public void setLikeList(ArrayList<String> likeList) {
+        this.likeList = likeList;
+    }
+
+    public ArrayList<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(ArrayList<Comment> commentList) {
+        this.commentList = commentList;
+    }
+
     public void setUserUID(String userUID) {
         this.userUID = userUID;
     }
 
     public ArrayList<Comment> getComments() {
-        return comments;
+        return commentList;
     }
 
     public void setComments(ArrayList<Comment> comments) {
-        this.comments = comments;
+        this.commentList = comments;
+    }
+
+    public StorageReference getGsReference() {
+        return gsReference;
+    }
+
+    public void setGsReference(StorageReference gsReference) {
+        this.gsReference = gsReference;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public StorageReference getProfPicReference() {
+        return profPicReference;
+    }
+
+    public void setProfPicReference(StorageReference profPicReference) {
+        this.profPicReference = profPicReference;
+    }
+
+    public Integer getImageWidth() {
+        return imageWidth;
+    }
+
+    public void setImageWidth(Integer imageWidth) {
+        this.imageWidth = imageWidth;
+    }
+
+    public Integer getImageHeight() {
+        return imageHeight;
+    }
+
+    public void setImageHeight(Integer imageHeight) {
+        this.imageHeight = imageHeight;
+    }
+
+    public String getMessageID() {
+        return messageID;
+    }
+
+    public void setMessageID(String messageID) {
+        this.messageID = messageID;
     }
 }

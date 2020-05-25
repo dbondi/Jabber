@@ -2,7 +2,9 @@ package controllers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
+import com.example.jab.ChatActivity;
 import com.example.jab.HomeActivity;
 import com.example.jab.MapActivity;
 import com.example.jab.ProfileActivity;
@@ -51,9 +53,12 @@ public class SearchController {
         context.startActivity(intent);
     }
 
-    public void goToTab(SearchTab tab) {
+    public void goToTab(SearchTab tab,Bundle savedInstanceState) {
         if(tab.getID()=="LocalChat"){
-            Intent intent = new Intent(context, MapActivity.class);
+
+
+            Intent intent = new Intent(context, ChatActivity.class);
+            intent.putExtras(savedInstanceState);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
             context.startActivity(intent);
         }

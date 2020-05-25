@@ -58,7 +58,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private static final int ITEM_TYPE_MAP = 0;
     private static final int ITEM_TYPE_COLUMN = 1;
     private FirebaseAuth auth;
-    private Bundle savedInstanceState;
+    private static Bundle savedInstanceState;
     private Context context;
     private SearchController controller;
 
@@ -94,12 +94,12 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             leftCard.setOnClickListener(new View.OnClickListener(){
                 @Override public void onClick(View v){
-                    controller.goToTab(searchRow.getLeftTab());
+                    controller.goToTab(searchRow.getLeftTab(),savedInstanceState);
                 }
             });
             rightCard.setOnClickListener(new View.OnClickListener(){
                 @Override public void onClick(View v){
-                    controller.goToTab(searchRow.getRightTab());
+                    controller.goToTab(searchRow.getRightTab(),savedInstanceState);
                 }
             });
 

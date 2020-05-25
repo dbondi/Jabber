@@ -286,7 +286,7 @@ public class RegisterPhoneActivity extends AppCompatActivity implements View.OnC
                             FirebaseUser user = task.getResult().getUser();
                             String uid = user.getUid();
                             Users uUser = new Users(noPhoneUser,phoneNumber,uid);
-                            controller.clickVerify(uUser);
+                //TODO just controller.clickVerify(uUser);
                             //TODO
                         } else {
                             // Sign in failed, display a message and update the UI

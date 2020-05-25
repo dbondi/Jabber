@@ -76,12 +76,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".06"
+        android:layout_weight=".15"
         />
 
     <LinearLayout
 
-        android:layout_weight="0.05"
+        android:layout_weight="0.06"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal">
@@ -93,22 +93,22 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:layout_width="0dp"
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/tv_Select_age"
+                android:id="@+id/connect_with_phone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.05"
+                android:layout_weight="0.06"
                 android:layout_gravity="center_horizontal"
-                android:background="#004f4f4f"
+                android:background="@drawable/custom_border"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
-                android:text="@string/select_your_age"
+                android:text="@string/connect_with_phone"
                 android:textColor='#f2e9eb'
-                android:textSize="20sp" >
+                android:textSize="19sp" >
             </Button>
 
         </LinearLayout>
@@ -125,17 +125,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".05"
+        android:layout_weight=".22"
         />
-
-    <NumberPicker
-        android:id="@+id/np_Age"
-        android:textColor="#f2e9eb"
-        android:textSize="20sp"
-        android:descendantFocusability="blocksDescendants"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".25" />
 
 
 

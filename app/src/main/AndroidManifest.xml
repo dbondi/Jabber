@@ -30,6 +30,11 @@
         <activity android:name=".SearchActivity"/>
         <activity android:name=".NewMessageActivity"/>
         <activity android:name=".MapActivity"/>
+        <activity android:name=".ChatActivity"/>
+        <activity android:name=".CommentActivity"/>
+        <activity android:name=".CommentActivityJava"/>
+        <activity android:name=".RegisterWithPhoneActivity"/>
+        <activity android:name=".RegisterPhonePasscodeActivity"/>
     </application>
 
 </manifest>
