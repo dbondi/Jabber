@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/background_color"
+        android:background="#CCCCCC"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/message_border_full"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10sp"
+                    android:layout_weight="1"
+                    android:id="@+id/goBack"
+                    android:src="@drawable/close">
+                </de.hdodenhof.circleimageview.CircleImageView>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"></LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/create_yap"
+                    android:textColor="#000000"
+                    android:textSize="24dp">
+
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="right|center_vertical"
+                    android:text="@string/yap"
+                    android:id="@+id/send_yap"
+                    android:textColor="#000000"
+                    android:textSize="22dp">
+
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="45dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:layout_marginTop="5sp"
+                            android:layout_marginLeft="5sp"
+                            android:layout_gravity="left"
+                            android:orientation="horizontal">
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:src="@drawable/circle_black">
+                            </de.hdodenhof.circleimageview.CircleImageView>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="4.5"
+                                android:layout_marginTop="6sp"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1.1"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="@font/lato_bold"
+                                    android:textSize="17dp"
+                                    android:text="Dan">
+
+                                </TextView>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal"
+                                    android:layout_marginBottom="7sp"
+                                    android:weightSum="3">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginRight="10dp"
+                                        android:background="@drawable/white_custom_border">
+                                        <TextView
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_marginRight="10dp"
+                                            android:textColor="#FFFFFF"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:text="Anonymous ⛛">
+                                        </TextView>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/white_custom_border">
+                                        <TextView
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_marginRight="10dp"
+                                            android:textColor="#FFFFFF"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:text="Campus ⛛">
+                                        </TextView>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="65dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginRight="20dp"
+                                android:background="@android:color/transparent"
+                                android:fontFamily="@font/lato_regular"
+                                android:gravity="top"
+                                android:id="@+id/message_text"
+                                android:hint="Send a Yap to people in madison"
+                                android:textColor="#FFFFFF"
+                                android:textColorHint="#99FFFFFF"
+                                android:textSize="25sp">
+                            </EditText>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/image_container"
+                                android:paddingStart="65dp"
+                                android:paddingEnd="20dp"
+                                android:paddingTop="20dp">
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    app:cardBackgroundColor="#00FFFFFF"
+                                    android:layout_marginBottom="20dp"
+                                    app:cardPreventCornerOverlap="false"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:id="@+id/post_image"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:adjustViewBounds="true"
+                                        android:background="#00FFFFFF"/>
+                                    <LinearLayout
+                                        android:id="@+id/cancel_image"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="right"
+                                        android:gravity="center"
+                                        android:layout_marginEnd="7dp"
+                                        android:clickable="true"
+                                        android:focusable="true"
+                                        android:layout_marginTop="7dp"
+                                        android:background="@drawable/circle_black">
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/cancel_white">
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="65dp"
+                                android:layout_marginEnd="20dp"
+                                android:id="@+id/poll"
+                                android:orientation="vertical">
+
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:clickable="true"
+                                    app:cardPreventCornerOverlap="false"
+                                    app:cardCornerRadius="20dp"
+                                    android:layout_marginTop="10dp"
+                                    app:cardElevation="0dp">
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical">
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="20dp"
+                                                android:layout_marginStart="15dp"
+                                                android:layout_marginEnd="50dp"
+                                                android:orientation="horizontal"
+                                                android:background="@drawable/poll_option_background">
+                                                <EditText
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginStart="8dp"
+                                                    android:layout_marginTop="6dp"
+                                                    android:layout_marginBottom="6dp"
+                                                    android:background="#00FFFFFF"
+                                                    android:fontFamily="@font/lato_black"
+                                                    android:textSize="16dp"
+                                                    android:textColor="#FFFFFF"
+                                                    android:id="@+id/option_1"
+                                                    android:textColorHint="#CCFFFFFF"
+                                                    android:hint="Option 1">
+
+                                                </EditText>
+                                            </LinearLayout>
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="12dp"
+                                                android:layout_marginStart="15dp"
+                                                android:layout_marginEnd="50dp"
+                                                android:orientation="horizontal"
+                                                android:background="@drawable/poll_option_background">
+                                                <EditText
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginStart="8dp"
+                                                    android:layout_marginTop="6dp"
+                                                    android:layout_marginBottom="6dp"
+                                                    android:background="#00FFFFFF"
+                                                    android:fontFamily="@font/lato_black"
+                                                    android:textSize="16dp"
+                                                    android:textColor="#FFFFFF"
+                                                    android:id="@+id/option_2"
+                                                    android:textColorHint="#CCFFFFFF"
+                                                    android:hint="Option 2">
+
+                                                </EditText>
+                                            </LinearLayout>
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:id="@+id/option_3_box"
+                                                android:layout_marginTop="12dp"
+                                                android:layout_marginStart="15dp"
+                                                android:layout_marginEnd="50dp"
+                                                android:orientation="horizontal"
+                                                android:background="@drawable/poll_option_background">
+                                                <EditText
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginStart="8dp"
+                                                    android:layout_marginTop="6dp"
+                                                    android:layout_marginBottom="6dp"
+                                                    android:background="#00FFFFFF"
+                                                    android:fontFamily="@font/lato_black"
+                                                    android:textSize="16dp"
+                                                    android:textColor="#FFFFFF"
+                                                    android:id="@+id/option_3"
+                                                    android:textColorHint="#CCFFFFFF"
+                                                    android:hint="Option 3">
+
+                                                </EditText>
+                                            </LinearLayout>
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:id="@+id/option_4_box"
+                                                android:layout_marginTop="12dp"
+                                                android:layout_marginStart="15dp"
+                                                android:layout_marginEnd="50dp"
+                                                android:orientation="horizontal"
+                                                android:background="@drawable/poll_option_background">
+                                                <EditText
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginStart="8dp"
+                                                    android:layout_marginTop="6dp"
+                                                    android:layout_marginBottom="6dp"
+                                                    android:background="#00FFFFFF"
+                                                    android:fontFamily="@font/lato_black"
+                                                    android:textSize="16dp"
+                                                    android:textColor="#FFFFFF"
+                                                    android:id="@+id/option_4"
+                                                    android:textColorHint="#CCFFFFFF"
+                                                    android:hint="Option 4">
+
+                                                </EditText>
+                                            </LinearLayout>
+                                        </LinearLayout>
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginStart="12dp"
+                                                android:layout_marginTop="12dp"
+                                                android:layout_marginBottom="12dp"
+                                                android:text="Poles are active for 24hrs">
+
+                                            </TextView>
+                                        </LinearLayout>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:id="@+id/cancel_poll"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="right"
+                                        android:gravity="center"
+                                        android:layout_marginEnd="7dp"
+                                        android:clickable="true"
+                                        android:layout_marginTop="7dp"
+                                        android:background="@drawable/circle_black"
+                                        android:focusable="true">
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/cancel_white">
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_gravity="bottom|right">
+                                        <LinearLayout
+                                            android:id="@+id/add_poll"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:clickable="true"
+                                            android:focusable="true"
+                                            android:layout_marginRight="14dp"
+                                            android:layout_marginBottom="3dp"
+                                            android:background="@drawable/plus"
+                                            android:orientation="horizontal">
+
+                                        </LinearLayout>
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="12dp"
+                                            android:layout_marginTop="12dp"
+                                            android:layout_marginBottom="12dp"
+                                            android:text="">
+
+                                        </TextView>
+                                    </LinearLayout>
+
+
+                                </androidx.cardview.widget.CardView>
+
+                            </RelativeLayout>
+
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </ScrollView>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#443b3a3a"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/photo_library_box"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_library_button">
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/gif_box"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/white_gif_button">
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/camera_box"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_camera_button">
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/poll_box"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_pole_button">
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="2">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle_white">
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,8 +17,9 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/background_color"
             app:cardPreventCornerOverlap="false"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="#006200"
             app:cardCornerRadius="20dp">
 
             <LinearLayout
@@ -27,8 +28,7 @@
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/white_clear_gradient">
+                    android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -60,7 +60,7 @@
                                 android:id="@+id/username"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="#000000"
+                                android:textColor="#FFFFFF"
                                 android:fontFamily="@font/lato_bold"
                                 android:textSize="15dp"
                                 android:text="Constantine">
@@ -87,7 +87,7 @@
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
                         android:paddingRight="7dp"
-                        android:textColor="#000000"
+                        android:textColor="#FFFFFF"
                         android:fontFamily="@font/lato_regular"
                         android:textSize="15dp">
                     </TextView>
@@ -117,7 +117,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="7dp"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="#eeffffff"
                             android:fontFamily="@font/lato_bold"
                             android:textSize="17dp"
                             android:text="17">

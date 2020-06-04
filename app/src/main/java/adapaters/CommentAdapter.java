@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.example.jab.GlideApp;
+//import com.example.jab.GlideApp;
 import com.example.jab.GlideApp;
 import com.example.jab.R;
 import com.google.firebase.storage.FirebaseStorage;
@@ -79,15 +80,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             postImageRef.getLayoutParams().height = ((int) (factor*widthScreen));
             //((ViewGroup) holder.messageView.getParent()).removeView(holder.message);
             holder.message.setHeight(0);
+
             GlideApp.with(context)
                     .load(currentChat.getGsReference())
                     .centerCrop()
                     .into(postImageRef);
+
+
         }
         else {
             holder.messageView.removeView(holder.post_image);
             String first = "<font color='#AAFFFFFF'>\" </font>";
-            String next = "<font color='#000000'>"+currentChat.getContent()+"</font>";
+            String next = "<font color='#FFFFFF'>"+currentChat.getContent()+"</font>";
             String last = "<font color='#AAFFFFFF'> \"</font>";
 
             holder.message.setText(Html.fromHtml(next));
@@ -98,6 +102,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         GlideApp.with(context)
                 .load(currentChat.getProfPicReference())
                 .into(profPicRef);
+
+
 
 
         //holder.bottomBox.set

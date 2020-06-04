@@ -144,8 +144,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         loadedStyle.addLayer(new SymbolLayer(MARKER_LAYER_ID, GEOJSON_SOURCE_ID)
                 .withProperties(
                         iconImage(MARKER_IMAGE_ID),
-                        iconAllowOverlap(true),
-                        iconIgnorePlacement(true),
+                        iconAllowOverlap(false),
+                        iconIgnorePlacement(false),
                         iconOffset(new Float[] {0f, 0f})
                 ));
     }
@@ -183,6 +183,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         List<Feature> features = mapboxMap.queryRenderedFeatures(screenPoint);
         if (!features.isEmpty()) {
             Feature feature = features.get(0);
+            System.out.println("IDIDID");
+            System.out.println(feature.id());
 
             StringBuilder stringBuilder = new StringBuilder();
 

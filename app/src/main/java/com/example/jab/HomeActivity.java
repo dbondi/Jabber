@@ -11,27 +11,42 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.nightonke.jellytogglebutton.JellyToggleButton;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import controllers.HomeController;
+import custom_class.CSVFile;
+import custom_class.Place;
 import custom_class.User;
 import custom_class.PointMap;
 import models.HomeModel;
 
+import static custom_class.HelperFunctions.distanceAway;
+
 public class HomeActivity extends AppCompatActivity implements LocationListener {
+    //TODO if asks for location user needs to say always need to change this
+    private static final String COMMA_DELIMITER = ",";
     private JellyToggleButton toggle;
-    private Button messageBtn;
+    private LinearLayout messageBtn;
     private TextView textLeft;
     private TextView textRight;
     private TextView localLocationText;
@@ -55,6 +70,12 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
 
     private User user;
 
+    private ArrayList<Place> localUniversityPlaces = new ArrayList<>();
+    private ArrayList<Place> localCityPlaces = new ArrayList<>();
+    private ArrayList<Place> universityPlaces = new ArrayList<>();
+    private ArrayList<Place> cityPlaces = new ArrayList<>();
+
+    /*
     //locationData
     private String cityLocation = null;
     private ArrayList<PointMap> cityCoordinates = null;
@@ -64,6 +85,8 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
     private String localLocation = null;
     private ArrayList<PointMap> localCoordinates = null;
     private String localLocationKey = null;
+
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +101,27 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
         // This contains the MapView in XML and needs to be called after the access token is configured.
 
         setContentView(R.layout.activity_main);
+
+        loadUniversityLocations();
+        loadCityLocations();
+
         auth = FirebaseAuth.getInstance();
 
         controller = new HomeController(auth, this);
         model = new HomeModel(auth, db);
 
+
+        chatTabBtn = findViewById(R.id.chat_tab);
+        searchTabBtn = findViewById(R.id.search_tab);
+        storiesTabBtn = findViewById(R.id.stories_tab);
+        localLocationText = findViewById(R.id.localLocationText);
+        messageBtn = findViewById(R.id.create_post);
+
+        localLocationText.setText("\uD83D\uDD25");
+
+
         user = getIntent().getExtras().getParcelable("User");
+
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -91,32 +129,12 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
         int heightScreen = size.y;
 
         double buttonWidth = heightScreen * .1;
-        //textLeft = findViewById(R.id.newMessageTextLeft);
-        //textRight = findViewById(R.id.newMessageTextRight);
-        //messageBtn = findViewById(R.id.new_message);
 
-        chatTabBtn = findViewById(R.id.chat_tab);
-        searchTabBtn = findViewById(R.id.search_tab);
-        storiesTabBtn = findViewById(R.id.stories_tab);
-        localLocationText = findViewById(R.id.localLocationText);
+        ViewGroup.LayoutParams messageBtnLayoutParams = messageBtn.getLayoutParams();
+        messageBtnLayoutParams.width = (int) buttonWidth;
+        messageBtnLayoutParams.height = (int) buttonWidth;
 
-
-        //ViewGroup.LayoutParams messageBtnLayoutParams = messageBtn.getLayoutParams();
-        //messageBtnLayoutParams.width = (int) buttonWidth;
-
-        //messageBtn.setLayoutParams(messageBtnLayoutParams);
-
-
-        //ViewGroup.LayoutParams textLeftLayoutParams = textLeft.getLayoutParams();
-        //textLeftLayoutParams.width = widthScreen - ((int) buttonWidth) - 30;
-
-        //textLeft.setLayoutParams(textLeftLayoutParams);
-
-
-        //ViewGroup.LayoutParams textRightLayoutParams = textRight.getLayoutParams();
-        //textRightLayoutParams.width = 30;
-
-        //textRight.setLayoutParams(textRightLayoutParams);
+        messageBtn.setLayoutParams(messageBtnLayoutParams);
 
         local_city = getIntent().getIntExtra("LocalCity", 0);
 
@@ -127,6 +145,12 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
 
         find_location();
 
+        messageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.createMsgBtn(localUniversityPlaces, localCityPlaces, user);
+            }
+        });
 
 
         storiesTabBtn.setOnClickListener(new View.OnClickListener() {
@@ -139,10 +163,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
         searchTabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("go to search tab");
-                System.out.println(cityCoordinates);
-                System.out.println(localCoordinates);
-                controller.searchBtn(cityLocation,cityCoordinates,cityLocationKey,localLocation,localCoordinates,localLocationKey,user);
+                controller.searchBtn(localUniversityPlaces, localCityPlaces, user);
             }
         });
 
@@ -168,21 +189,26 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
 
     @Override
     public void onLocationChanged(Location location) {
-        System.out.println("This thing is working");
-        if(test){
-            userLocation = new Location("");
+        if (test) {
+            userLocation = location;
             userLocation.setLatitude(-89.408054);
             userLocation.setLongitude(43.077293);
-        }
-        else {
+            localCityLocations(userLocation, 5.0);
+            localUniversityLocations(userLocation, 5.0);
+        } else {
             userLocation = location;
+            localCityLocations(userLocation, 5.0);
+            localUniversityLocations(userLocation, 5.0);
         }
+        /*
         try {
 
             model.findCityLocation(new HomeActivity.FirestoreCallBackFirst(){
 
+
                 @Override
                 public void onCallback(Map<String,Object> locationData) {
+
                     if (locationData != null) {
                         cityLocation = (String) locationData.get("Name");
                         cityCoordinates = (ArrayList<PointMap>) locationData.get("Coordinates");
@@ -206,33 +232,108 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
                     }
                 }
 
+
             },userLocation);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        */
+
     }
 
-    public interface FirestoreCallBackFirst{
-        void onCallback(Map<String,Object> locationData);
+    public interface FirestoreCallBackFirst {
+        void onCallback(Map<String, Object> locationData);
     }
 
-    public interface FirestoreCallBackSecond{
-        void onCallback(Map<String,Object> locationLocalData);
+    public interface FirestoreCallBackSecond {
+        void onCallback(Map<String, Object> locationLocalData);
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        Log.d("Latitude","status");
+        Log.d("Latitude", "status");
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-        Log.d("Latitude","enable");
+        Log.d("Latitude", "enable");
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        Log.d("Latitude","disable");
+        Log.d("Latitude", "disable");
+    }
+
+    public void localCityLocations(Location location, double milesAway) {
+        System.out.println("Lat");
+        System.out.println(location.getLatitude());
+        System.out.println("Long");
+        System.out.println(location.getLongitude());
+        localCityPlaces = new ArrayList<>();
+        for (Place place : cityPlaces) {
+            LatLng local = place.getLocation();
+            double miles = distanceAway(location.getLatitude(), local.latitude, location.getLongitude(), local.longitude, 0.0, 0.0);
+            if (miles <= milesAway) {
+                localCityPlaces.add(place);
+            }
+        }
+    }
+
+    public void localUniversityLocations(Location location, double milesAway) {
+        localUniversityPlaces = new ArrayList<>();
+        for (Place place : universityPlaces) {
+            LatLng local = place.getLocation();
+            double miles = distanceAway(location.getLatitude(), local.latitude, location.getLongitude(), local.longitude, 0.0, 0.0);
+            if (miles <= milesAway) {
+                localUniversityPlaces.add(place);
+            }
+        }
+    }
+
+    private void loadUniversityLocations() {
+        universityPlaces = new ArrayList<>();
+        boolean firstLine = true;
+        System.out.println(System.currentTimeMillis());
+        InputStream inputStream = getResources().openRawResource(R.raw.colleges);
+        CSVFile csvFile = new CSVFile(inputStream);
+        List universityList = csvFile.read();
+        for (Object universityData : universityList) {
+            String concatUniversityDataFull = Arrays.toString((String[]) universityData);
+            String concatUniversityData = concatUniversityDataFull.substring(1,concatUniversityDataFull.length()-1).replace(", ",",");
+            String[] universityDataSplit = concatUniversityData.split(",");
+            if (!firstLine) {
+                LatLng locationLocation = new LatLng( Double.parseDouble(universityDataSplit[6]),Double.parseDouble(universityDataSplit[5]));
+                int pop = Integer.parseInt(universityDataSplit[4]);
+                universityPlaces.add(new Place(locationLocation, universityDataSplit[1].replace(";",","), pop, universityDataSplit[0], "Universities"));
+            } else {
+                firstLine = false;
+            }
+        }
+        System.out.println(System.currentTimeMillis());
+    }
+
+
+    private void loadCityLocations() {
+        cityPlaces = new ArrayList<>();
+        boolean firstLine = true;
+        System.out.println(System.currentTimeMillis());
+        InputStream inputStream = getResources().openRawResource(R.raw.largest_cities);
+        CSVFile csvFile = new CSVFile(inputStream);
+        List cityList = csvFile.read();
+        for (Object cityData : cityList) {
+            String concatCityDataFull = Arrays.toString((String[]) cityData);
+            String concatCityData = concatCityDataFull.substring(1,concatCityDataFull.length()-1).replace(", ",",");
+            String[] cityDataSplit = concatCityData.split(",");
+            if (!firstLine) {
+                LatLng locationLocation = new LatLng( Double.parseDouble(cityDataSplit[6]),Double.parseDouble(cityDataSplit[5]));
+                int pop = Integer.parseInt(cityDataSplit[4]);
+                cityPlaces.add(new Place(locationLocation, cityDataSplit[0], pop, cityDataSplit[7], "Cities"));
+            } else {
+                firstLine = false;
+            }
+        }
+        System.out.println(System.currentTimeMillis());
     }
 }
+

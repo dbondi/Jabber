@@ -39,7 +39,14 @@
     <string name="query_feature_no_properties_found">No Properties Found</string>
     <string name="query_feature_marker_title">Mark Title</string>
     <string name="load_data_base">Load database info</string>
-    <string name="map_style">mapbox://styles/dbondi16/cka6eizjc0hbh1ilozkegcfl3</string>
+    <string name="map_style">mapbox://styles/dbondi16/ckar7zh0o0ftj1inu0anu00rp</string>
     <string name="connect_with_phone">Connect with phone</string>
     <string name="name">Name</string>
+    <string name="upcoming_events">Upcoming Events</string>
+    <string name="past_events">Past Events</string>
+    <string name="temp_years">20 years old</string>
+    <string name="constantine">Constantine</string>
+    <string name="post">Post</string>
+    <string name="yap">Yap</string>
+    <string name="create_yap">Create Yap</string>
 </resources>

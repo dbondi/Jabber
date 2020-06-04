@@ -5,16 +5,18 @@ public class SearchTab {
     private String image;
     private String ID;
     private String type;
+    private Place place;
 
     public SearchTab(){
 
     }
 
-    public SearchTab(String name, String image, String ID, String type){
+    public SearchTab(String name, String image, String ID, String type, Place place){
         this.name = name;
         this.image = image;
         this.ID = ID;
         this.type = type;
+        this.place = place;
     }
 
     public String getID() {
@@ -47,5 +49,13 @@ public class SearchTab {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Place getPlace() {
+        return place;
+    }
+
+    public void setPlace(Place place) {
+        this.place = place;
     }
 }

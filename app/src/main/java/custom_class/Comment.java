@@ -2,6 +2,7 @@ package custom_class;
 
 import android.graphics.Bitmap;
 
+import com.giphy.sdk.core.models.Media;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.StorageReference;
@@ -9,23 +10,40 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 public class Comment {
-    private String content;
-    private String imageID;
-    private GeoPoint location;
-    private Timestamp timestamp;
+
+    //All comment data
+    private ArrayList<String> likeList;
     private String userUID;
     private String userName;
-    private ArrayList<String> likeList;
+    private GeoPoint location;
+    private Timestamp timestamp;
     private Integer likeNumber;
-    private StorageReference gsReference;
-    private StorageReference profPicReference;
-    private Integer imageWidth;
 
-    private Integer imageHeight;
-    private Boolean boolImage;
+    //Spot in commentSection
     private Integer columnNumber;
 
-    public Comment(String content, String imageID, GeoPoint location, Timestamp timestamp, String userUID, String userName, Integer likeNumber, ArrayList<String> likeList, StorageReference gsReference, StorageReference profPicReference, Integer imageWidth, Integer imageHeight, Boolean boolImage, Integer columnNumber) {
+    //Gif type
+    private Media media;
+
+    //boolean types
+    private Boolean gifBool;
+    private Boolean imageBool;
+    private Boolean textBool;
+    private Boolean videoBool;
+
+    //image type data
+    private Integer imageHeight;
+    private Integer imageWidth;
+    private String imageID;
+
+    //text type data
+    private String content;
+
+    //database storage
+    private StorageReference gsReference;
+    private StorageReference profPicReference;
+
+    public Comment(String content, String imageID, GeoPoint location, Timestamp timestamp, String userUID, String userName, Integer likeNumber, ArrayList<String> likeList, StorageReference gsReference, StorageReference profPicReference, Integer imageWidth, Integer imageHeight, Boolean imageBool, Integer columnNumber) {
         this.content = content;
         this.imageID = imageID;
         this.location = location;
@@ -38,7 +56,7 @@ public class Comment {
         this.profPicReference = profPicReference;
         this.imageWidth = imageWidth;
         this.imageHeight = imageHeight;
-        this.boolImage = boolImage;
+        this.imageBool = imageBool;
         this.columnNumber = columnNumber;
     }
 
@@ -139,11 +157,11 @@ public class Comment {
     }
 
     public Boolean getBoolImage() {
-        return boolImage;
+        return imageBool;
     }
 
-    public void setBoolImage(Boolean boolImage) {
-        this.boolImage = boolImage;
+    public void setBoolImage(Boolean imageBool) {
+        this.imageBool = imageBool;
     }
     public Integer getColumnNumber() {
         return columnNumber;

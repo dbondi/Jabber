@@ -1,27 +1,33 @@
 package models
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.location.Location
+import android.os.Bundle
 import android.util.Log
 import com.example.jab.CommentActivity
+import com.giphy.sdk.core.models.Media
 import com.google.firebase.Timestamp
+import com.google.firebase.Timestamp.now
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
 import custom_class.Comment
+import custom_class.HelperFunctions.random_color
+import custom_class.Place
 import custom_class.PointMap
 import custom_class.User
-import java.util.*
-import kotlin.collections.ArrayList
+import java.io.ByteArrayOutputStream
+
 
 class CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFirestore) {
     private val storage: FirebaseStorage
     private val TAG = "CommentModel"
 
-    fun loadComments(callback: CommentActivity.FirestoreCallBackKot, cityLocation: String?, cityCoordinates: ArrayList<PointMap>, cityLocationKey: String, localLocation: String?, localCoordinates: ArrayList<PointMap>, localLocationKey: String?, messageID: String, user: User?) {
-        println(cityLocationKey)
+    fun loadComments(callback: CommentActivity.FirestoreCallBackKot, messageID: String, user: User?, place: Place) {
         println(messageID)
-        val docChats = db.collection("Chats").document("Cities").collection(cityLocationKey).document(messageID).collection("Comments")
+        val docChats = db.collection("Chats").document(place.type).collection(place.ipedsid).document(messageID).collection("Comments")
         val listOfDocuments: MutableList<String> = ArrayList()
         docChats.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -43,7 +49,7 @@ class CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFires
                     val likeList = document["LikeList"] as ArrayList<String>?
 
                     //ArrayList<String> commentList = (ArrayList<String>) document.get("CommentList");
-                    val gsReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/Comments/Cities/$cityLocationKey/$messageID/$commentID/photo.jpg")
+                    val gsReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/Comments/${place.type}/${place.ipedsid}/${messageID}/${commentID}/photo.jpg")
                     val profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/$userUID/profilePic.jpg")
                     val comment = Comment(content, imageID, location, timestamp, userUID, userName, likeNumber, likeList, gsReference, profPicReference, imageWidth, imageHeight, imageBoolean, columnNumber)
                     comments.add(comment)
@@ -55,6 +61,147 @@ class CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFires
                 callback.onCallback(null)
             }
         }
+    }
+
+    fun post_string(commentPost: String, bundle: Bundle, userLocation: Location?, generateColor: String, place: Place) {
+
+        var user = bundle.getParcelable("User") as User?
+        var timestamp = now()
+        var color = generateColor
+        var imageBoolean = false
+        var gifBoolean = false
+        var stringBoolean = true
+        var userID = user?.uid
+        var userName = "Dan"//user?.profileName
+        var geoPoint = GeoPoint(userLocation?.latitude!!, userLocation?.longitude!!)
+        var messageID = bundle.getString("MessageID").toString()
+
+        val emptyStringArray = ArrayList<String>()
+        // Create a new course object with information
+        val course: HashMap<String, Any> = HashMap()
+        course["Timestamp"] = timestamp
+        course["Color"] = color
+        course["ImageBoolean"] = imageBoolean
+        course["GifBoolean"] = gifBoolean
+        course["StringBoolean"] = stringBoolean
+        course["User"] = userID!!
+        course["UserName"] = userName!!
+        course["Location"] = geoPoint
+        course["Content"] = commentPost
+        course["LikeList"] = emptyStringArray
+        course["LikeNumber"] = 0
+
+        val collectionRef = db.collection("Chats").document(place.type).collection(place.ipedsid).document(messageID).collection("Comments")
+        collectionRef.add(course).addOnSuccessListener { documentReference ->
+            Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
+        }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error adding document", e)
+                }
+
+
+    }
+
+    fun post_gif(media: Media, bundle: Bundle, userLocation: Location?, generateColor: String, place: Place) {
+
+        var user = bundle.getParcelable("User") as User?
+        var timestamp = now()
+        var color = generateColor
+        var imageBoolean = false
+        var gifBoolean = true
+        var stringBoolean = false
+        var userID = user?.uid
+        var userName = user?.profileName
+        var geoPoint = GeoPoint(userLocation?.latitude!!, userLocation?.longitude!!)
+        var messageID = bundle.getString("MessageID").toString()
+
+        val emptyStringArray = arrayOf<String>()
+        // Create a new course object with information
+        val course: HashMap<String, Any> = HashMap()
+        course["Timestamp"] = timestamp
+        course["Color"] = color
+        course["ImageBoolean"] = imageBoolean
+        course["GifBoolean"] = gifBoolean
+        course["StringBoolean"] = stringBoolean
+        course["User"] = userID!!
+        course["UserName"] = userName!!
+        course["Location"] = geoPoint
+        course["GifUrl"] = media.url!!
+        course["LikeList"] = emptyStringArray
+        course["LikeNumber"] = 0
+
+        val collectionRef = db.collection("Chats").document(place.type).collection(place.ipedsid).document(messageID).collection("Comments")
+        collectionRef.add(course).addOnSuccessListener { documentReference ->
+            Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
+        }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error adding document", e)
+                }
+
+    }
+
+    fun post_image(bitmap: Bitmap, bundle: Bundle, userLocation: Location?, generateColor: String, place: Place) {
+
+        val smallBitmap = getResizedBitmap(bitmap,1000);
+        val baos = ByteArrayOutputStream()
+        smallBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data: ByteArray = baos.toByteArray()
+
+
+        val user = bundle.getParcelable("User") as User?
+        val timestamp = now()
+        val color = generateColor
+        val imageBoolean = true
+        val gifBoolean = false
+        val stringBoolean = false
+        val userID = user?.uid
+        val userName = user?.profileName
+        val geoPoint = GeoPoint(userLocation?.latitude!!, userLocation?.longitude!!)
+        val localCity =bundle.getInt("LocalCity")
+        val messageID = bundle.getString("MessageID").toString()
+
+        val emptyStringArray = arrayOf<String>()
+        // Create a new course object with information
+        val course: HashMap<String, Any> = HashMap()
+        course["Timestamp"] = timestamp
+        course["Color"] = color
+        course["ImageBoolean"] = imageBoolean
+        course["GifBoolean"] = gifBoolean
+        course["StringBoolean"] = stringBoolean
+        course["User"] = userID!!
+        course["UserName"] = userName!!
+        course["Location"] = geoPoint
+        course["ImageHeight"] = smallBitmap!!.height
+        course["ImageWidth"] = smallBitmap.width
+        course["LikeList"] = emptyStringArray
+        course["LikeNumber"] = 0
+
+        val collectionRef = db.collection("Chats").document(place.type).collection(place.ipedsid).document(messageID).collection("Comments")
+        collectionRef.add(course).addOnSuccessListener { documentReference ->
+            Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
+            val ref = storage.getReference("Comments/${place.type}/${localCity}/messageID/${documentReference.id}")
+            ref.putBytes(data)
+        }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error adding document", e)
+                }
+
+
+
+    }
+
+    fun getResizedBitmap(image: Bitmap, maxSize: Int): Bitmap? {
+        var width = image.width
+        var height = image.height
+        val bitmapRatio = width.toFloat() / height.toFloat()
+        if (bitmapRatio > 1) {
+            width = maxSize
+            height = (width / bitmapRatio).toInt()
+        } else {
+            height = maxSize
+            width = (height * bitmapRatio).toInt()
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true)
     }
 
 

@@ -3,6 +3,7 @@ package custom_class;
 import android.location.Location;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class HelperFunctions
 {
@@ -171,6 +172,38 @@ public class HelperFunctions
         // Return true if count is odd, false otherwise
         return (count % 2 == 1); // Same as (count%2 == 1)
     }
+    public static String[] random_color(int max){
+        Random r = new Random();
+        int random_int = r.nextInt(max);
+        String[] arr1 = new String[]{"#a60a02","#377801","#027c8a","#5902a1","#a60293","#d17e02","#01470d","#0247d1","#ff8e03","#1fad66","#010161","#b80266"};
+        String[] arr2 = new String[]{"#fa7d35","#c1d604","#47ff6c","#ff57ee","#bf40ff","#fa9455","#6ed433","#b67fff","#ffc003","#7dff5c","#03e6ff","#ff75ff"};
+        String var1 = arr1[random_int];
+        String var2 = arr2[random_int];
+        return new String[]{var1,var2};
+    }
+
+
+    public static double distanceAway(double lat1, double lat2, double lon1,
+                                  double lon2, double el1, double el2) {
+
+        final int R = 6371; // Radius of the earth
+
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c * 1000; // convert to meters
+
+        double height = el1 - el2;
+
+        distance = Math.pow(distance, 2) + Math.pow(height, 2);
+
+        return Math.sqrt(distance)*(0.000621371);
+    }
+
+
 
 
 

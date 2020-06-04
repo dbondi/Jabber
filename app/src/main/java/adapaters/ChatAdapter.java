@@ -11,9 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-//import com.example.jab.GlideApp;
 import com.example.jab.GlideApp;
 import com.example.jab.R;
 import com.google.firebase.storage.FirebaseStorage;
@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import controllers.ChatController;
 import custom_class.Chat;
+import custom_class.Place;
 import custom_class.PointMap;
 import custom_class.User;
 
@@ -31,32 +32,19 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
     int widthScreen;
     int heightScreen;
     ChatController controller;
+    boolean load = true;
+    int ydy = 0;
 
-    //locationData
-    private String cityLocation = null;
-    private ArrayList<PointMap> cityCoordinates = null;
-    private String cityLocationKey = null;
-
-    //localData
-    private String localLocation = null;
-    private ArrayList<PointMap> localCoordinates = null;
-    private String localLocationKey = null;
 
 
     private User user;
 
-    public ChatAdapter(User user, Context context, int widthScreen, int heightScreen, ChatController controller, String cityLocation, ArrayList<PointMap> cityCoordinates, String cityLocationKey, String localLocation, ArrayList<PointMap> localCoordinates, String localLocationKey){
+    public ChatAdapter(User user, Context context, int widthScreen, int heightScreen, ChatController controller){
         this.user = user;
         this.context = context;
         this.widthScreen = widthScreen;
         this.heightScreen = heightScreen;
         this.controller = controller;
-        this.cityLocation = cityLocation;
-        this.cityCoordinates = cityCoordinates;
-        this.cityLocationKey = cityLocationKey;
-        this.localLocation = localLocation;
-        this.localCoordinates = localCoordinates;
-        this.localLocationKey = localLocationKey;
     }
 
     private Boolean calculateLike(Chat currentChat) {
@@ -69,10 +57,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
         this.chats = chats;
     }
 
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
+        System.out.println("onCreateViewHolder:"+viewType);
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_after_school_chat, parent, false);
         final ViewHolder holder = new ViewHolder(view);
 
@@ -83,13 +72,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.ViewHolder holder, int position) {
+        System.out.println("onBindViewHolder:"+position);
+
         Chat currentChat = chats.get(position);
 
-        double factor = ((double)currentChat.getImageHeight())/((double)currentChat.getImageWidth());
+        double factor = ((double)currentChat.getImageHeight()+20)/((double)currentChat.getImageWidth()+80.0);
 
-        String first = "<font color='#AAE91E63'>\" </font>";
-        String next = "<font color='#000000'>"+currentChat.getContent().toUpperCase()+"</font>";
-        String last = "<font color='#AAE91E63'> \"</font>";
+        String first = "<font color='#04c5e3'>\" </font>";
+        String next = "<font color='#FFFFFF'>"+currentChat.getContent().toUpperCase()+"</font>";
+        String last = "<font color='#04c5e3'> \"</font>";
 
         holder.message.setText(Html.fromHtml(first+next+last));
 
@@ -104,13 +95,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
 
         postImageRef.getLayoutParams().height = ((int) (factor*widthScreen));
 
-        //holder.photoBox.getLayoutParams().height = ((int) (factor*widthScreen));
-        //holder.photoBox.setBackground(context.getResources().getDrawable(R.drawable.background_top));
         holder.profilePic.getLayoutParams().height = ((int) (heightScreen*.03));
         holder.bottomBox.getLayoutParams().height = ((int) (heightScreen*.06));
 
 
         //holder.post_image.setImageBitmap(currentChat.getImageBitmap());
+
         GlideApp.with(context)
                 .load(currentChat.getGsReference())
                 .centerCrop()
@@ -119,21 +109,26 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
 
         GlideApp.with(context)
                 .load(currentChat.getProfPicReference())
+                .centerCrop()
                 .into(profPicRef);
+
+
 
 
         //holder.bottomBox.set
 
 
         if(calculateLike(currentChat)) {
-            holder.cbLike.toggle();
+            if(!holder.cbLike.isChecked()) {
+                holder.cbLike.toggle();
+            }
         }
         holder.likeNumber.setText(Integer.toString(currentChat.getLikeNumber()));
         holder.commentNumber.setText(Integer.toString(currentChat.getCommentNumber()));
 
         holder.cbComment.setOnClickListener(new View.OnClickListener(){
             @Override public void onClick(View v) {
-                controller.commentSection(cityLocation, cityCoordinates, cityLocationKey, localLocation, localCoordinates, localLocationKey, currentChat.getMessageID(), user);
+                controller.commentSection(currentChat.getPlace(), currentChat.getMessageID(), user);
             }
         });
 
@@ -141,10 +136,92 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
     }
 
 
-
     @Override
     public int getItemCount() {
         return chats.size();
+    }
+
+    //TODO
+    public void connectView(RecyclerView  chatView) {
+        if (chatView.getLayoutManager() instanceof LinearLayoutManager) {
+
+            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) chatView
+                    .getLayoutManager();
+
+
+            chatView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+
+                    ydy = ydy + dy;
+                    //System.out.println(ydy);
+
+                    Integer height = recyclerView.getHeight();
+                    Integer left_over = ydy % height;
+                    Integer opposite = height - left_over;
+                    linearLayoutManager.getItemCount();
+
+                    if(opposite.equals(height)){
+                        Integer lastPosition = linearLayoutManager.findLastVisibleItemPosition();
+                        Chat currentChat = chats.get(lastPosition);
+
+
+                        double factor = ((double)currentChat.getImageHeight())/((double)currentChat.getImageWidth());
+
+                        int heightImage = ((int) (factor*widthScreen));
+
+                        Integer hidden_height = recyclerView.getHeight()/2;
+                        Integer extra_space = hidden_height - heightImage;
+
+                        //update
+                        chatView.post(new Runnable() {
+                            public void run() {
+                                ((ChatAdapter.ViewHolder) (chatView.findViewHolderForAdapterPosition(lastPosition))).expansion.getLayoutParams().height = extra_space;
+                                notifyItemChanged(lastPosition);
+                            }
+                        });
+                    }
+                    else {
+                        System.out.println(height);
+                        System.out.println(opposite);
+                        //Subtract
+                        Integer lastPosition = linearLayoutManager.findLastVisibleItemPosition() - 1;
+                        Chat currentChat = chats.get(lastPosition);
+
+
+                        double factor = ((double) currentChat.getImageHeight()) / ((double) currentChat.getImageWidth());
+
+                        int heightImage = ((int) (factor * widthScreen));
+
+                        Integer hidden_height = recyclerView.getHeight() / 2;
+                        Integer extra_space = hidden_height - heightImage;
+
+                        if (height > opposite && (height - 200) < opposite) {
+
+                            //update
+                            chatView.post(new Runnable() {
+                                public void run() {
+                                    ((ViewHolder) (chatView.findViewHolderForAdapterPosition(lastPosition))).expansion.getLayoutParams().height = extra_space;
+                                    notifyItemChanged(lastPosition);
+                                }
+                            });
+                        }
+                        if ((height - 200) >= opposite && (height - 200 - heightImage) < opposite) {
+                            chatView.post(new Runnable() {
+                                public void run() {
+                                    ((ViewHolder) (chatView.findViewHolderForAdapterPosition(lastPosition))).expansion.getLayoutParams().height = extra_space + ((height - 200)-opposite);
+                                    notifyItemChanged(lastPosition);
+                                }
+                            });
+                        }
+                        if ((height - 200 - heightImage) >= opposite) {
+                        }
+                    }
+
+                }
+            });
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -156,6 +233,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
         private CheckBox cbComment;
         private TextView likeNumber;
         private TextView commentNumber;
+        private LinearLayout expansion;
+        private int x;
+        private int y;
 
         private LinearLayout profileBox;
         private LinearLayout bottomBox;
@@ -172,6 +252,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
             cbComment = itemView.findViewById(R.id.comment_button);
             likeNumber = itemView.findViewById(R.id.like_number);
             commentNumber = itemView.findViewById(R.id.comment_number);
+            expansion = itemView.findViewById(R.id.expansion);
 
             bottomBox = itemView.findViewById(R.id.bottomBox);
             bottomBox = itemView.findViewById(R.id.bottomBox);

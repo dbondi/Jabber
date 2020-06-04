@@ -11,185 +11,185 @@
         android:gravity="center"
         android:weightSum="100">
 
-
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="90"
-            android:orientation="vertical"
-            app:cardBackgroundColor="@android:color/transparent"
-            app:cardElevation="0dp">
+            android:layout_height="match_parent"
+            android:layout_weight="95"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:cardElevation="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:background="#001923"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/message"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:layout_marginTop="44dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="30dp"
+                        android:fontFamily="@font/font1"
+                        android:text="''UW Madison IS Sweet"
+                        android:textSize="24dp"
+                        />
+                </LinearLayout>
 
 
+            </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:id="@+id/box_image"
+                android:layout_width="match_parent"
+                android:background="#001923"
+
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:layout_height="wrap_content">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:background="#001923"
+                        android:id="@+id/post_image"
+                        android:paddingBottom="1dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:src="@drawable/beacj">
+                    </ImageView>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:id="@+id/bottomBox"
+                android:orientation="horizontal"
+                android:background="#001923">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/message_border_full"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:background="#FFFFFF"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:id="@+id/message"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:layout_marginTop="44dp"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="15dp"
-                            android:layout_marginBottom="30dp"
-                            android:fontFamily="@font/font1"
-                            android:text="''UW Madison IS Sweet"
-                            android:textSize="20dp"
-                            />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/box_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/post_image"
-                            android:paddingStart="1dp"
-                            android:paddingEnd="1dp"
-                            android:paddingBottom="1dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:src="@drawable/beacj">
-                        </ImageView>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/bottomBox"
-                    android:background="@drawable/message_border_full">
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:gravity="left"
+                        android:layout_weight="70">
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:gravity="left"
-                            android:layout_weight="70">
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center_vertical">
+                            android:gravity="center_vertical">
 
 
-                                <de.hdodenhof.circleimageview.CircleImageView
-                                    android:id="@+id/profilePic"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:layout_marginLeft="2dp"
-                                    android:layout_marginTop="2dp"
-                                    android:layout_marginRight="2dp"
-                                    android:src="@drawable/red_marker">
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/profilePic"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginRight="2dp"
+                                android:src="@drawable/red_marker">
 
-                                </de.hdodenhof.circleimageview.CircleImageView>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center_vertical">
-                                <TextView
-                                    android:id="@+id/username"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@color/colorAccent"
-                                    android:fontFamily="@font/lato_bold"
-                                    android:textSize="16dp"
-                                    android:text="Big Pop">
-
-                                </TextView>
-                            </LinearLayout>
-
+                            </de.hdodenhof.circleimageview.CircleImageView>
                         </LinearLayout>
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:gravity="right"
-                            android:layout_weight="40">
-                            <LinearLayout
+                            android:gravity="center_vertical">
+                            <TextView
+                                android:id="@+id/username"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center_vertical">
-                                <CheckBox
-                                    android:id="@+id/like_button"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:button="@drawable/favorite"
-                                    android:scaleX="1"
-                                    android:scaleY="1"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center_vertical">
-                                <TextView
-                                    android:id="@+id/like_number"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="10dp"
-                                    android:textColor="@color/colorAccent"
-                                    android:fontFamily="@font/lato_regular"
-                                    android:textSize="21dp"
-                                    android:text="15">
+                                android:layout_height="wrap_content"
+                                android:textColor="#FFFFFF"
+                                android:fontFamily="@font/lato_bold"
+                                android:textSize="16dp"
+                                android:text="Big Pop">
 
-                                </TextView>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center_vertical">
-                                <CheckBox
-                                    android:id="@+id/comment_button"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:button="@drawable/chat"
-                                    android:scaleX="1"
-                                    android:scaleY="1"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center_vertical">
-                                <TextView
-                                    android:id="@+id/comment_number"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:paddingRight="10dp"
-                                    android:textColor="@color/colorAccent"
-                                    android:fontFamily="@font/lato_regular"
-                                    android:textSize="21dp"
-                                    android:text="10">
-
-                                </TextView>
-                            </LinearLayout>
+                            </TextView>
                         </LinearLayout>
 
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="right"
+                        android:layout_weight="40">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+                            <CheckBox
+                                android:id="@+id/like_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:button="@drawable/favorite"
+                                android:scaleX="1"
+                                android:scaleY="1"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+                            <TextView
+                                android:id="@+id/like_number"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:textColor="#eeffffff"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="21dp"
+                                android:text="15">
 
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:background="@android:color/transparent">
+                            </TextView>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+                            <CheckBox
+                                android:id="@+id/comment_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:button="@drawable/chat"
+                                android:scaleX="1"
+                                android:scaleY="1"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+                            <TextView
+                                android:id="@+id/comment_number"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingRight="10dp"
+                                android:textColor="#eeffffff"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="21dp"
+                                android:text="10">
+
+                            </TextView>
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-
-
-        </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+        </LinearLayout>
+        </LinearLayout>
 
 
     </LinearLayout>

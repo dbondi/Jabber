@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#C2185B</color>
-    <color name="colorPrimaryDark">#C2185B</color>
+    <color name="colorPrimaryDark">#203060</color>
     <color name="colorAccent">#E91E63</color>
     <color name="colorYellow">#ffbe4f</color>
     <color name="colorTeal">#0ea7b5</color>
@@ -9,4 +9,16 @@
     <color name="colorOrange">#e8702a</color>
     <color name="colorSkyBlue">#6bd2db</color>
     <color name="buttonGrey">#330033</color>
+    <color name="postColor1">#FF0200</color>
+    <color name="postColor2">#7EFF00</color>
+    <color name="postColor3">#00FDFF</color>
+    <color name="postColor4">#8100FF</color>
+    <color name="postColor5">#FF00EC</color>
+    <color name="postColor6">#FF9300</color>
+    <color name="postColor7">#00FF13</color>
+    <color name="postColor8">#006CFF</color>
+    <color name="postColor9">#FFE800</color>
+    <color name="postColor10">#00FF68</color>
+    <color name="postColor11">#0017FF</color>
+    <color name="postColor12">#FF0097</color>
 </resources>

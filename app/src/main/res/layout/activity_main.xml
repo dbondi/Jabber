@@ -10,97 +10,93 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/good_back"
             android:orientation="vertical">
             <LinearLayout
 
-                android:layout_weight="0.09"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
-
-            </LinearLayout>
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_weight="0.91"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@drawable/wisconsin_black"
-                android:id="@+id/rc_messages"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <LinearLayout
-
-                android:layout_weight="0.09"
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
-                <Button
+                <LinearLayout
                     android:id="@+id/profileButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/top_tab_gradient">
-                </Button>
+                    android:layout_weight=".2"
+                    android:background="#88FFFFFF"
+                    android:orientation="horizontal">
+                </LinearLayout>
                 <TextView
                     android:id="@+id/localLocationText"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:fontFamily="@font/lato_black"
                     android:text="..."
-                    android:textColor="#f2e9eb"
-                    android:textSize="28dp"
+                    android:textColor="#bbE91E63"
+                    android:textSize="20dp"
                     android:gravity="center"
-                    android:background="@drawable/top_tab_gradient">
+                    android:background="#88FFFFFF">
                 </TextView>
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".2"
-                    android:background="@drawable/top_tab_gradient"
-                    android:orientation="horizontal">
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".8"
-                    android:background="@drawable/top_tab_gradient"
+                    android:background="#88FFFFFF"
                     android:orientation="horizontal">
 
                 </LinearLayout>
             </LinearLayout>
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.70"
-                android:textColor='@android:color/white'>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.21"
-                android:textColor='@android:color/white'>
-            </LinearLayout>
-
-
+                android:layout_height="match_parent"
+                android:id="@+id/rc_messages"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.10"
+                android:orientation="horizontal"
+                android:gravity="right|bottom"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="70dp">
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/create_post"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:background="@drawable/circle_purple">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:fontFamily="@font/lato_regular"
+                        android:textColor="#FFFFFF"
+                        android:text="+">
+
+
+                    </TextView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:orientation="vertical">
             <LinearLayout
 
-                android:layout_weight="0.84"
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:orientation="horizontal">
-            </LinearLayout>
-            <LinearLayout
-
-                android:layout_weight="0.16"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
+                android:layout_height="100dp"
                 android:background="@drawable/background_bottom"
                 android:orientation="vertical">
                 <LinearLayout
@@ -128,11 +124,12 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_weight=".8"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:gravity="center">
                             <Button
                                 android:id="@+id/search_tab"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
                                 android:background="@drawable/ic_search_black_24dp">
                             </Button>
                         </LinearLayout>
@@ -156,12 +153,13 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_weight=".8"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:gravity="center">
                             <Button
                                 android:id="@+id/chat_tab"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/ic_panorama_fish_eye_black_24dp">
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/home_icon">
                             </Button>
                         </LinearLayout>
 
@@ -184,11 +182,12 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_weight=".8"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:gravity="center">
                             <Button
                                 android:id="@+id/stories_tab"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
                                 android:background="@drawable/ic_reorder_black_24dp">
                             </Button>
                         </LinearLayout>

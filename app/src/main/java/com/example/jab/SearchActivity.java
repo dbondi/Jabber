@@ -18,16 +18,22 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mapbox.mapboxsdk.Mapbox;
 
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import adapaters.SearchAdapter;
 import controllers.SearchController;
+import custom_class.CSVFile;
 import custom_class.MapTab;
+import custom_class.Place;
 import custom_class.PointMap;
 import custom_class.SearchRow;
 import custom_class.SearchTab;
@@ -58,15 +64,10 @@ public class SearchActivity extends AppCompatActivity implements LocationListene
     private Bundle saveInstanceState;
     private static Context instance;
 
-    //locationData
-    private String cityLocation = null;
-    private ArrayList<PointMap> cityCoordinates = null;
-    private String cityLocationKey = null;
-
-    //localData
-    private String localLocation = null;
-    private ArrayList<PointMap> localCoordinates = null;
-    private String localLocationKey = null;
+    private ArrayList<Place> localUniversityPlaces = new ArrayList<>();
+    private ArrayList<Place> localCityPlaces = new ArrayList<>();
+    private ArrayList<Place> universityPlaces = new ArrayList<>();
+    private ArrayList<Place> cityPlaces = new ArrayList<>();
 
     private User user = null;
     private boolean autoUpdate = false;
@@ -86,20 +87,13 @@ public class SearchActivity extends AppCompatActivity implements LocationListene
         intent = getIntent();
         bundle = intent.getExtras();
 
-        cityLocation = bundle.getString("CityLocation");
-        cityCoordinates = bundle.getParcelableArrayList("CityCoordinates");
-        cityLocationKey = bundle.getString("CityLocationKey");
-
-        localLocation = bundle.getString("LocalLocation");
-        localCoordinates = bundle.getParcelableArrayList("LocalCoordinates");
-        localLocationKey = bundle.getString("LocalLocationKey");
-
         user = bundle.getParcelable("User");
+        localUniversityPlaces = bundle.getParcelableArrayList("LocalUniversityPlaces");
+        localCityPlaces = bundle.getParcelableArrayList("LocalCityPlaces");
 
-
-        if(cityLocationKey == null || localLocationKey == null){
-            autoUpdate = true;
-        }
+        //if(cityLocationKey == null || localLocationKey == null){
+        autoUpdate = true;
+        //}
         find_location();
 
         // Mapbox access token is configured here. This needs to be called either in your application
@@ -117,8 +111,7 @@ public class SearchActivity extends AppCompatActivity implements LocationListene
 
         searchView = findViewById(R.id.searchRec);
 
-        getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
 
         chatTabBtn.setOnClickListener(new View.OnClickListener() {
@@ -168,129 +161,96 @@ public class SearchActivity extends AppCompatActivity implements LocationListene
         else {
             userLocation = location;
         }
-        try {
 
-            if(needUpdated()) {
-
-                model.findCityLocation(new SearchActivity.FirestoreCallBackFirst() {
-
-                    @Override
-                    public void onCallback(Map<String, Object> locationData) {
-                        cityLocation = (String) locationData.get("Name");
-                        cityCoordinates = (ArrayList<PointMap>) locationData.get("Coordinates");
-                        cityLocationKey = (String) locationData.get("LocationKey");
-
-                        //find local Location
-                        model.findLocalLocation(new SearchActivity.FirestoreCallBackSecond() {
-
-                            @Override
-                            public void onCallback(Map<String, Object> locationData) {
-                                localLocation = (String) locationData.get("Name");
-                                localCoordinates = (ArrayList<PointMap>) locationData.get("Coordinates");
-                                localLocationKey = (String) locationData.get("LocationKey");
+        if(needUpdated()) {
 
 
-                                //loadTiles
+            SearchTab dealsChat = new SearchTab();
+            dealsChat.setName("Deals");
+            dealsChat.setID("Deals");
 
-                                ArrayList<String> tabStrings = new ArrayList<>();
-                                ArrayList<SearchRow> searchRows = new ArrayList<>();
-
-                                SearchTab dealsChat = new SearchTab();
-                                dealsChat.setName("Deals");
-                                dealsChat.setID("Deals");
-
-                                SearchTab localChat = new SearchTab();
-                                localChat.setName(localLocation);
-                                localChat.setID("LocalChat");
-
-                                SearchTab cityChat = new SearchTab();
-                                cityChat.setName(cityLocation);
-                                cityChat.setID("CityChat");
-
-                                SearchTab connectChat = new SearchTab();
-                                connectChat.setName("Connect");
-                                connectChat.setID("Connect");
-
-                                SearchTab localEventsChat = new SearchTab();
-                                localEventsChat.setName("Local Events");
-                                localEventsChat.setID("LocalEvents");
-
-                                SearchTab trendingChat = new SearchTab();
-                                trendingChat.setName("Trending");
-                                trendingChat.setID("Trending");
-
-                                SearchRow row1 = new SearchRow(dealsChat, localChat);
-                                SearchRow row2 = new SearchRow(cityChat, connectChat);
-                                SearchRow row3 = new SearchRow(localEventsChat, trendingChat);
-
-                                searchRows.add(row1);
-                                searchRows.add(row2);
-                                searchRows.add(row3);
-
-                                ArrayList<Object> columnTabs = new ArrayList<Object>();
-
-                                MapTab mTab = new MapTab();
-
-                                columnTabs.add(mTab);
-
-                                columnTabs.add(row1);
-                                columnTabs.add(row2);
-                                columnTabs.add(row3);
-
-                            /*
-                            for(int i = 0; i < Math.floor(searchRows.size()/2); i++){
-                                System.out.println(i);
-                                SearchTab leftTab = new SearchTab();
-                                SearchTab rightTab = new SearchTab();
-
-                                leftTab.setName(tabStrings.get(2*i));
-
-                                if (2*i + 1 < searchRows.size()){
-                                    rightTab.setName(tabStrings.get(2*i + 1));
-                                }
-
-                                SearchRow column = new SearchRow(leftTab, rightTab);
-                                searchRows.add(column);
-
-                            }
-                            */
-                                bundle.putString("CityLocation",cityLocation);
-                                bundle.putParcelableArrayList("CityCoordinates", cityCoordinates);
-                                bundle.putString("CityLocationKey",cityLocationKey);
-
-                                bundle.putString("LocalLocation",localLocation);
-                                bundle.putParcelableArrayList("LocalCoordinates",localCoordinates);
-                                bundle.putString("LocalLocationKey",localLocationKey);
-
-                                bundle.putParcelable("User",user);
-                                intent.putExtras(bundle);
-
-                                System.out.println("This far?");
-
-                                searchColumnAdapter = new SearchAdapter(columnTabs, bundle, getContext());
-                                searchView.setAdapter(searchColumnAdapter);
-                                searchView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-                                //end loadTiles
-
-
-                            }
-                        }, userLocation, cityLocationKey);
-                    }
-
-                }, userLocation);
+            ArrayList<SearchTab> universityTabs = new ArrayList<>();
+            for(Place place: localUniversityPlaces){
+                SearchTab universityTab = new SearchTab();
+                universityTab.setName(place.getName());
+                universityTab.setType("UniversityTab");
+                universityTab.setPlace(place);
+                universityTabs.add(universityTab);
+                System.out.println(place.getName());
             }
+            ArrayList<SearchTab> cityTabs = new ArrayList<>();
+            for(Place place: localCityPlaces){
+                SearchTab cityTab = new SearchTab();
+                cityTab.setName(place.getName());
+                cityTab.setPlace(place);
+                cityTab.setType("CityTab");
+                cityTabs.add(cityTab);
+                System.out.println(place.getName());
+            }
+            SearchTab connectChat = new SearchTab();
+            connectChat.setName("Connect");
+            connectChat.setID("Connect");
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            SearchTab localEventsChat = new SearchTab();
+            localEventsChat.setName("Local Events");
+            localEventsChat.setID("LocalEvents");
+
+            SearchTab trendingChat = new SearchTab();
+            trendingChat.setName("Trending");
+            trendingChat.setID("Trending");
+
+            ArrayList<SearchTab> allTabs = new ArrayList<>();
+            allTabs.addAll(universityTabs);
+            allTabs.addAll(cityTabs);
+            allTabs.add(connectChat);
+            allTabs.add(localEventsChat);
+            allTabs.add(trendingChat);
+
+
+            ArrayList<SearchRow> arrayRows = new ArrayList<>();
+
+            ArrayList<Object> rowTabs = new ArrayList<Object>();
+
+            MapTab mTab = new MapTab();
+
+            for(int i = 0; i < Math.ceil(allTabs.size()/2); i++){
+                System.out.println(i);
+                SearchTab leftTab = allTabs.get(2*i);
+                SearchTab rightTab = new SearchTab();
+
+                if (2*i + 1 < allTabs.size()){
+                    rightTab = allTabs.get(2*i + 1);
+                }
+
+                SearchRow column = new SearchRow(leftTab, rightTab);
+                arrayRows.add(column);
+
+            }
+            rowTabs.add(mTab);
+            rowTabs.addAll(arrayRows);
+
+
+
+            bundle.putParcelable("User",user);
+            intent.putExtras(bundle);
+
+            System.out.println("This far?");
+
+            searchColumnAdapter = new SearchAdapter(rowTabs, bundle, getContext());
+            searchView.setAdapter(searchColumnAdapter);
+            searchView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            //end loadTiles
+
         }
+
     }
 
     private boolean needUpdated() {
         if (autoUpdate){
             return true;
         }
-        return !(isInside(localCoordinates,userLocation) && isInside(cityCoordinates,userLocation));
+        return true;//!(isInside(localCoordinates,userLocation) && isInside(cityCoordinates,userLocation));
     }
 
     @Override
@@ -309,19 +269,52 @@ public class SearchActivity extends AppCompatActivity implements LocationListene
     }
 
 
-    public interface FirestoreCallBackFirst{
-        void onCallback(Map<String,Object> locationData);
-    }
-    public interface FirestoreCallBackSecond{
-        void onCallback(Map<String,Object> locationData);
-    }
-
-
-
     @Override
     public void onBackPressed() {
     }
+    private void loadUniversityLocations() {
+        universityPlaces = new ArrayList<>();
+        boolean firstLine = true;
+        System.out.println(System.currentTimeMillis());
+        InputStream inputStream = getResources().openRawResource(R.raw.colleges);
+        CSVFile csvFile = new CSVFile(inputStream);
+        List universityList = csvFile.read();
+        for (Object universityData : universityList) {
+            String concatUniversityDataFull = Arrays.toString((String[]) universityData);
+            String concatUniversityData = concatUniversityDataFull.substring(1,concatUniversityDataFull.length()-1).replace(", ",",");
+            String[] universityDataSplit = concatUniversityData.split(",");
+            if (!firstLine) {
+                LatLng locationLocation = new LatLng(Double.parseDouble(universityDataSplit[5]), Double.parseDouble(universityDataSplit[6]));
+                int pop = Integer.parseInt(universityDataSplit[4]);
+                universityPlaces.add(new Place(locationLocation, universityDataSplit[1].replace(";",","), pop, universityDataSplit[0], "Universities"));
+            } else {
+                firstLine = false;
+            }
+        }
+        System.out.println(System.currentTimeMillis());
+    }
 
 
+    private void loadCityLocations() {
+        cityPlaces = new ArrayList<>();
+        boolean firstLine = true;
+        System.out.println(System.currentTimeMillis());
+        InputStream inputStream = getResources().openRawResource(R.raw.largest_cities);
+        CSVFile csvFile = new CSVFile(inputStream);
+        List cityList = csvFile.read();
+        for (Object cityData : cityList) {
+            String concatCityDataFull = Arrays.toString((String[]) cityData);
+            String concatCityData = concatCityDataFull.substring(1,concatCityDataFull.length()-1).replace(", ",",");
+            String[] cityDataSplit = concatCityData.split(",");
+            if (!firstLine) {
+                LatLng locationLocation = new LatLng(Double.parseDouble(cityDataSplit[5]), Double.parseDouble(cityDataSplit[6]));
+                int pop = Integer.parseInt(cityDataSplit[4]);
+                cityPlaces.add(new Place(locationLocation, cityDataSplit[1], pop, cityDataSplit[7], "Cities"));
+            } else {
+                firstLine = false;
+            }
+        }
+        System.out.println(System.currentTimeMillis());
+    }
 
 }

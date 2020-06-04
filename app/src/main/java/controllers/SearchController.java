@@ -12,6 +12,7 @@ import com.example.jab.SearchActivity;
 import com.example.jab.StoriesActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
+import custom_class.Place;
 import custom_class.SearchTab;
 
 public class SearchController {
@@ -53,28 +54,33 @@ public class SearchController {
         context.startActivity(intent);
     }
 
-    public void goToTab(SearchTab tab,Bundle savedInstanceState) {
-        if(tab.getID()=="LocalChat"){
-
+    public void goToTab(SearchTab tab, Bundle savedInstanceState, Place place) {
+        if(tab.getType().equals("CityTab")){
+            savedInstanceState.putParcelable("Place",place);
 
             Intent intent = new Intent(context, ChatActivity.class);
             intent.putExtras(savedInstanceState);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
             context.startActivity(intent);
         }
-        else if(tab.getID()=="CityChat"){
+        else if(tab.getType().equals("UniversityTab")){
+            savedInstanceState.putParcelable("Place",place);
+            Intent intent = new Intent(context, ChatActivity.class);
+
+            intent.putExtras(savedInstanceState);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
+            context.startActivity(intent);
+        }
+        else if(tab.getType().equals("Deals")){
 
         }
-        else if(tab.getID()=="Deals"){
+        else if(tab.getType().equals("Connect")){
 
         }
-        else if(tab.getID()=="Connect"){
+        else if(tab.getType().equals("LocalEvents")){
 
         }
-        else if(tab.getID()=="LocalEvents"){
-
-        }
-        else if(tab.getID()=="Trending"){
+        else if(tab.getType().equals("Trending")){
 
         }
     }

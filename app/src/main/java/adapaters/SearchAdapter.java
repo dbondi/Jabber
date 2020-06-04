@@ -94,12 +94,12 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             leftCard.setOnClickListener(new View.OnClickListener(){
                 @Override public void onClick(View v){
-                    controller.goToTab(searchRow.getLeftTab(),savedInstanceState);
+                    controller.goToTab(searchRow.getLeftTab(),savedInstanceState,searchRow.getLeftTab().getPlace());
                 }
             });
             rightCard.setOnClickListener(new View.OnClickListener(){
                 @Override public void onClick(View v){
-                    controller.goToTab(searchRow.getRightTab(),savedInstanceState);
+                    controller.goToTab(searchRow.getRightTab(),savedInstanceState,searchRow.getRightTab().getPlace());
                 }
             });
 

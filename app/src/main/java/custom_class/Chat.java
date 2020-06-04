@@ -27,6 +27,7 @@ public class Chat {
     private Integer imageWidth;
     private Integer imageHeight;
     private String messageID;
+    private Place place;
 
 
     public Chat(String content, String imageID, GeoPoint location, Timestamp timestamp, String userUID, String profileName, Integer commentNumber, Integer likeNumber, ArrayList<String> likeList, StorageReference gsReference, StorageReference profPicReference) {
@@ -44,7 +45,7 @@ public class Chat {
         this.profPicReference = profPicReference;
     }
 
-    public Chat(String content, String imageID, GeoPoint location, Timestamp timestamp, String userUID, String profileName, Integer commentNumber, Integer likeNumber, ArrayList<String> likeList, StorageReference gsReference, StorageReference profPicReference,Integer imageWidth, Integer imageHeight, String messageID) {
+    public Chat(String content, String imageID, GeoPoint location, Timestamp timestamp, String userUID, String profileName, Integer commentNumber, Integer likeNumber, ArrayList<String> likeList, StorageReference gsReference, StorageReference profPicReference,Integer imageWidth, Integer imageHeight, String messageID, Place place) {
 
         this.content = content;
         this.imageID = imageID;
@@ -60,6 +61,7 @@ public class Chat {
         this.imageWidth = imageWidth;
         this.imageHeight = imageHeight;
         this.messageID = messageID;
+        this.place = place;
     }
 
 
@@ -219,5 +221,13 @@ public class Chat {
 
     public void setMessageID(String messageID) {
         this.messageID = messageID;
+    }
+
+    public Place getPlace() {
+        return place;
+    }
+
+    public void setPlace(Place place) {
+        this.place = place;
     }
 }

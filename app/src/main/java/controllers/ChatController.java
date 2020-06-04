@@ -5,15 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.jab.CommentActivity;
-import com.example.jab.HomeActivity;
-import com.example.jab.NewMessageActivity;
-import com.example.jab.ProfileActivity;
+import com.example.jab.NewChatActivity;
 import com.example.jab.SearchActivity;
-import com.example.jab.StoriesActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
+import custom_class.Place;
 import custom_class.PointMap;
 import custom_class.User;
 
@@ -27,18 +25,12 @@ public class ChatController {
         this.context = context;
     }
 
-    public void commentSection(String cityLocation, ArrayList<PointMap> cityCoordinates, String cityLocationKey, String localLocation, ArrayList<PointMap> localCoordinates, String localLocationKey, String postKey, User user) {
+    public void commentSection(Place place, String postKey, User user) {
         Bundle bundle = new Bundle();
-        bundle.putString("CityLocation",cityLocation);
-        bundle.putParcelableArrayList("CityCoordinates", cityCoordinates);
-        bundle.putString("CityLocationKey",cityLocationKey);
-
-        bundle.putString("LocalLocation",localLocation);
-        bundle.putParcelableArrayList("LocalCoordinates",localCoordinates);
-        bundle.putString("LocalLocationKey",localLocationKey);
 
         bundle.putString("MessageID",postKey);
         bundle.putParcelable("User",user);
+        bundle.putParcelable("Place",place);
 
         Intent intent = new Intent(context, CommentActivity.class);
         intent.putExtras(bundle);
@@ -46,13 +38,29 @@ public class ChatController {
         context.startActivity(intent);
     }
 
-
-    public void createMessage(int local_city) {
+    public void createMsgBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces,  User user, Place place) {
         Bundle bundle = new Bundle();
-        bundle.putInt("LocalCity",local_city);
-        Intent intent = new Intent(context, NewMessageActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
+        bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
+        bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
+        bundle.putParcelable("Place", place);
+        bundle.putString("caller", "com.example.jab.ChatActivity");
+        bundle.putParcelable("User",user);
+
+        Intent intent = new Intent(context, NewChatActivity.class);
         intent.putExtras(bundle);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
+        context.startActivity(intent);
+    }
+
+    public void goBack(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, User user, Place place) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
+        bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
+        bundle.putParcelable("Place", place);
+        bundle.putParcelable("User",user);
+        Intent intent = new Intent(context, SearchActivity.class);
+        intent.putExtras(bundle);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
         context.startActivity(intent);
     }
 }

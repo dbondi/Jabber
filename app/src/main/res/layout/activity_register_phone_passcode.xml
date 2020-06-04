@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:windowSoftInputMode="adjustPan"
-    android:background="#11293f"
+    android:background="#203060"
     tools:context=".RegisterPhonePasscodeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="76"
+        android:weightSum="73"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_weight=".7"
+                android:layout_weight=".5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
 
@@ -57,9 +57,10 @@
             <LinearLayout
                 android:layout_weight=".3"
                 android:layout_width="0dp"
-
                 android:layout_gravity="bottom"
-                android:layout_height="wrap_content">
+                android:gravity="center"
+                android:background="@drawable/border_passcode"
+                android:layout_height="60sp">
 
 
                 <EditText
@@ -70,16 +71,15 @@
                     android:textColor="#f2e9eb"
                     android:maxLength="1"
                     android:gravity="center_horizontal"
-                    android:textSize="18dp"
-                    android:background="@drawable/border_passcode"
+                    android:textSize="20sp"
+                    android:background="@android:color/transparent"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"/>
 
 
             </LinearLayout>
             <LinearLayout
-                android:layout_weight=".1"
-                android:layout_width="0dp"
+                android:layout_width="10sp"
 
                 android:layout_gravity="bottom"
                 android:layout_height="wrap_content">
@@ -87,9 +87,10 @@
             <LinearLayout
                 android:layout_weight=".3"
                 android:layout_width="0dp"
-
+                android:gravity="center"
                 android:layout_gravity="bottom"
-                android:layout_height="wrap_content">
+                android:background="@drawable/border_passcode"
+                android:layout_height="60sp">
 
 
                 <EditText
@@ -100,16 +101,15 @@
                     android:textColor="#f2e9eb"
                     android:maxLength="1"
                     android:gravity="center_horizontal"
-                    android:textSize="18dp"
-                    android:background="@drawable/border_passcode"
+                    android:textSize="20sp"
+                    android:background="@android:color/transparent"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"/>
 
 
             </LinearLayout>
             <LinearLayout
-                android:layout_weight=".1"
-                android:layout_width="0dp"
+                android:layout_width="10sp"
 
                 android:layout_gravity="bottom"
                 android:layout_height="wrap_content">
@@ -117,9 +117,10 @@
             <LinearLayout
                 android:layout_weight=".3"
                 android:layout_width="0dp"
-
+                android:gravity="center"
                 android:layout_gravity="bottom"
-                android:layout_height="wrap_content">
+                android:background="@drawable/border_passcode"
+                android:layout_height="60sp">
 
 
                 <EditText
@@ -130,16 +131,15 @@
                     android:textColor="#f2e9eb"
                     android:maxLength="1"
                     android:gravity="center_horizontal"
-                    android:textSize="18dp"
-                    android:background="@drawable/border_passcode"
+                    android:textSize="20sp"
+                    android:background="@android:color/transparent"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"/>
 
 
             </LinearLayout>
             <LinearLayout
-                android:layout_weight=".1"
-                android:layout_width="0dp"
+                android:layout_width="10sp"
 
                 android:layout_gravity="bottom"
                 android:layout_height="wrap_content">
@@ -147,8 +147,10 @@
             <LinearLayout
                 android:layout_weight=".3"
                 android:layout_width="0dp"
+                android:gravity="center"
                 android:layout_gravity="bottom"
-                android:layout_height="wrap_content">
+                android:background="@drawable/border_passcode"
+                android:layout_height="60sp">
 
 
                 <EditText
@@ -159,16 +161,15 @@
                     android:textColor="#f2e9eb"
                     android:maxLength="1"
                     android:gravity="center_horizontal"
-                    android:textSize="18dp"
-                    android:background="@drawable/border_passcode"
+                    android:textSize="20sp"
+                    android:background="@android:color/transparent"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"/>
 
 
             </LinearLayout>
             <LinearLayout
-                android:layout_weight=".1"
-                android:layout_width="0dp"
+                android:layout_width="10sp"
 
                 android:layout_gravity="bottom"
                 android:layout_height="wrap_content">
@@ -176,9 +177,10 @@
             <LinearLayout
                 android:layout_weight=".3"
                 android:layout_width="0dp"
-
+                android:gravity="center"
                 android:layout_gravity="bottom"
-                android:layout_height="wrap_content">
+                android:background="@drawable/border_passcode"
+                android:layout_height="60sp">
 
 
                 <EditText
@@ -189,16 +191,15 @@
                     android:textColor="#f2e9eb"
                     android:maxLength="1"
                     android:gravity="center_horizontal"
-                    android:textSize="18dp"
-                    android:background="@drawable/border_passcode"
+                    android:textSize="20sp"
+                    android:background="@android:color/transparent"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"/>
 
 
             </LinearLayout>
             <LinearLayout
-                android:layout_weight=".1"
-                android:layout_width="0dp"
+                android:layout_width="10sp"
 
                 android:layout_gravity="bottom"
                 android:layout_height="wrap_content">
@@ -206,9 +207,10 @@
             <LinearLayout
                 android:layout_weight=".3"
                 android:layout_width="0dp"
-
+                android:gravity="center"
                 android:layout_gravity="bottom"
-                android:layout_height="wrap_content">
+                android:background="@drawable/border_passcode"
+                android:layout_height="60sp">
 
 
                 <EditText
@@ -219,15 +221,15 @@
                     android:textColor="#f2e9eb"
                     android:maxLength="1"
                     android:gravity="center_horizontal"
-                    android:textSize="18dp"
-                    android:background="@drawable/border_passcode"
+                    android:textSize="20sp"
+                    android:background="@android:color/transparent"
                     android:imeOptions="actionDone"
                     android:selectAllOnFocus="true"/>
 
 
             </LinearLayout>
             <LinearLayout
-                android:layout_weight=".7"
+                android:layout_weight=".5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
 
@@ -237,12 +239,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3">
+            android:layout_weight="2">
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -252,7 +253,7 @@
                     android:id="@+id/incorrect_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"
+                    android:textSize="20dp"
                     android:gravity="center"
                     android:text="@string/incorrect_code"
                     android:textColor="@android:color/holo_red_light" />
@@ -263,18 +264,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3">
+            android:layout_weight="2">
         </LinearLayout>
         <LinearLayout
 
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="12"
             app:layout_constraintTop_toBottomOf="@+id/btnRemember"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_weight="1"
+                android:layout_weight=".5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
 
@@ -284,22 +285,25 @@
                 android:layout_weight="2"
                 android:layout_width="0dp"
 
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content">
+                android:layout_gravity="top"
+                android:layout_height="70dp">
 
                 <Button
                     android:id="@+id/btn_verify"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="17dp"
-                    android:textColor="@color/mapbox_blue"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="21dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:textColor="@color/colorPrimary"
                     android:background="@drawable/round_button_white"
                     android:enabled="true"
                     android:text="@string/verify" />
 
             </LinearLayout>
             <LinearLayout
-                android:layout_weight="1"
+                android:layout_weight=".5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
 
@@ -321,7 +325,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10">
+            android:layout_weight="9">
             <ProgressBar
                 android:id="@+id/loading_phone"
                 android:layout_height="match_parent"

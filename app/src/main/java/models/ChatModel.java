@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import custom_class.Chat;
+import custom_class.Place;
 import custom_class.PointMap;
 import custom_class.User;
 
@@ -35,14 +36,10 @@ public class ChatModel {
         storage = FirebaseStorage.getInstance();
     }
 
-    public void loadLocalChats(String cityLocation, ArrayList<PointMap> cityCoordinates, String cityLocationKey, String localLocation, ArrayList<PointMap> localCoordinates, String localLocationKey) {
-        db.collection("Chats").document("Local");
-    }
-
-    public void loadCityChats(final ChatActivity.FirestoreCallBack callback, String cityLocation, ArrayList<PointMap> cityCoordinates, String cityLocationKey, String localLocation, ArrayList<PointMap> localCoordinates, String localLocationKey, User user) {
+    public void loadChat(final ChatActivity.FirestoreCallBack callback, Place place, User user) {
 
 
-        CollectionReference docChats = db.collection("Chats").document("Cities").collection(cityLocationKey);
+        CollectionReference docChats = db.collection("Chats").document(place.getType()).collection(place.getIPEDSID());
 
         List<String> listOfDocuments = new ArrayList<>();
 
@@ -71,11 +68,11 @@ public class ChatModel {
 
                         //ArrayList<String> commentList = (ArrayList<String>) document.get("CommentList");
 
-                        StorageReference gsReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/Chats/Cities/" + cityLocationKey + "/" + messageID + "/" + "photo.jpg");
+                        StorageReference gsReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/Chats/"+place.getType()+"/" + place.getIPEDSID() + "/" + messageID + "/" + "photo.jpg");
 
                         StorageReference profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/" + userUID + "/" + "profilePic.jpg");
 
-                        Chat chat = new Chat(content,imageID,location,timestamp,userUID,userName,commentNumber,likeNumber,likeList,gsReference,profPicReference,imageWidth,imageHeight,messageID);
+                        Chat chat = new Chat(content,imageID,location,timestamp,userUID,userName,commentNumber,likeNumber,likeList,gsReference,profPicReference,imageWidth,imageHeight,messageID,place);
                         chats.add(chat);
                     }
                     callback.onCallback(chats);
@@ -83,7 +80,7 @@ public class ChatModel {
 
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
-                        callback.onCallback(null);
+                    callback.onCallback(null);
                 }
             }
         });

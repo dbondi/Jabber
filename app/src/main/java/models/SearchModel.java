@@ -27,6 +27,7 @@ public class SearchModel {
         this.auth = auth;
     }
 
+    /*
     public void findCityLocation(final SearchActivity.FirestoreCallBackFirst callback, Location userLocation) throws InterruptedException {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Locations/Cities");
 
@@ -111,4 +112,7 @@ public class SearchModel {
         });
 
     }
+    */
+
+
 }
