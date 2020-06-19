@@ -10,15 +10,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:orientation="vertical">
-        <LinearLayout
-
-            android:layout_weight="0.84"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal">
-        </LinearLayout>
         <LinearLayout
 
             android:layout_weight="0.16"
@@ -39,6 +33,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -50,7 +45,35 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight=".8"
+                        android:layout_weight="1.2"
+                        android:layout_height="match_parent">
+                        <Button
+                            android:id="@+id/home_tab"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/home_icon">
+                        </Button>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".6">
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".6">
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1.2"
                         android:layout_height="match_parent">
                         <Button
                             android:id="@+id/search_tab"
@@ -78,13 +101,13 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight=".8"
+                        android:layout_weight="1.2"
                         android:layout_height="match_parent">
                         <Button
                             android:id="@+id/chat_tab"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/ic_panorama_fish_eye_black_24dp">
+                            android:background="@drawable/chat">
                         </Button>
                     </LinearLayout>
 
@@ -106,13 +129,13 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight=".8"
+                        android:layout_weight="1.2"
                         android:layout_height="match_parent">
                         <Button
-                            android:id="@+id/stories_tab"
+                            android:id="@+id/profile_tab"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/ic_reorder_black_24dp">
+                            android:background="@drawable/profile_icon">
                         </Button>
                     </LinearLayout>
 
@@ -136,69 +159,71 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
-            <Button
+            <LinearLayout
                 android:id="@+id/profileButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/top_tab_gradient">
-            </Button>
+                android:background="#88FFFFFF"
+                android:orientation="horizontal">
+            </LinearLayout>
             <TextView
                 android:id="@+id/localLocationText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/top_tab_gradient">
+                android:background="#88FFFFFF">
             </TextView>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight=".2"
-                android:background="@drawable/top_tab_gradient"
+                android:layout_weight=".4"
+                android:background="#88FFFFFF"
                 android:orientation="horizontal">
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight=".8"
-                android:background="@drawable/top_tab_gradient"
+                android:layout_weight=".6"
+                android:gravity="center"
+                android:background="#88FFFFFF"
                 android:orientation="horizontal">
 
             </LinearLayout>
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="wrap_content">
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:baselineAligned="false"
                 android:fillViewport="true"
                 android:textColor='@android:color/white'>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:weightSum="1"
-                    android:orientation="vertical"
-                    android:background="#ffffff">
+                    android:layout_height="wrap_content"
+                    android:background="#00FFFFFF"
+                    android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight=".4"
+                        android:layout_height="500dp"
+                        android:nestedScrollingEnabled="true"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:layout_centerVertical="true"
                         android:id="@+id/profilePictures">
 
                     </androidx.recyclerview.widget.RecyclerView>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:orientation="horizontal">
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight=".8"
                             android:orientation="vertical">
                             <TextView
                                 android:layout_width="match_parent"
@@ -220,7 +245,7 @@
                                 android:id="@+id/age_on_profile"
                                 android:text="@string/temp_years"
                                 android:fontFamily="@font/lato_regular"
-                                android:textSize="15dp"
+                                android:textSize="16dp"
                                 android:layout_marginTop="7sp"
                                 android:layout_marginLeft="7sp"
                                 android:layout_marginBottom="10sp">
@@ -231,37 +256,67 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="right|top"
-                            android:layout_marginRight="10dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginTop="10dp"
                             android:orientation="horizontal">
                             <LinearLayout
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:clickable="true"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight=".9"
+                                android:background="@drawable/follower_border"
+                                android:paddingLeft="5dp"
+                                android:paddingTop="1dp"
                                 android:gravity="center"
-                                android:background="@drawable/fisheye_purple">
-                                <LinearLayout
-                                    android:layout_width="60sp"
-                                    android:layout_height="60sp"
-                                    android:layout_marginLeft="0sp"
-                                    android:layout_marginTop="0sp"
-                                    android:clickable="true"
-                                    android:background="@drawable/circle_black">
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginBottom="15sp"
-                                        android:layout_marginTop="15sp"
-                                        android:layout_marginLeft="15sp"
-                                        android:layout_marginRight="15sp"
-                                        android:background="@drawable/connect_icon">
+                                android:paddingBottom="1dp">
+                                <TextView
+                                    android:gravity="center"
+                                    android:background="@drawable/person_add_24"
+                                    android:layout_height="30dp"
+                                    android:layout_width="30dp">
 
 
-                                    </LinearLayout>
-                                </LinearLayout>
+                                </TextView>
 
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="5dp"
+                                    android:layout_gravity="center"
+                                    android:paddingRight="10dp"
+                                    android:textSize="20dp"
+                                    android:fontFamily="@font/lato_bold"
+                                    android:textColor="#000000"
+                                    android:text="Add">
+
+
+                                </TextView>
                             </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/follower_border"
+                                android:paddingLeft="5dp"
+                                android:layout_marginLeft="10dp"
+                                android:paddingTop="1dp"
+                                android:paddingBottom="1dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="5dp"
+                                    android:layout_gravity="center"
+                                    android:paddingRight="10dp"
+                                    android:gravity="center"
+                                    android:textSize="20dp"
+                                    android:fontFamily="@font/lato_bold"
+                                    android:textColor="#000000"
+                                    android:text="Message">
+
+
+                                </TextView>
+                            </LinearLayout>
+
 
                         </LinearLayout>
                     </LinearLayout>
@@ -286,7 +341,7 @@
                         android:id="@+id/text_upcoming_events"
                         android:fontFamily="@font/lato_bold"
                         android:text="@string/upcoming_events"
-                        android:textSize="15dp"
+                        android:textSize="16dp"
                         android:layout_marginTop="7sp"
                         android:layout_marginLeft="7sp"
                         android:layout_marginBottom="7sp">
@@ -295,15 +350,14 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight=".085"
+                        android:layout_height="80dp"
                         android:id="@+id/upcoming_events_1">
 
                     </androidx.recyclerview.widget.RecyclerView>
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight=".085"
+                        android:layout_height="80dp"
+                        android:background="#00FFFFFF"
                         android:id="@+id/upcoming_events_2">
 
                     </androidx.recyclerview.widget.RecyclerView>
@@ -313,7 +367,7 @@
                         android:id="@+id/text_past_events"
                         android:fontFamily="@font/lato_bold"
                         android:text="@string/past_events"
-                        android:textSize="15dp"
+                        android:textSize="16dp"
                         android:layout_marginTop="7sp"
                         android:layout_marginLeft="7sp"
                         android:layout_marginBottom="7sp">
@@ -321,15 +375,13 @@
                     </TextView>
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight=".085"
+                        android:layout_height="80dp"
                         android:id="@+id/past_events_1">
 
                     </androidx.recyclerview.widget.RecyclerView>
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight=".085"
+                        android:layout_height="80dp"
                         android:id="@+id/past_events_2">
 
                     </androidx.recyclerview.widget.RecyclerView>

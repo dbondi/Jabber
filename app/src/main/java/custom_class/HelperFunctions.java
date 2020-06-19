@@ -1,6 +1,9 @@
 package custom_class;
 
 import android.location.Location;
+import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -172,14 +175,17 @@ public class HelperFunctions
         // Return true if count is odd, false otherwise
         return (count % 2 == 1); // Same as (count%2 == 1)
     }
-    public static String[] random_color(int max){
+    public static ArrayList<String> random_color(int max){
         Random r = new Random();
         int random_int = r.nextInt(max);
         String[] arr1 = new String[]{"#a60a02","#377801","#027c8a","#5902a1","#a60293","#d17e02","#01470d","#0247d1","#ff8e03","#1fad66","#010161","#b80266"};
         String[] arr2 = new String[]{"#fa7d35","#c1d604","#47ff6c","#ff57ee","#bf40ff","#fa9455","#6ed433","#b67fff","#ffc003","#7dff5c","#03e6ff","#ff75ff"};
         String var1 = arr1[random_int];
         String var2 = arr2[random_int];
-        return new String[]{var1,var2};
+        ArrayList<String> colors = new ArrayList<>();
+        colors.add(var1);
+        colors.add(var2);
+        return colors;
     }
 
 
@@ -201,6 +207,50 @@ public class HelperFunctions
         distance = Math.pow(distance, 2) + Math.pow(height, 2);
 
         return Math.sqrt(distance)*(0.000621371);
+    }
+
+
+    public static void rec(RecyclerView recView1){
+        recView1.getAdapter().registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                recView1.setVisibility(recView1.getAdapter().getItemCount() > 0 ? View.VISIBLE : View.GONE);
+            }
+
+            @Override
+            public void onItemRangeChanged(int positionStart, int itemCount) {
+                onChanged();
+            }
+
+            @Override
+            public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
+                onChanged();
+            }
+
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                onChanged();
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                onChanged();
+            }
+
+            @Override
+            public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
+                onChanged();
+            }
+        });
+    }
+
+    public static int calculateAge(Integer birthDate, long currentDate) {
+
+        if ((birthDate != 0)) {
+            return (int) Math.floor((currentDate/1000-birthDate)/31556952.0);
+        } else {
+            return 0;
+        }
     }
 
 

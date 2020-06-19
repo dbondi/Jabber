@@ -1,6 +1,7 @@
 package adapaters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,27 +11,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.example.jab.GlideApp;
 //import com.example.jab.GlideApp;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.jab.GlideApp;
 import com.example.jab.R;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
 import custom_class.Comment;
-import custom_class.User;
+import custom_class.UserProfile;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>{
     ArrayList<Comment> comments = new ArrayList<>();
-    User user;
+    UserProfile user;
     Context context;
     boolean boolPhoto;
 
-    public CommentAdapter(User user, Context context){
+    public CommentAdapter(UserProfile user, Context context){
         this.user = user;
         this.context = context;
     }
@@ -55,15 +57,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return holder;
     }
 
-
-
     @Override
     public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
         Comment currentChat = comments.get(position);
-
-        double factor = ((double)currentChat.getImageHeight())/((double)currentChat.getImageWidth());
-
-
+         double factor = ((double) currentChat.getImageHeight()) / ((double) currentChat.getImageWidth());
 
         holder.username.setText(currentChat.getUserName());
 
@@ -71,48 +68,66 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
         ImageView profPicRef = holder.profilePic;
 
-        Integer widthScreen = currentChat.getImageWidth();
+        //Integer widthScreen = currentChat.getImageWidth();
         Integer heightScreen = currentChat.getImageHeight();
 
+        holder.backgroundColor.setCardBackgroundColor(Color.parseColor(currentChat.getColor().get(0)));
 
-
-        if(currentChat.getBoolImage()) {
-            postImageRef.getLayoutParams().height = ((int) (factor*widthScreen));
+        if (currentChat.getBoolImage()) {
+            //postImageRef.getLayoutParams().height = ((int) (factor*widthScreen));
             //((ViewGroup) holder.messageView.getParent()).removeView(holder.message);
             holder.message.setHeight(0);
 
+            RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.ic_launcher_background);
             GlideApp.with(context)
                     .load(currentChat.getGsReference())
-                    .centerCrop()
+                    .apply(requestOptions)
                     .into(postImageRef);
 
 
-        }
-        else {
-            holder.messageView.removeView(holder.post_image);
-            String first = "<font color='#AAFFFFFF'>\" </font>";
-            String next = "<font color='#FFFFFF'>"+currentChat.getContent()+"</font>";
+        } else if (currentChat.getGifBoolean()) {
+            RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.ic_launcher_background);
+
+            holder.message.setHeight(0);
+
+            GlideApp.with(context)
+                    .load(currentChat.getGifUrl())
+                    .apply(requestOptions)
+                    .into(postImageRef);
+
+        } else if (currentChat.getStringBoolean()) {
+            //holder.messageView.removeView(holder.post_image);
+            String first = "<font color='" + currentChat.getColor().get(1) + "'>\" </font>";
+            String next = "<font color='#FFFFFF'>" + currentChat.getContent() + "</font>";
             String last = "<font color='#AAFFFFFF'> \"</font>";
 
             holder.message.setText(Html.fromHtml(next));
 
         }
 
+        RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.ic_launcher_background);
+
 
         GlideApp.with(context)
                 .load(currentChat.getProfPicReference())
+                .apply(requestOptions)
                 .into(profPicRef);
-
-
-
 
         //holder.bottomBox.set
 
-
-        if(calculateLike(currentChat)) {
+        if (calculateLike(currentChat)) {
             holder.cbLike.toggle();
         }
         holder.likeNumber.setText(Integer.toString(currentChat.getLikeNumber()));
+
+        holder.cbLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //like
+
+            }
+        });
+
 
     }
 
@@ -131,8 +146,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         private CheckBox cbLike;
         private TextView likeNumber;
         private ConstraintLayout messageView;
+        private CardView backgroundColor;
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
+        //FirebaseStorage storage = FirebaseStorage.getInstance();
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -143,13 +159,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             cbLike = itemView.findViewById(R.id.like_button);
             likeNumber = itemView.findViewById(R.id.like_number);
             messageView = itemView.findViewById(R.id.message_id);
+            backgroundColor = itemView.findViewById(R.id.background_color);
 
-            cbLike.setOnClickListener(new View.OnClickListener(){
-                @Override public void onClick(View v){
-                    //like
-
-                }
-            });
 
 
         }

@@ -16,33 +16,20 @@
             android:layout_height="50dp">
 
         </LinearLayout>
-        <ScrollView
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <LinearLayout
+            android:layout_height="match_parent"
+            android:id="@+id/threeViews">
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:id="@+id/comments_1"/>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:id="@+id/comments_2"/>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:id="@+id/comments_3"/>
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:id="@+id/comments_1"/>
+
+        </LinearLayout>
 
 
-        </ScrollView>
+
         <LinearLayout
 
             android:layout_width="match_parent"
@@ -130,8 +117,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginTop="7dp"
                         android:hint="Comment something.."
                         android:id="@+id/comment_text"
                         android:inputType="textCapSentences|textMultiLine"
@@ -164,7 +151,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="8dp"
                     android:gravity="center"
                     android:background="@drawable/custom_border">
@@ -194,7 +181,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="8dp"
                     android:clickable="true"
                     android:id="@+id/camera_box"
@@ -225,8 +212,9 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
                     android:gravity="center"
                     android:id="@+id/photo_box"
                     android:clickable="true"
@@ -257,7 +245,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="8sp"
                     android:layout_marginRight="9sp"
                     android:gravity="center"

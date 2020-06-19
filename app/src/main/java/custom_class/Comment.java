@@ -23,13 +23,14 @@ public class Comment {
     private Integer columnNumber;
 
     //Gif type
-    private Media media;
+    //private Media media;
+    private String gifUrl;
 
     //boolean types
-    private Boolean gifBool;
+    private Boolean gifBoolean;
     private Boolean imageBool;
-    private Boolean textBool;
-    private Boolean videoBool;
+    private Boolean stringBoolean;
+    //private Boolean videoBool;
 
     //image type data
     private Integer imageHeight;
@@ -43,9 +44,14 @@ public class Comment {
     private StorageReference gsReference;
     private StorageReference profPicReference;
 
-    public Comment(String content, String imageID, GeoPoint location, Timestamp timestamp, String userUID, String userName, Integer likeNumber, ArrayList<String> likeList, StorageReference gsReference, StorageReference profPicReference, Integer imageWidth, Integer imageHeight, Boolean imageBool, Integer columnNumber) {
+    private ArrayList<String> color;
+    private Integer height;
+    private boolean last;
+
+    public Comment(String content, String imageID, String gifUrl, GeoPoint location, Timestamp timestamp, String userUID, String userName, Integer likeNumber, ArrayList<String> likeList, StorageReference gsReference, StorageReference profPicReference, Integer imageWidth, Integer imageHeight, Boolean imageBool, Boolean gifBoolean, Boolean stringBoolean, Integer columnNumber, ArrayList<String> color) {
         this.content = content;
         this.imageID = imageID;
+        this.gifUrl = gifUrl;
         this.location = location;
         this.timestamp = timestamp;
         this.userUID = userUID;
@@ -57,7 +63,16 @@ public class Comment {
         this.imageWidth = imageWidth;
         this.imageHeight = imageHeight;
         this.imageBool = imageBool;
+        this.gifBoolean = gifBoolean;
+        this.stringBoolean = stringBoolean;
         this.columnNumber = columnNumber;
+        this.color = color;
+        height = 0;
+        last = false;
+    }
+    public Comment(int height){
+        this.height = height;
+        last = true;
     }
 
     public String getContent() {
@@ -163,6 +178,7 @@ public class Comment {
     public void setBoolImage(Boolean imageBool) {
         this.imageBool = imageBool;
     }
+
     public Integer getColumnNumber() {
         return columnNumber;
     }
@@ -171,4 +187,59 @@ public class Comment {
         this.columnNumber = columnNumber;
     }
 
+    public String getGifUrl() {
+        return gifUrl;
+    }
+
+    public void setGifUrl(String gifUrl) {
+        this.gifUrl = gifUrl;
+    }
+
+    public Boolean getGifBoolean() {
+        return gifBoolean;
+    }
+
+    public void setGifBoolean(Boolean gifBoolean) {
+        this.gifBoolean = gifBoolean;
+    }
+
+    public Boolean getImageBool() {
+        return imageBool;
+    }
+
+    public void setImageBool(Boolean imageBool) {
+        this.imageBool = imageBool;
+    }
+
+    public Boolean getStringBoolean() {
+        return stringBoolean;
+    }
+
+    public void setStringBoolean(Boolean stringBoolean) {
+        this.stringBoolean = stringBoolean;
+    }
+
+    public ArrayList<String> getColor() {
+        return color;
+    }
+
+    public void setColor(ArrayList<String> color) {
+        this.color = color;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public boolean isLast() {
+        return last;
+    }
+
+    public void setLast(boolean last) {
+        this.last = last;
+    }
 }

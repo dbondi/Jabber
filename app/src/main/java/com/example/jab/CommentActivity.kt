@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.ImageDecoder
 import android.graphics.drawable.Animatable
 import android.location.Location
@@ -23,11 +22,13 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.facebook.imagepipeline.image.ImageInfo
 import com.giphy.sdk.core.models.Media
 import com.giphy.sdk.core.models.enums.RatingType
@@ -44,7 +45,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import controllers.CommentController
-import custom_class.*
+import custom_class.Comment
+import custom_class.HelperFunctions
+import custom_class.Place
+import custom_class.UserProfile
 import de.hdodenhof.circleimageview.CircleImageView
 import models.CommentModel
 
@@ -65,6 +69,9 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
     private lateinit var commentView_1: RecyclerView
     private lateinit var commentView_2: RecyclerView
     private lateinit var commentView_3: RecyclerView
+
+    private lateinit var scrollView: ScrollView
+
     private var commentAdapter_1: CommentAdapter? = null
     private var commentAdapter_2: CommentAdapter? = null
     private var commentAdapter_3: CommentAdapter? = null
@@ -86,11 +93,13 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
     protected var locationListener: LocationListener? = null
 
     private val test = true
-    private var randomColor: Array<String>? = null
+    private lateinit var randomColor: ArrayList<String?>
 
     private lateinit var messageID: String
     private lateinit var place: Place
-    private lateinit var user: User
+    private lateinit var user: UserProfile
+
+    private lateinit var syncRecyclers: List<RecyclerView>
 
     private lateinit var bundle: Bundle
 
@@ -108,10 +117,10 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
         auth = FirebaseAuth.getInstance()
         context = this
         commentView_1 = findViewById(R.id.comments_1)
-        commentView_2 = findViewById(R.id.comments_2)
-        commentView_3 = findViewById(R.id.comments_3)
+        //commentView_2 = findViewById(R.id.comments_2)
+        //commentView_3 = findViewById(R.id.comments_3)
         add_gif_button = findViewById(R.id.add_gif_button)
-        background_color = findViewById(R.id.background_color);
+        //background_color = findViewById(R.id.background_color);
 
         comment_something = findViewById(R.id.comment_text)
         gif_box = findViewById(R.id.gif_box)
@@ -131,9 +140,7 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
         settings.useBlurredBackground = true
         settings.stickerColumnCount = 4
 
-
-        randomColor = HelperFunctions.random_color(11)
-        background_color!!.setBackgroundColor(Color.parseColor(randomColor!![0]));
+        //background_color.setBackgroundColor(Color.parseColor(randomColor.get(0)));
 
         val intent = intent
         bundle = intent.extras!!
@@ -166,27 +173,115 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
         model!!.loadComments(object : CommentActivity.FirestoreCallBackKot {
             override fun onCallback(comments: ArrayList<Comment?>?) {
                 commentAdapter_1 = CommentAdapter(user, context)
-                commentAdapter_2 = CommentAdapter(user, context)
-                commentAdapter_3 = CommentAdapter(user, context)
-                val comments_1 = getCommentsPart(comments, 1)
-                val comments_2 = getCommentsPart(comments, 2)
-                val comments_3 = getCommentsPart(comments, 3)
+                //commentAdapter_2 = CommentAdapter(user, context)
+                //commentAdapter_3 = CommentAdapter(user, context)
+                //val comments_1 = getCommentsPart(comments, 1)
+                //val comments_2 = getCommentsPart(comments, 2)
+                //val comments_3 = getCommentsPart(comments, 3)
+                commentAdapter_1!!.update(comments)
+                //commentAdapter_2!!.update(comments_2)
+                //commentAdapter_3!!.update(comments_3)
+                var staggeredGridLayoutManager = StaggeredGridLayoutManager(3,LinearLayoutManager.VERTICAL)
+                commentView_1.adapter = commentAdapter_1
+                //commentView_2.adapter = commentAdapter_2
+               // commentView_3.adapter = commentAdapter_3
+                commentView_1.layoutManager = staggeredGridLayoutManager
+                commentView_1.adapter = commentAdapter_1
+                //commentView_2.layoutManager = LinearLayoutManager(context)
+                //commentView_3.layoutManager = LinearLayoutManager(context)
+                //commentView_1.isNestedScrollingEnabled = false;
+                //commentView_2.isNestedScrollingEnabled = false;
+                //commentView_3.isNestedScrollingEnabled = false;
+
+                /*
+                val params1: ViewGroup.LayoutParams = commentView_1.getLayoutParams()
+                params1.height = 8000
+                commentView_1.setLayoutParams(params1)
+                val params2: ViewGroup.LayoutParams = commentView_2.getLayoutParams()
+                params2.height = 8000
+                commentView_1.setLayoutParams(params2)
+                val params3: ViewGroup.LayoutParams = commentView_3.getLayoutParams()
+                params3.height = 8000
+                commentView_1.setLayoutParams(params3)
+                */
+
+                //rec(commentView_1)
+                //rec(commentView_2)
+                //rec(commentView_3)
+
+
+                /*
+                val maxheight = maxOf(commentView_1.layoutParams.height,maxOf(commentView_2.layoutParams.height,commentView_3.layoutParams.height))
+
+                println("MaxHeight")
+                println(maxheight)
+
+                comments_1.add(Comment(maxheight-commentView_1.layoutParams.height))
+                comments_2.add(Comment(maxheight-commentView_2.layoutParams.height))
+                comments_3.add(Comment(maxheight-commentView_3.layoutParams.height))
+
                 commentAdapter_1!!.update(comments_1)
                 commentAdapter_2!!.update(comments_2)
                 commentAdapter_3!!.update(comments_3)
-                commentView_1.setAdapter(commentAdapter_1)
-                commentView_2.setAdapter(commentAdapter_2)
-                commentView_3.setAdapter(commentAdapter_3)
-                commentView_1.setLayoutManager(LinearLayoutManager(context))
-                commentView_2.setLayoutManager(LinearLayoutManager(context))
-                commentView_3.setLayoutManager(LinearLayoutManager(context))
-                commentView_1.setNestedScrollingEnabled(false);
-                commentView_2.setNestedScrollingEnabled(false);
-                commentView_3.setNestedScrollingEnabled(false);
+                commentAdapter_1!!.notifyItemInserted(comments_1.size - 1);
+                commentAdapter_2!!.notifyItemInserted(comments_2.size - 1);
+                commentAdapter_3!!.notifyItemInserted(comments_3.size - 1);
+                commentAdapter_1!!.notifyDataSetChanged();
+                commentAdapter_2!!.notifyDataSetChanged();
+                commentAdapter_3!!.notifyDataSetChanged();
+
+                */
+
+
+                //commentView_1.setHasFixedSize(false)
+                //commentView_2.setHasFixedSize(false)
+                //commentView_3.setHasFixedSize(false)
+
+
             }
 
         }, messageID,user,place)
 
+        /*
+        val scrollListeners = arrayOfNulls<RecyclerView.OnScrollListener>(3)
+        scrollListeners[0] = object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                commentView_2.removeOnScrollListener(scrollListeners[1]!!)
+                commentView_2.scrollBy(dx, dy)
+                commentView_2.addOnScrollListener(scrollListeners[1]!!)
+                commentView_3.removeOnScrollListener(scrollListeners[2]!!)
+                commentView_3.scrollBy(dx, dy)
+                commentView_3.addOnScrollListener(scrollListeners[2]!!)
+            }
+        }
+        scrollListeners[1] = object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                commentView_1.removeOnScrollListener(scrollListeners[0]!!)
+                commentView_1.scrollBy(dx, dy)
+                commentView_1.addOnScrollListener(scrollListeners[0]!!)
+                commentView_3.removeOnScrollListener(scrollListeners[2]!!)
+                commentView_3.scrollBy(dx, dy)
+                commentView_3.addOnScrollListener(scrollListeners[2]!!)
+            }
+        }
+        scrollListeners[2] = object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                commentView_1.removeOnScrollListener(scrollListeners[0]!!)
+                commentView_1.scrollBy(dx, dy)
+                commentView_1.addOnScrollListener(scrollListeners[0]!!)
+                commentView_2.removeOnScrollListener(scrollListeners[1]!!)
+                commentView_2.scrollBy(dx, dy)
+                commentView_2.addOnScrollListener(scrollListeners[1]!!)
+            }
+        }
+        commentView_1.addOnScrollListener(scrollListeners[0]!!)
+        commentView_2.addOnScrollListener(scrollListeners[1]!!)
+        commentView_3.addOnScrollListener(scrollListeners[2]!!)
+
+         */
 
         Giphy.configure(this, YOUR_API_KEY)
 
@@ -200,12 +295,10 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
         })
 
         photo_box.setOnClickListener(View.OnClickListener {
-            System.out.println("printing success")
             openGalleryForImage()
         })
 
         camera_box.setOnClickListener(View.OnClickListener {
-            System.out.println("printing success")
             dispatchTakePictureIntent()
         })
 
@@ -234,7 +327,8 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
 
         post_button.setOnClickListener(View.OnClickListener {
             var comment_post = comment_something.text.toString()
-            model!!.post_string(comment_post,bundle,userLocation,randomColor!![0],place)
+            randomColor = HelperFunctions.random_color(11)
+            model!!.post_string(comment_post,bundle,userLocation,randomColor,place)
 
 
         })
@@ -283,7 +377,8 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
             //System.out.println("Bitly Gif URL")
             //System.out.println(media.bitlyGifUrl)
             //messageItems.add(GifItem(media, User.Me))
-            model!!.post_gif(media,bundle,userLocation,randomColor!![0],place)
+            randomColor = HelperFunctions.random_color(11)
+            model!!.post_gif(media,bundle,userLocation,randomColor,place)
         }
         override fun onDismissed() {
             Log.d(TAG, "onDismissed")
@@ -343,15 +438,17 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
             try {
                 selectedPhotoUri?.let {
                     if(Build.VERSION.SDK_INT < 28) {
+                        randomColor = HelperFunctions.random_color(11)
                         val bitmap = MediaStore.Images.Media.getBitmap(
                                 this.contentResolver,
                                 selectedPhotoUri
                         )
-                        model!!.post_image(bitmap,bundle,userLocation,randomColor!![0],place)
+                        model!!.post_image(bitmap,bundle,userLocation,randomColor,place)
                     } else {
+                        randomColor = HelperFunctions.random_color(11)
                         val source = ImageDecoder.createSource(this.contentResolver, selectedPhotoUri)
                         val bitmap = ImageDecoder.decodeBitmap(source)
-                        model!!.post_image(bitmap,bundle,userLocation,randomColor!![0],place)
+                        model!!.post_image(bitmap,bundle,userLocation,randomColor,place)
                     }
                 }
             } catch (e: Exception) {
@@ -359,8 +456,9 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
             }
         }
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            randomColor = HelperFunctions.random_color(11)
             val imageBitmap = data?.extras?.get("data") as Bitmap
-            model!!.post_image(imageBitmap,bundle,userLocation,randomColor!![0],place)
+            model!!.post_image(imageBitmap,bundle,userLocation,randomColor,place)
         }
     }
 

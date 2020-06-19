@@ -1,17 +1,28 @@
 package com.example.jab;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.NumberPicker;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.StorageReference;
 
+import java.time.Instant;
+import java.util.ArrayList;
+
+import adapaters.ProfilePictureAdapter;
 import controllers.WelcomeController;
+import custom_class.UserProfile;
+import models.WelcomeModel;
+
+import static custom_class.HelperFunctions.calculateAge;
 
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -19,8 +30,11 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     Button b_Login;
     Button b_login_phone;
     Button tv_Select_age;
+    Button skip;
     private WelcomeController controller;
     private FirebaseAuth auth;
+    private FirebaseFirestore db;
+    private WelcomeModel model;
 
 
     @Override
@@ -32,28 +46,22 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
         b_login_phone = findViewById(R.id.connect_with_phone);
         b_Login = findViewById(R.id.b_Login);
+        skip = findViewById(R.id.skip);
 
         //tv_Select_age = findViewById(R.id.tv_Select_age);
         //tv_Select_age.setEnabled(false);
 
         b_Login.setOnClickListener(this);
+        skip.setOnClickListener(this);
         //tv_Select_age.setOnClickListener(this);
 
 
         auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         controller = new WelcomeController(this,auth);
+        model = new WelcomeModel(auth,db);
 
         b_login_phone.setOnClickListener(this);
-
-        //final NumberPicker np = np_Age;
-        //np.setMaxValue(101);
-        //np.setMinValue(1);
-        //np.setValue(16);
-        //np.setWrapSelectorWheel(false);
-        //np.setTextColor(0);
-        //np.setOnValueChangedListener(this);
-        //setNumberPickerTextColor(np_Age,Integer.parseInt("f2e9eb",16));
-
 
     }
 
@@ -63,8 +71,21 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.connect_with_phone:
                 controller.clickCreateWithPhone();
                 break;
+            case R.id.skip:
+                model.loadMyData(new WelcomeActivity.FirestoreCallBack(){
+
+                    @Override
+                    public void onCallback(UserProfile userEditInfo) {
+                        controller.skipCreatePhone(userEditInfo);
+                    }
+                });
+                break;
 
         }
+    }
+
+    public interface FirestoreCallBack{
+        void onCallback(UserProfile userEditInfo);
     }
 
     @Override

@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 
 import controllers.RegisterPhonePasscodeController;
 import controllers.RegisterWithPhoneController;
-import custom_class.User;
+import custom_class.UserProfile;
 import custom_class.Users;
 import models.RegisterPhonePasscodeModel;
 import models.RegisterWithPhoneModel;
@@ -47,7 +47,7 @@ public class RegisterPhonePasscodeActivity extends Activity implements View.OnCl
     private String phoneNumber;
 
     //user info
-    private User user;
+    private UserProfile user;
     private String UID;
 
     private String typedCode;
@@ -84,7 +84,7 @@ public class RegisterPhonePasscodeActivity extends Activity implements View.OnCl
         validationID = getIntent().getExtras().getString("ValidationID");
 
         verified = false;
-        user = new User();
+        user = new UserProfile();
 
         invCode.setVisibility(View.INVISIBLE);
         loadingBar.setVisibility(View.INVISIBLE);
@@ -193,7 +193,6 @@ public class RegisterPhonePasscodeActivity extends Activity implements View.OnCl
 
                 //TODO Im not gonna touch because i dont think it executes
                 if(verified){
-
                     controller.continueToApp(user);
                 }
 

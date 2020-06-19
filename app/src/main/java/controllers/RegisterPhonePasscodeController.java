@@ -4,11 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.jab.HomeActivity;
-import com.example.jab.RegisterPhonePasscodeActivity;
+import com.example.jab.BirthActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
-import custom_class.User;
+import custom_class.UserProfile;
 
 public class RegisterPhonePasscodeController {
     private Context context;
@@ -19,10 +18,10 @@ public class RegisterPhonePasscodeController {
         this.auth = auth;
     }
 
-    public void continueToApp(User user) {
+    public void continueToApp(UserProfile user) {
         Bundle bundle = new Bundle();
         bundle.putParcelable("User",user);
-        Intent intent = new Intent(context, HomeActivity.class);
+        Intent intent = new Intent(context, BirthActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }

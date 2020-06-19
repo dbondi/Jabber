@@ -15,13 +15,11 @@
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"/>
+            android:layout_height="20dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="20">
+            android:layout_height="140dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,9 +32,28 @@
                     android:gravity="center"
                     android:text="@string/jabber"
                     android:textColor='#f2e9eb'
-                    android:textSize="85dp"
+                    android:textSize="70dp"
                     android:textStyle="bold" />
 
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="23dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:gravity="center"
+                    android:text="Can I get your number?"
+                    android:textColor="#bbEEEEEE" />
             </LinearLayout>
         </LinearLayout>
 
@@ -44,44 +61,49 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="9"
+            android:layout_height="140dp"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_weight="7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="center_horizontal|center_vertical">
-
-                <EditText
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal">
+                <br.com.sapereaude.maskedEditText.MaskedEditText
                     android:id="@+id/phone_register"
-                    android:layout_width="match_parent"
+                    android:layout_width="240dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="45dp"
-                    android:layout_marginRight="45dp"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginRight="70dp"
+                    android:paddingLeft="10sp"
+                    android:paddingRight="10sp"
+                    android:paddingTop="20sp"
+                    android:paddingBottom="22sp"
                     android:textColor="#f2e9eb"
-                    android:textSize="23dp"
-                    android:backgroundTint="#f2e9eb"
-                    android:imeOptions="actionDone"
-                    android:hint="@string/prompt_phone"
-                    android:textColorHint="#f2e9eb"
-                    android:inputType="textNoSuggestions"
-                    android:selectAllOnFocus="true" />
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textSize="26dp"
+                    android:background="@drawable/round_button_grey_clear"
+                    android:textColorHint="#aaf2e9eb"
+                    android:fontFamily="@font/lato_regular"
+                    android:inputType="phone"
+                    android:hint="__________"
+                    app:mask="( ### ) ###-####"
+                    app:keep_hint="true"  />
+
             </LinearLayout>
 
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="12dp"
             android:orientation="horizontal">
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3">
+            android:layout_height="36dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,17 +136,6 @@
                 android:layout_height="70dp"
                 android:gravity="center_horizontal|center_vertical">
 
-                <Button
-                    android:id="@+id/btn_send_cord"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="46dp"
-                    android:layout_marginRight="46dp"
-                    android:textSize="20dp"
-                    android:textColor="@color/colorPrimary"
-                    android:background="@drawable/round_button_white"
-                    android:enabled="true"
-                    android:text="@string/send_code" />
 
 
             </LinearLayout>
@@ -191,6 +202,30 @@
         </LinearLayout>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+        <LinearLayout
 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp">
+            <Button
+                android:id="@+id/btn_send_cord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="46dp"
+                android:layout_marginRight="46dp"
+                android:textSize="20dp"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/round_button_white"
+                android:enabled="true"
+                android:text="@string/send_code" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

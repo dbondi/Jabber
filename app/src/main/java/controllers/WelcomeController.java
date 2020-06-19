@@ -2,23 +2,21 @@ package controllers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
+import com.example.jab.HomeActivity;
 import com.example.jab.LoginActivity;
 import com.example.jab.RegisterActivity;
-import com.example.jab.RegisterPhoneActivity;
 import com.example.jab.RegisterWithPhoneActivity;
+import com.giphy.sdk.core.models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
@@ -26,14 +24,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import models.RegisterModel;
+import custom_class.UserProfile;
 
 public class WelcomeController {
     private Context context;
@@ -124,5 +121,15 @@ public class WelcomeController {
     public void clickCreateWithPhone() {
         Intent register = new Intent(context, RegisterWithPhoneActivity.class);
         context.startActivity(register);
+    }
+
+    public void skipCreatePhone(UserProfile user) {
+        auth.signInWithCustomToken("hYCu9VzlvQMnY0QkIKMNZQ32ylC3");
+        Bundle bundle = new Bundle();
+
+        bundle.putParcelable("User",user);
+        Intent intent = new Intent(context, HomeActivity.class);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 }

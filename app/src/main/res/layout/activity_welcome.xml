@@ -116,6 +116,19 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
+            <Button
+                android:id="@+id/skip"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.06"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/custom_border"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:gravity="center"
+                android:text="@string/skip"
+                android:textColor='#f2e9eb'
+                android:textSize="19sp" >
+            </Button>
 
         </LinearLayout>
 

@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.jab.HomeActivity;
+import com.giphy.sdk.core.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 
-import custom_class.User;
-import custom_class.Users;
+import custom_class.UserProfile;
 
 
 public class RegisterPhoneController {
@@ -23,7 +23,7 @@ public class RegisterPhoneController {
     }
 
 
-    public void clickVerify(User user) {
+    public void clickVerify(UserProfile user) {
         Bundle bundle = new Bundle();
         bundle.putParcelable("User",user);
         Intent intent = new Intent(context, HomeActivity.class);

@@ -23,6 +23,7 @@ import android.view.inputmethod.InputConnection
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.os.BuildCompat
 import androidx.core.view.inputmethod.EditorInfoCompat
@@ -43,7 +44,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import controllers.NewChatController
 import custom_class.HelperFunctions
 import custom_class.Place
-import custom_class.User
+import custom_class.UserProfile
 import de.hdodenhof.circleimageview.CircleImageView
 import models.NewChatModel
 import java.util.*
@@ -76,16 +77,18 @@ class NewChatActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
     private lateinit var cancel_image: LinearLayout
     private lateinit var cancel_poll: LinearLayout
 
-    private var randomColor: Array<String>? = null
-    private var user: User? = null
+    private lateinit var randomColor: ArrayList<String?>
+    private var user: UserProfile? = null
 
     private lateinit var option1: EditText
     private lateinit var option2: EditText
     private lateinit var option3: EditText
     private lateinit var option4: EditText
 
-    private var option3Box: LinearLayout? = null
-    private var option4Box: LinearLayout? = null
+    private var option1Box: CardView? = null
+    private var option2Box: CardView? = null
+    private var option3Box: CardView? = null
+    private var option4Box: CardView? = null
 
     private lateinit var add_poll_option: LinearLayout
 
@@ -140,6 +143,8 @@ class NewChatActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
         option3 = findViewById(R.id.option_3)
         option4 = findViewById(R.id.option_4)
 
+        option1Box = findViewById(R.id.option_1_box)
+        option2Box = findViewById(R.id.option_2_box)
         option3Box = findViewById(R.id.option_3_box)
         option4Box = findViewById(R.id.option_4_box)
 
@@ -157,7 +162,7 @@ class NewChatActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
 
         randomColor = HelperFunctions.random_color(11)
 
-        background_color.setBackgroundColor(Color.parseColor(randomColor!![0]));
+        background_color.setBackgroundColor(Color.parseColor(randomColor.get(0)));
         message_text.hint = "Send a Yap to people in " + place.name;
 
         //set gif settings
@@ -291,6 +296,14 @@ class NewChatActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
             image_container.visibility = View.GONE
             option3Box!!.visibility = View.GONE
             option4Box!!.visibility = View.GONE
+            option1Box!!.setBackgroundColor(Color.parseColor(randomColor.get(0)))
+            option2Box!!.setBackgroundColor(Color.parseColor(randomColor.get(0)))
+            option3Box!!.setBackgroundColor(Color.parseColor(randomColor.get(0)))
+            option4Box!!.setBackgroundColor(Color.parseColor(randomColor.get(0)))
+            option1Box!!.radius = 200F
+            option2Box!!.radius = 200F
+            option3Box!!.radius = 200F
+            option4Box!!.radius = 200F
             add_poll_option.visibility = View.VISIBLE
             poll!!.visibility = View.GONE
             poll?.visibility = View.VISIBLE
@@ -301,7 +314,7 @@ class NewChatActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
 
         send_yap!!.setOnClickListener(View.OnClickListener {
             if(messageOption.equals("Text")){
-                model!!.post_text(message_text.text.toString(),userLocation,randomColor!![0],place,user)
+                model!!.post_text(message_text.text.toString(),userLocation,randomColor,place,user)
             }
             if(messageOption.equals("Poll")){
                 val pollValues: ArrayList<String> = ArrayList()
@@ -316,13 +329,18 @@ class NewChatActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
                     pollValues.add(option4.text.toString())
                 }
 
-                model!!.post_poll(message_text.text.toString(),pollValues,userLocation,randomColor!![0],place,user)
+                model!!.post_poll(message_text.text.toString(),pollValues,userLocation,randomColor,place,user)
             }
             if(messageOption.equals("Image")){
-                model!!.post_image(message_text.text.toString(),image_bitmap,userLocation,randomColor!![0],place,user)
+                model!!.post_image(message_text.text.toString(),image_bitmap,userLocation,randomColor,place,user)
             }
             if(messageOption.equals("Gif")){
-                model!!.post_gif(message_text.text.toString(),gif_url,userLocation,randomColor!![0],place,user)
+                model!!.post_gif(message_text.text.toString(),gif_url,userLocation,randomColor,place,user)
+            }
+            try {
+                controller!!.goBack(getIntent(),localUniversityPlaces,localCityPlaces, user,place)
+            } catch (e: ClassNotFoundException) {
+                e.printStackTrace()
             }
         })
 
@@ -405,6 +423,7 @@ class NewChatActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
             messageOption = "Gif"
             image_container.visibility = View.VISIBLE
             gif_url = url
+            sendableCalculator()
 
         }
         override fun onDismissed() {
@@ -451,6 +470,7 @@ class NewChatActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
                         GlideApp.with(context!!)
                                 .load(bitmap)
                                 .into(post_image)
+                        sendableCalculator()
 
                         image_bitmap = bitmap
 
@@ -465,6 +485,7 @@ class NewChatActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
                         GlideApp.with(context!!)
                                 .load(bitmap)
                                 .into(post_image)
+                        sendableCalculator()
 
                         image_bitmap = bitmap
 
@@ -490,6 +511,7 @@ class NewChatActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
             GlideApp.with(context!!)
                     .load(imageBitmap)
                     .into(post_image)
+            sendableCalculator()
         }
     }
     override fun onLocationChanged(location: Location) {
@@ -526,7 +548,7 @@ class NewChatActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
                 send_yap?.setTextColor(Color.parseColor("#000000"))
             }
         }
-        if(messageOption.equals("Poll")){
+        else if(messageOption.equals("Poll")){
             //TODO
             if(message_text.text.toString().equals("")){
                 send_yap?.isClickable = false
@@ -565,11 +587,11 @@ class NewChatActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
                 }
             }
         }
-        if(messageOption.equals("Image")){
+        else if(messageOption.equals("Image")){
             send_yap?.isClickable = true
             send_yap?.setTextColor(Color.parseColor("#000000"))
         }
-        if(messageOption.equals("Gif")){
+        else if(messageOption.equals("Gif")){
             send_yap?.isClickable = true
             send_yap?.setTextColor(Color.parseColor("#000000"))
         }

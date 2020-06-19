@@ -11,7 +11,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="97"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,10 +60,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#f2e9eb"
-                    android:textSize="19dp"
                     android:backgroundTint="#f2e9eb"
+                    android:textSize="19dp"
                     android:hint="@string/name"
-                    android:textColorHint="#f2e9eb"
+                    android:textColorHint="#99ffffff"
                     android:selectAllOnFocus="true"
                     android:imeOptions="actionDone"
                     android:inputType="textPersonName" />
@@ -177,6 +176,37 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="11"
+            android:weightSum="100"
+            android:gravity="center_horizontal|center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="70"
+                android:gravity="center">
+
+                <Spinner
+                    android:layout_width="70dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="match_parent">
+                </Spinner>
+                <Spinner
+                    android:layout_width="70dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="match_parent">
+                </Spinner>
+                <Spinner
+                    android:layout_width="100dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="match_parent">
+                </Spinner>
+
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
 

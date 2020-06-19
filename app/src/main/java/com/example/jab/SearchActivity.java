@@ -27,17 +27,15 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import adapaters.SearchAdapter;
 import controllers.SearchController;
 import custom_class.CSVFile;
 import custom_class.MapTab;
 import custom_class.Place;
-import custom_class.PointMap;
 import custom_class.SearchRow;
 import custom_class.SearchTab;
-import custom_class.User;
+import custom_class.UserProfile;
 import models.SearchModel;
 
 import static custom_class.HelperFunctions.isInside;
@@ -51,9 +49,8 @@ public class SearchActivity extends AppCompatActivity implements LocationListene
     private SearchAdapter searchColumnAdapter;
     private static final String TAG = "SearchActivity";
 
-    private Button searchTabBtn;
+    private Button homeTabBtn;
     private Button chatTabBtn;
-    private Button storiesTabBtn;
     private Button profileTabBtn;
     private boolean test = true;
 
@@ -69,7 +66,7 @@ public class SearchActivity extends AppCompatActivity implements LocationListene
     private ArrayList<Place> universityPlaces = new ArrayList<>();
     private ArrayList<Place> cityPlaces = new ArrayList<>();
 
-    private User user = null;
+    private UserProfile user = null;
     private boolean autoUpdate = false;
     Bundle bundle = null;
     Intent intent = null;
@@ -105,14 +102,20 @@ public class SearchActivity extends AppCompatActivity implements LocationListene
         controller = new SearchController(auth, this);
         model = new SearchModel(auth);
 
+        homeTabBtn = findViewById(R.id.home_tab);
         chatTabBtn = findViewById(R.id.chat_tab);
-        searchTabBtn = findViewById(R.id.search_tab);
-        storiesTabBtn = findViewById(R.id.stories_tab);
+        profileTabBtn = findViewById(R.id.profile_tab);
 
         searchView = findViewById(R.id.searchRec);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+        homeTabBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.homeBtn(localUniversityPlaces, localCityPlaces, user);
+            }
+        });
 
         chatTabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,10 +124,10 @@ public class SearchActivity extends AppCompatActivity implements LocationListene
             }
         });
 
-        storiesTabBtn.setOnClickListener(new View.OnClickListener() {
+        profileTabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controller.storiesBtn();
+                controller.profileBtn(localUniversityPlaces, localCityPlaces, user);
             }
         });
 

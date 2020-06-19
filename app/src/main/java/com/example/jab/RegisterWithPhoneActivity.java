@@ -29,6 +29,8 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import br.com.sapereaude.maskedEditText.MaskedEditText;
+
 import java.util.concurrent.TimeUnit;
 
 import controllers.RegisterPhoneController;
@@ -46,7 +48,7 @@ public class RegisterWithPhoneActivity extends AppCompatActivity implements View
     private FirebaseFirestore db;
     private String TAG = "RegisterWithPhoneActivity";
 
-    private EditText phone;
+    private MaskedEditText phone;
     private Boolean moveToValidation;
     private Boolean sendCodeClick;
     private String validateID;
@@ -74,7 +76,9 @@ public class RegisterWithPhoneActivity extends AppCompatActivity implements View
         controller = new RegisterWithPhoneController(this,auth);
         model = new RegisterWithPhoneModel(db, auth);
 
+
         phone = findViewById(R.id.phone_register);
+
         moveToValidation = false;
         sendCodeClick = false;
 
@@ -158,14 +162,13 @@ public class RegisterWithPhoneActivity extends AppCompatActivity implements View
                 sendCodeClick = true;
 
                 phoneNumber = phone.getText().toString();
-
                 System.out.println("Send code click");
 
-                startPhoneNumberVerification(phoneNumber);
+                startPhoneNumberVerification("+1"+phoneNumber);
 
                 //I dont think you can go this way
                 if(moveToValidation){
-                    controller.startPhoneNumberVerification(phoneNumber,validateID,phoneResendToken);
+                    controller.startPhoneNumberVerification("+1"+phoneNumber,validateID,phoneResendToken);
                 }
 
                 break;

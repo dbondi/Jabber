@@ -2,6 +2,7 @@ package com.example.jab;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.location.Location;
@@ -11,7 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,20 +24,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.nightonke.jellytogglebutton.JellyToggleButton;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 import controllers.HomeController;
 import custom_class.CSVFile;
 import custom_class.Place;
-import custom_class.User;
-import custom_class.PointMap;
+import custom_class.UserProfile;
 import models.HomeModel;
 
 import static custom_class.HelperFunctions.distanceAway;
@@ -54,7 +50,6 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
 
     private Button searchTabBtn;
     private Button chatTabBtn;
-    private Button storiesTabBtn;
     private Button profileTabBtn;
 
     private HomeController controller;
@@ -68,25 +63,14 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
 
     protected Location userLocation;
 
-    private User user;
+    private UserProfile user;
 
     private ArrayList<Place> localUniversityPlaces = new ArrayList<>();
     private ArrayList<Place> localCityPlaces = new ArrayList<>();
     private ArrayList<Place> universityPlaces = new ArrayList<>();
     private ArrayList<Place> cityPlaces = new ArrayList<>();
 
-    /*
-    //locationData
-    private String cityLocation = null;
-    private ArrayList<PointMap> cityCoordinates = null;
-    private String cityLocationKey = null;
 
-    //localData
-    private String localLocation = null;
-    private ArrayList<PointMap> localCoordinates = null;
-    private String localLocationKey = null;
-
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +89,13 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
         loadUniversityLocations();
         loadCityLocations();
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        user = bundle.getParcelable("User");
+        localUniversityPlaces = bundle.getParcelableArrayList("LocalUniversityPlaces");
+        localCityPlaces = bundle.getParcelableArrayList("LocalCityPlaces");
+  
+
         auth = FirebaseAuth.getInstance();
 
         controller = new HomeController(auth, this);
@@ -113,14 +104,14 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
 
         chatTabBtn = findViewById(R.id.chat_tab);
         searchTabBtn = findViewById(R.id.search_tab);
-        storiesTabBtn = findViewById(R.id.stories_tab);
+        profileTabBtn = findViewById(R.id.profile_tab);
         localLocationText = findViewById(R.id.localLocationText);
         messageBtn = findViewById(R.id.create_post);
+        messageBtn.setVisibility(View.GONE);
 
         localLocationText.setText("\uD83D\uDD25");
 
 
-        user = getIntent().getExtras().getParcelable("User");
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -130,13 +121,11 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
 
         double buttonWidth = heightScreen * .1;
 
-        ViewGroup.LayoutParams messageBtnLayoutParams = messageBtn.getLayoutParams();
-        messageBtnLayoutParams.width = (int) buttonWidth;
-        messageBtnLayoutParams.height = (int) buttonWidth;
+        //ViewGroup.LayoutParams messageBtnLayoutParams = messageBtn.getLayoutParams();
+        //messageBtnLayoutParams.width = (int) buttonWidth;
+        //messageBtnLayoutParams.height = (int) buttonWidth;
 
-        messageBtn.setLayoutParams(messageBtnLayoutParams);
-
-        local_city = getIntent().getIntExtra("LocalCity", 0);
+        //messageBtn.setLayoutParams(messageBtnLayoutParams);
 
         //messageBtn.setBackground(getResources().getDrawable(R.drawable.round_bound_pink));
 
@@ -145,27 +134,32 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
 
         find_location();
 
-        messageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                controller.createMsgBtn(localUniversityPlaces, localCityPlaces, user);
-            }
-        });
+        System.out.println("BoolPucs");
+
+        System.out.println(user.getBoolPictures());
 
 
-        storiesTabBtn.setOnClickListener(new View.OnClickListener() {
+        profileTabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controller.storiesBtn();
+                controller.profileTabBtn(localUniversityPlaces, localCityPlaces, user);
             }
         });
 
         searchTabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controller.searchBtn(localUniversityPlaces, localCityPlaces, user);
+                controller.searchTabBtn(localUniversityPlaces, localCityPlaces, user);
             }
         });
+
+        chatTabBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.chatTabBtn(localUniversityPlaces, localCityPlaces, user);
+            }
+        });
+
 
     }
 

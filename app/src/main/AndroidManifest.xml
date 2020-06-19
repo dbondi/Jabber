@@ -25,7 +25,10 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".RegisterActivity"/>
+        <activity
+            android:name=".RegisterActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
         <activity android:name=".RegisterPhoneActivity"/>
         <activity android:name=".LoginActivity"/>
         <activity android:name=".HomeActivity"/>
@@ -34,12 +37,33 @@
             android:name=".NewChatActivity"
             android:windowSoftInputMode="adjustResize">
         </activity>
+        <activity
+            android:name=".BirthActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity
+            android:name=".FirstNameActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
         <activity android:name=".MapActivity"/>
         <activity android:name=".ChatActivity"/>
         <activity android:name=".PhotoLibraryActivity"/>
         <activity android:name=".CommentActivity"/>
-        <activity android:name=".RegisterWithPhoneActivity"/>
-        <activity android:name=".RegisterPhonePasscodeActivity"/>
+        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".MyProfileActivity"/>
+        <activity android:name=".EditProfileActivity"/>
+        <activity
+            android:name=".RegisterWithPhoneActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity
+            android:name=".RegisterPhonePasscodeActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity
+            android:name=".GenderActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
     </application>
 
 </manifest>

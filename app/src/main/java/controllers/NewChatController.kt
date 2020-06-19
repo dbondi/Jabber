@@ -5,14 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
 import custom_class.Place
-import custom_class.PointMap
-import custom_class.User
+import custom_class.UserProfile
 import java.util.*
 
 class NewChatController(private val auth: FirebaseAuth, private val context: Context) {
 
     @Throws(ClassNotFoundException::class)
-    fun goBack(intent: Intent?,localUniversityPlaces: ArrayList<Place>?, localCityPlaces: ArrayList<Place>?, user: User?, place: Place?) {
+    fun goBack(intent: Intent?, localUniversityPlaces: ArrayList<Place>?, localCityPlaces: ArrayList<Place>?, user: UserProfile?, place: Place?) {
         val caller = intent?.getStringExtra("caller")
         val callerClass = Class.forName(caller!!)
         val bundle = Bundle()

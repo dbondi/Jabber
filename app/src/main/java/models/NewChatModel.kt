@@ -10,9 +10,10 @@ import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
 import custom_class.Place
 import custom_class.PointMap
-import custom_class.User
+import custom_class.UserProfile
 import java.io.ByteArrayOutputStream
-import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class NewChatModel(private val auth: FirebaseAuth, private val db: FirebaseFirestore) {
     private val storage: FirebaseStorage
@@ -25,55 +26,6 @@ class NewChatModel(private val auth: FirebaseAuth, private val db: FirebaseFires
         storage = FirebaseStorage.getInstance()
     }
 
-    /*
-    fun post_image(bitmap: Bitmap, bundle: Bundle, userLocation: Location?, generateColor: String, place: Place) {
-
-        val smallBitmap = getResizedBitmap(bitmap,1000);
-        val baos = ByteArrayOutputStream()
-        smallBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val data: ByteArray = baos.toByteArray()
-
-
-        val user = bundle.getParcelable("User") as User?
-        val timestamp = Timestamp.now()
-        val color = generateColor
-        val imageBoolean = true
-        val gifBoolean = false
-        val stringBoolean = false
-        val userID = user?.uid
-        val userName = user?.profileName
-        val geoPoint = GeoPoint(userLocation?.latitude!!, userLocation?.longitude!!)
-        val localCity =bundle.getInt("LocalCity")
-        val messageID = bundle.getString("MessageID").toString()
-
-        val emptyStringArray = arrayOf<String>()
-        // Create a new course object with information
-        val course: HashMap<String, Any> = HashMap()
-        course["Timestamp"] = timestamp
-        course["Color"] = color
-        course["ImageBoolean"] = imageBoolean
-        course["GifBoolean"] = gifBoolean
-        course["StringBoolean"] = stringBoolean
-        course["User"] = userID!!
-        course["UserName"] = userName!!
-        course["Location"] = geoPoint
-        course["ImageHeight"] = smallBitmap!!.height
-        course["ImageWidth"] = smallBitmap.width
-        course["LikeList"] = emptyStringArray
-        course["LikeNumber"] = 0
-
-        val collectionRef = db.collection("Chats").document(place.type).collection(place.ipedsid).document(messageID).collection("Comments")
-        collectionRef.add(course).addOnSuccessListener { documentReference ->
-            Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
-            val ref = storage.getReference("Comments/${place.type}/${localCity}/messageID/${documentReference.id}")
-            ref.putBytes(data)
-        }
-                .addOnFailureListener { e ->
-                    Log.w(TAG, "Error adding document", e)
-                }
-    }
-
-     */
     fun getResizedBitmap(image: Bitmap, maxSize: Int): Bitmap? {
         var width = image.width
         var height = image.height
@@ -88,14 +40,13 @@ class NewChatModel(private val auth: FirebaseAuth, private val db: FirebaseFires
         return Bitmap.createScaledBitmap(image, width, height, true)
     }
 
-    fun post_image(text: String?, imageBitmap: Bitmap?, userLocation: Location?, generateColor: String, place: Place, user: User?) {
+    fun post_image(text: String?, imageBitmap: Bitmap?, userLocation: Location?, generateColor: ArrayList<String?>, place: Place, user: UserProfile?) {
         val smallBitmap = getResizedBitmap(imageBitmap!!,1000);
         val baos = ByteArrayOutputStream()
         smallBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data: ByteArray = baos.toByteArray()
 
         val timestamp = Timestamp.now()
-        val color = generateColor
         val imageBoolean = true
         val gifBoolean = false
         val stringBoolean = false
@@ -104,25 +55,33 @@ class NewChatModel(private val auth: FirebaseAuth, private val db: FirebaseFires
         val userName = user?.profileName
         val geoPoint = GeoPoint(userLocation?.latitude!!, userLocation?.longitude!!)
 
-        val emptyStringArray = arrayOf<String>()
+        val emptyStringArray: ArrayList<String> = ArrayList<String>()
         // Create a new course object with information
         val course: HashMap<String, Any> = HashMap()
+        val pollVoteList: HashMap<String, Integer> = HashMap()
+        val pollValues: ArrayList<String> = ArrayList<String>()
+        val pollVotes: ArrayList<Integer> = ArrayList<Integer>()
+
+        course["PollVoteList"] = pollVoteList
+        course["PollValues"] = pollValues
+        course["PollVotes"] = pollVotes
         course["Content"] = text!!
         course["Timestamp"] = timestamp
-        course["Color"] = color
+        course["Color"] = generateColor
         course["ImageBoolean"] = imageBoolean
         course["GifBoolean"] = gifBoolean
         course["StringBoolean"] = stringBoolean
-        course["pollBoolean"] = pollBoolean
+        course["PollBoolean"] = pollBoolean
         course["GifURL"] = ""
         course["User"] = userID!!
+        //TODO
         course["UserName"] = userName!!
         course["Location"] = geoPoint
         course["ImageHeight"] = smallBitmap!!.height
         course["ImageWidth"] = smallBitmap.width
-        course["PollValues"] = emptyStringArray
         course["LikeList"] = emptyStringArray
         course["LikeNumber"] = 0
+        course["CommentNumber"] = 0
 
         val collectionRef = db.collection("Chats").document(place.type).collection(place.ipedsid)
         collectionRef.add(course).addOnSuccessListener { documentReference ->
@@ -135,10 +94,9 @@ class NewChatModel(private val auth: FirebaseAuth, private val db: FirebaseFires
         }
     }
 
-    fun post_gif(text: String, gif_url: String?, userLocation: Location?, generateColor: String, place: Place, user: User?) {
+    fun post_gif(text: String, gif_url: String?, userLocation: Location?, generateColor: ArrayList<String?>, place: Place, user: UserProfile?) {
 
         val timestamp = Timestamp.now()
-        val color = generateColor
         val imageBoolean = false
         val gifBoolean = true
         val stringBoolean = false
@@ -147,25 +105,32 @@ class NewChatModel(private val auth: FirebaseAuth, private val db: FirebaseFires
         val userName = user?.profileName
         val geoPoint = GeoPoint(userLocation?.latitude!!, userLocation?.longitude!!)
 
-        val emptyStringArray = arrayOf<String>()
+        val emptyStringArray: ArrayList<String> = ArrayList<String>()
         // Create a new course object with information
         val course: HashMap<String, Any> = HashMap()
+        val pollVoteList: HashMap<String, Integer> = HashMap()
+        val pollValues: ArrayList<String> = ArrayList<String>()
+        val pollVotes: ArrayList<Integer> = ArrayList<Integer>()
+
+        course["PollVoteList"] = pollVoteList
+        course["PollValues"] = pollValues
+        course["PollVotes"] = pollVotes
         course["Content"] = text
         course["Timestamp"] = timestamp
-        course["Color"] = color
+        course["Color"] = generateColor
         course["ImageBoolean"] = imageBoolean
         course["GifBoolean"] = gifBoolean
         course["StringBoolean"] = stringBoolean
-        course["pollBoolean"] = pollBoolean
+        course["PollBoolean"] = pollBoolean
         course["GifURL"] = gif_url!!
         course["User"] = userID!!
         course["UserName"] = userName!!
         course["Location"] = geoPoint
         course["ImageHeight"] = 0
         course["ImageWidth"] = 0
-        course["PollValues"] = emptyStringArray
         course["LikeList"] = emptyStringArray
         course["LikeNumber"] = 0
+        course["CommentNumber"] = 0
 
         val collectionRef = db.collection("Chats").document(place.type).collection(place.ipedsid)
         collectionRef.add(course).addOnSuccessListener { documentReference ->
@@ -173,9 +138,8 @@ class NewChatModel(private val auth: FirebaseAuth, private val db: FirebaseFires
         }
     }
 
-    fun post_poll(text: String, pollValues: ArrayList<String>, userLocation: Location?, generateColor: String, place: Place, user: User?) {
+    fun post_poll(text: String, pollValues: ArrayList<String>, userLocation: Location?, generateColor: ArrayList<String?>, place: Place, user: UserProfile?) {
         val timestamp = Timestamp.now()
-        val color = generateColor
         val imageBoolean = false
         val gifBoolean = false
         val stringBoolean = false
@@ -184,25 +148,35 @@ class NewChatModel(private val auth: FirebaseAuth, private val db: FirebaseFires
         val userName = user?.profileName
         val geoPoint = GeoPoint(userLocation?.latitude!!, userLocation?.longitude!!)
 
-        val emptyStringArray = arrayOf<String>()
+        val emptyStringArray: ArrayList<String> = ArrayList<String>()
         // Create a new course object with information
         val course: HashMap<String, Any> = HashMap()
+        val pollVoteList: HashMap<String, Integer> = HashMap()
+        val emptyIntegerArray = arrayListOf<Int>()
+            emptyIntegerArray.add(0)
+            emptyIntegerArray.add(0)
+            emptyIntegerArray.add(0)
+            emptyIntegerArray.add(0)
+
+        course["PollVoteList"] = pollVoteList
+        course["PollValues"] = pollValues
+        course["PollVotes"] = emptyIntegerArray
         course["Content"] = text
         course["Timestamp"] = timestamp
-        course["Color"] = color
+        course["Color"] = generateColor
         course["ImageBoolean"] = imageBoolean
         course["GifBoolean"] = gifBoolean
         course["StringBoolean"] = stringBoolean
-        course["pollBoolean"] = pollBoolean
+        course["PollBoolean"] = pollBoolean
         course["GifURL"] = ""
         course["User"] = userID!!
         course["UserName"] = userName!!
         course["Location"] = geoPoint
         course["ImageHeight"] = 0
         course["ImageWidth"] = 0
-        course["PollValues"] = pollValues
         course["LikeList"] = emptyStringArray
         course["LikeNumber"] = 0
+        course["CommentNumber"] = 0
 
         val collectionRef = db.collection("Chats").document(place.type).collection(place.ipedsid)
         collectionRef.add(course).addOnSuccessListener { documentReference ->
@@ -210,11 +184,10 @@ class NewChatModel(private val auth: FirebaseAuth, private val db: FirebaseFires
         }
     }
 
-    fun post_text(text: String, userLocation: Location?, generateColor: String, place: Place, user: User?) {
+    fun post_text(text: String, userLocation: Location?, generateColor: ArrayList<String?>, place: Place, user: UserProfile?) {
 
 
         val timestamp = Timestamp.now()
-        val color = generateColor
         val imageBoolean = false
         val gifBoolean = false
         val stringBoolean = true
@@ -223,16 +196,23 @@ class NewChatModel(private val auth: FirebaseAuth, private val db: FirebaseFires
         val userName = user?.profileName
         val geoPoint = GeoPoint(userLocation?.latitude!!, userLocation?.longitude!!)
 
-        val emptyStringArray = arrayOf<String>()
+        val emptyStringArray: ArrayList<String> = ArrayList<String>()
         // Create a new course object with information
         val course: HashMap<String, Any> = HashMap()
+        val pollVoteList: HashMap<String, Integer> = HashMap()
+        val pollValues: ArrayList<String> = ArrayList<String>()
+        val pollVotes: ArrayList<Integer> = ArrayList<Integer>()
+
+        course["PollVoteList"] = pollVoteList
+        course["PollValues"] = pollValues
+        course["PollVotes"] = pollVotes
         course["Content"] = text
         course["Timestamp"] = timestamp
-        course["Color"] = color
+        course["Color"] = generateColor
         course["ImageBoolean"] = imageBoolean
         course["GifBoolean"] = gifBoolean
         course["StringBoolean"] = stringBoolean
-        course["pollBoolean"] = pollBoolean
+        course["PollBoolean"] = pollBoolean
         course["GifURL"] = ""
         course["User"] = userID!!
         course["UserName"] = userName!!
@@ -242,7 +222,7 @@ class NewChatModel(private val auth: FirebaseAuth, private val db: FirebaseFires
         course["PollValues"] = emptyStringArray
         course["LikeList"] = emptyStringArray
         course["LikeNumber"] = 0
-
+        course["CommentNumber"] = 0
         val collectionRef = db.collection("Chats").document(place.type).collection(place.ipedsid)
         collectionRef.add(course).addOnSuccessListener { documentReference ->
             Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")

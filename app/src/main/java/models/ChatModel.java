@@ -19,11 +19,11 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import custom_class.Chat;
 import custom_class.Place;
-import custom_class.PointMap;
-import custom_class.User;
+import custom_class.UserProfile;
 
 public class ChatModel {
     private FirebaseAuth auth;
@@ -36,7 +36,7 @@ public class ChatModel {
         storage = FirebaseStorage.getInstance();
     }
 
-    public void loadChat(final ChatActivity.FirestoreCallBack callback, Place place, User user) {
+    public void loadChat(final ChatActivity.FirestoreCallBack callback, Place place, UserProfile user) {
 
 
         CollectionReference docChats = db.collection("Chats").document(place.getType()).collection(place.getIPEDSID());
@@ -64,15 +64,24 @@ public class ChatModel {
                         Integer imageWidth = ((Number) document.get("ImageWidth")).intValue();
                         Integer imageHeight = ((Number) document.get("ImageHeight")).intValue();
 
+                        Boolean imageBoolean = ((Boolean) document.get("ImageBoolean"));
+                        Boolean gifBoolean = ((Boolean) document.get("GifBoolean"));
+                        Boolean stringBoolean = ((Boolean) document.get("StringBoolean"));
+                        Boolean pollBoolean = ((Boolean) document.get("PollBoolean"));
+                        String gifUrl = ((String) document.get("GifURL"));
+
+                        ArrayList<String> color = (ArrayList<String>) document.get("Color");
+                        ArrayList<String> pollValues = (ArrayList<String>) document.get("PollValues");
                         ArrayList<String> likeList = (ArrayList<String>) document.get("LikeList");
+                        Map<String,Integer> pollVoteList = (Map<String,Integer>) document.get("PollVoteList");
+                        ArrayList<Long> pollVotes = (ArrayList<Long>) document.get("PollVotes");
 
-                        //ArrayList<String> commentList = (ArrayList<String>) document.get("CommentList");
+                        StorageReference gsReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/Chats/"+place.getType()+"/" + place.getIPEDSID() + "/" + messageID );
 
-                        StorageReference gsReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/Chats/"+place.getType()+"/" + place.getIPEDSID() + "/" + messageID + "/" + "photo.jpg");
 
                         StorageReference profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/" + userUID + "/" + "profilePic.jpg");
 
-                        Chat chat = new Chat(content,imageID,location,timestamp,userUID,userName,commentNumber,likeNumber,likeList,gsReference,profPicReference,imageWidth,imageHeight,messageID,place);
+                        Chat chat = new Chat(content,imageID,location,timestamp,userUID,userName,likeList,pollVoteList,commentNumber,likeNumber,gifUrl,pollValues,pollVotes,stringBoolean,pollBoolean,imageBoolean,gifBoolean,gsReference,profPicReference,imageWidth,imageHeight,messageID,place,color);
                         chats.add(chat);
                     }
                     callback.onCallback(chats);

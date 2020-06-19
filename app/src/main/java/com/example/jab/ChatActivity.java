@@ -20,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,18 +27,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import adapaters.ChatAdapter;
-import adapaters.SearchAdapter;
 import controllers.ChatController;
 import custom_class.Chat;
-import custom_class.MapTab;
 import custom_class.Place;
-import custom_class.PointMap;
-import custom_class.SearchRow;
-import custom_class.SearchTab;
-import custom_class.User;
+import custom_class.UserProfile;
 import models.ChatModel;
 
 import static custom_class.HelperFunctions.distanceAway;
@@ -59,8 +52,9 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
     private TextView textLeft;
     private TextView textRight;
     private TextView localLocationText;
+    private TextView placeText;
     private int local_city;
-    private String[] randomColor;
+    private ArrayList<String> randomColor;
 
     private Place place;
     private LinearLayout messageBtn;
@@ -68,6 +62,7 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
     private Button chatTabBtn;
     private Button storiesTabBtn;
     private Button profileTabBtn;
+    private Button homeTabBtn;
 
     protected Location userLocation;
     protected LocationManager locationManager;
@@ -80,7 +75,7 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
     private ArrayList<Place> universityPlaces = new ArrayList<>();
     private ArrayList<Place> cityPlaces = new ArrayList<>();
 
-    private User user;
+    private UserProfile user;
 
     @Override
     protected void onResume(){
@@ -121,8 +116,10 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
 
         chatTabBtn = findViewById(R.id.chat_tab);
         searchTabBtn = findViewById(R.id.search_tab);
-        storiesTabBtn = findViewById(R.id.stories_tab);
         localLocationText = findViewById(R.id.localLocationText);
+        homeTabBtn = findViewById(R.id.home_tab);
+        profileTabBtn = findViewById(R.id.profile_tab);
+        placeText = findViewById(R.id.place);
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -163,7 +160,9 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
                 }
                 chatAdapter.connectView(chatView);
                  */
-                chatAdapter = new ChatAdapter(user,getContext(),widthScreen,heightScreen,controller);
+                int optionScreenSize = (int) Math.round(widthScreen*.95);
+                optionScreenSize = optionScreenSize - 98;
+                chatAdapter = new ChatAdapter(user,getContext(),widthScreen,heightScreen,optionScreenSize,controller,false);
                 chatAdapter.update(chats);
                 chatView.setAdapter(chatAdapter);
 
@@ -177,6 +176,23 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
                 controller.createMsgBtn(localUniversityPlaces,localCityPlaces,user,place);
             }
         });
+        homeTabBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.homeBtn(localUniversityPlaces,localCityPlaces,user,place);
+            }
+        });
+
+
+        profileTabBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.profileBtn(localUniversityPlaces,localCityPlaces,user,place);
+            }
+        });
+
+
+
 
     }
 

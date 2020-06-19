@@ -72,17 +72,20 @@
                     android:orientation="horizontal"
                     android:background="@drawable/circle_purple">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginBottom="25dp"
                         android:textSize="30sp"
                         android:gravity="center"
                         android:fontFamily="@font/lato_regular"
-                        android:textColor="#FFFFFF"
-                        android:text="+">
+                        android:background="@drawable/white_plus">
 
 
-                    </TextView>
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -90,13 +93,14 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:orientation="vertical">
             <LinearLayout
 
+                android:layout_weight="0.16"
                 android:layout_width="fill_parent"
-                android:layout_height="100dp"
+                android:layout_height="0dp"
                 android:background="@drawable/background_bottom"
                 android:orientation="vertical">
                 <LinearLayout
@@ -112,34 +116,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
                     android:orientation="horizontal">
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight=".6">
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight=".8"
-                            android:layout_height="match_parent"
-                            android:gravity="center">
-                            <Button
-                                android:id="@+id/search_tab"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:background="@drawable/ic_search_black_24dp">
-                            </Button>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight=".6">
-                        </LinearLayout>
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -152,13 +128,12 @@
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight=".8"
-                            android:layout_height="match_parent"
-                            android:gravity="center">
+                            android:layout_weight="1.2"
+                            android:layout_height="match_parent">
                             <Button
-                                android:id="@+id/chat_tab"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:id="@+id/home_tab"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
                                 android:background="@drawable/home_icon">
                             </Button>
                         </LinearLayout>
@@ -181,14 +156,69 @@
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight=".8"
-                            android:layout_height="match_parent"
-                            android:gravity="center">
+                            android:layout_weight="1.2"
+                            android:layout_height="match_parent">
                             <Button
-                                android:id="@+id/stories_tab"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:background="@drawable/ic_reorder_black_24dp">
+                                android:id="@+id/search_tab"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/ic_search_black_24dp">
+                            </Button>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".6">
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".6">
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1.2"
+                            android:layout_height="match_parent">
+                            <Button
+                                android:id="@+id/chat_tab"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/chat">
+                            </Button>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".6">
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".6">
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1.2"
+                            android:layout_height="match_parent">
+                            <Button
+                                android:id="@+id/profile_tab"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/profile_icon">
                             </Button>
                         </LinearLayout>
 
