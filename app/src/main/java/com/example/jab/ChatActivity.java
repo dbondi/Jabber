@@ -5,16 +5,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -34,6 +39,8 @@ import custom_class.Chat;
 import custom_class.Place;
 import custom_class.UserProfile;
 import models.ChatModel;
+import ru.noties.scrollable.CanScrollVerticallyDelegate;
+import ru.noties.scrollable.ScrollableLayout;
 
 import static custom_class.HelperFunctions.distanceAway;
 import static custom_class.HelperFunctions.random_color;
@@ -46,6 +53,7 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
     private ChatController controller;
     private ChatModel model;
     private RecyclerView chatView;
+    private ScrollView chatScroll;
     private ChatAdapter chatAdapter;
 
     private static Context instance;
@@ -63,6 +71,7 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
     private Button storiesTabBtn;
     private Button profileTabBtn;
     private Button homeTabBtn;
+    private LinearLayout chatTop;
 
     protected Location userLocation;
     protected LocationManager locationManager;
@@ -108,6 +117,24 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
         instance = this;
 
         chatView = findViewById(R.id.rc_messages);
+        chatScroll = findViewById(R.id.chat_scroll);
+
+        final ScrollableLayout scrollableLayout = findViewById(R.id.chat_scroll);
+
+        // this listener is absolute minimum that is required for `ScrollableLayout` to function
+        scrollableLayout.setCanScrollVerticallyDelegate(new CanScrollVerticallyDelegate() {
+            @Override
+            public boolean canScrollVertically(int direction) {
+                // Obtain a View that is a scroll container (RecyclerView, ListView, ScrollView, WebView, etc)
+                // and call its `canScrollVertically(int) method.
+                // Please note, that if `ViewPager is used, currently displayed View must be obtained
+                // because `ViewPager` doesn't delegate `canScrollVertically` method calls to it's children
+
+                final View view = chatView.getRootView();
+                return view.canScrollVertically(direction);
+            }
+        });
+
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
@@ -120,6 +147,7 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
         homeTabBtn = findViewById(R.id.home_tab);
         profileTabBtn = findViewById(R.id.profile_tab);
         placeText = findViewById(R.id.place);
+        chatTop = findViewById(R.id.chat_top);
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -191,10 +219,31 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
+        Rect scrollBounds = new Rect();
+        chatScroll.getHitRect(scrollBounds);
+
+
+        /**
+        chatView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+             @Override
+             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if(chatScroll.getLocalVisibleRect(scrollBounds)){
+                    chatScroll.smoothScrollBy(dx,dy);
+                }
+                else{
+                    super.onScrolled(recyclerView, dx, dy);
+                }
+             }
+        });
+        **/
+
+        //chatScroll
+
 
 
 
     }
+
 
     public static Context getContext(){
         return instance;
@@ -278,5 +327,74 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onBackPressed() {
         controller.goBack(localUniversityPlaces,localCityPlaces,user,place);
+    }
+
+    public static interface ClickListener{
+        public void onClick(View view,int position);
+        public void onLongClick(View view,int position);
+    }
+
+    /**
+     * RecyclerView: Implementing single item click and long press (Part-II)
+     *
+     * - creating an innerclass implementing RevyvlerView.OnItemTouchListener
+     * - Pass clickListener interface as parameter
+     * */
+
+    class RecyclerTouchListener implements RecyclerView.OnItemTouchListener{
+
+        private ChatActivity.ClickListener clicklistener;
+        private GestureDetector gestureDetector;
+
+        public RecyclerTouchListener(Context context, final RecyclerView recycleView, final ChatActivity.ClickListener clicklistener){
+
+            this.clicklistener=clicklistener;
+
+
+            gestureDetector=new GestureDetector(context,new GestureDetector.SimpleOnGestureListener(){
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child=recycleView.findChildViewUnder(e.getX(),e.getY());
+                    if(child!=null && clicklistener!=null){
+                        clicklistener.onLongClick(child,recycleView.getChildAdapterPosition(child));
+                    }
+                }
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            /**
+            View child = rv.findChildViewUnder(e.getX(), e.getY());
+            if (child != null && clicklistener != null && gestureDetector.onTouchEvent(e)) {
+                clicklistener.onClick(child, rv.getChildAdapterPosition(child));
+            }
+             **/
+
+
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+            /**
+            View child=rv.findChildViewUnder(e.getX(),e.getY());
+            if(child!=null && clicklistener!=null && gestureDetector.onTouchEvent(e)){
+                clicklistener.onClick(child,rv.getChildAdapterPosition(child));
+            }**/
+
+
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
     }
 }

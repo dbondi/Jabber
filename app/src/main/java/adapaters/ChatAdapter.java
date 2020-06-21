@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.request.RequestOptions;
+import com.example.jab.CustomRecyclerView;
 import com.example.jab.GlideApp;
 import com.example.jab.R;
 import com.google.firebase.storage.FirebaseStorage;

@@ -35,10 +35,11 @@ public class Chat {
     private Place place;
     private ArrayList<String> color;
     private Integer valueVoted;
+    private String chatGroupId;
 
     private Boolean poleVoted;
 
-    public Chat(String content, String imageID, GeoPoint location, Timestamp timestamp, String userUID, String userName, ArrayList<String> likeList, Map<String,Integer> pollVoteList, Integer commentNumber, Integer likeNumber, String gifURL, ArrayList<String> pollOptions, ArrayList<Long> pollVotes, Boolean boolText, Boolean boolPoll, Boolean boolImage, Boolean boolGif, StorageReference gsReference, StorageReference profPicReference, Integer imageWidth, Integer imageHeight, String messageID, Place place, ArrayList<String> color) {
+    public Chat(String content, String imageID, GeoPoint location, Timestamp timestamp, String userUID, String userName, ArrayList<String> likeList, Map<String,Integer> pollVoteList, Integer commentNumber, Integer likeNumber, String gifURL, ArrayList<String> pollOptions, ArrayList<Long> pollVotes, Boolean boolText, Boolean boolPoll, Boolean boolImage, Boolean boolGif, StorageReference gsReference, StorageReference profPicReference, Integer imageWidth, Integer imageHeight, String messageID, Place place, ArrayList<String> color, String chatGroupId) {
         this.content = content;
         this.imageID = imageID;
         this.location = location;
@@ -65,6 +66,7 @@ public class Chat {
         this.color = color;
         poleVoted = false;
         valueVoted = 0;
+        this.chatGroupId = chatGroupId;
     }
 
     public Integer getCommentNumber() {
@@ -273,6 +275,14 @@ public class Chat {
 
     public void setValueVoted(Integer valueVoted) {
         this.valueVoted = valueVoted;
+    }
+
+    public String getChatGroupId() {
+        return chatGroupId;
+    }
+
+    public void setChatGroupId(String chatGroupId) {
+        this.chatGroupId = chatGroupId;
     }
 }
 

@@ -81,7 +81,7 @@ public class ChatModel {
 
                         StorageReference profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/" + userUID + "/" + "profilePic.jpg");
 
-                        Chat chat = new Chat(content,imageID,location,timestamp,userUID,userName,likeList,pollVoteList,commentNumber,likeNumber,gifUrl,pollValues,pollVotes,stringBoolean,pollBoolean,imageBoolean,gifBoolean,gsReference,profPicReference,imageWidth,imageHeight,messageID,place,color);
+                        Chat chat = new Chat(content,imageID,location,timestamp,userUID,userName,likeList,pollVoteList,commentNumber,likeNumber,gifUrl,pollValues,pollVotes,stringBoolean,pollBoolean,imageBoolean,gifBoolean,gsReference,profPicReference,imageWidth,imageHeight,messageID,place,color,"a");
                         chats.add(chat);
                     }
                     callback.onCallback(chats);
