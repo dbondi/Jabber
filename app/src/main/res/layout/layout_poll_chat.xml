@@ -181,7 +181,7 @@
                     android:focusable="true"
                     android:layout_marginRight="14dp"
                     android:layout_marginBottom="3dp"
-                    android:background="@drawable/plus"
+                    android:background="@drawable/plus_big"
                     android:orientation="horizontal">
 
                 </LinearLayout>

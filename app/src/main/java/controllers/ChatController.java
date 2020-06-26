@@ -9,6 +9,7 @@ import com.example.jab.HomeActivity;
 import com.example.jab.MyProfileActivity;
 import com.example.jab.NewChatActivity;
 import com.example.jab.SearchActivity;
+import com.example.jab.SearchTabActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class ChatController {
         bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
         bundle.putParcelable("Place", place);
         bundle.putParcelable("User",user);
-        Intent intent = new Intent(context, SearchActivity.class);
+        Intent intent = new Intent(context, SearchTabActivity.class);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
         context.startActivity(intent);

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.example.jab.ChatActivity;
 import com.example.jab.MyProfileActivity;
 import com.example.jab.SearchActivity;
+import com.example.jab.SearchTabActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class HomeController {
         final int cacheSize = maxMemory / 8;
 
 
-        Intent intent = new Intent(context, SearchActivity.class);
+        Intent intent = new Intent(context, SearchTabActivity.class);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
         context.startActivity(intent);

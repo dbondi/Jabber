@@ -119,7 +119,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="7dp"
                         android:layout_marginTop="7dp"
-                        android:hint="Comment something.."
+                        android:hint="Comment something..."
                         android:id="@+id/comment_text"
                         android:inputType="textCapSentences|textMultiLine"
                         android:maxLength="200"
@@ -127,7 +127,7 @@
                         android:textColor="#FFFFFF"
                         android:fontFamily="@font/lato_regular"
                         android:background="@android:color/transparent"
-                        android:textSize="17dp">
+                        android:textSize="16dp">
 
                     </EditText>
                 </LinearLayout>

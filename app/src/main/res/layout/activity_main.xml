@@ -7,102 +7,77 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/good_back"
+            android:background="@drawable/good_back_night"
+            android:layout_marginBottom="40dp"
             android:orientation="vertical">
-            <LinearLayout
 
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:id="@+id/profileButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".2"
-                    android:background="#88FFFFFF"
-                    android:orientation="horizontal">
-                </LinearLayout>
-                <TextView
-                    android:id="@+id/localLocationText"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/lato_black"
-                    android:text="..."
-                    android:textColor="#bbE91E63"
-                    android:textSize="20dp"
-                    android:gravity="center"
-                    android:background="#88FFFFFF">
-                </TextView>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".2"
-                    android:background="#88FFFFFF"
-                    android:orientation="horizontal">
 
-                </LinearLayout>
-            </LinearLayout>
-
-            <ru.noties.scrollable.ScrollableLayout
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/chat_scroll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/chat_scroll">
-                <LinearLayout
+                android:fitsSystemWindows="true">
+
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:id="@+id/chat_scroll_tool"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    app:expandedTitleGravity="top"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                    app:titleEnabled="false">
+                    <androidx.appcompat.widget.Toolbar
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:background="#000000"
+                        app:layout_collapseMode="pin"
+                        android:elevation="1dp"
+                        android:contentInsetLeft="0dp"
+                        android:contentInsetStart="0dp"
+                        app:contentInsetLeft="0dp"
+                        app:contentInsetStart="0dp"
+                        android:contentInsetRight="0dp"
+                        android:contentInsetEnd="0dp"
+                        app:contentInsetRight="0dp"
+                        app:contentInsetEnd="0dp"
+                        android:id="@+id/tool_bar">
+
+                        <TextView
+                            android:id="@+id/localLocationText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato_black"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:text="@string/dot"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp"></TextView>
+                    </androidx.appcompat.widget.Toolbar>
+
+
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-
-                        android:background="#00FFFFFF"
-
+                        android:background="#33000000"
+                        android:layout_marginTop="46dp"
                         android:id="@+id/chat_top"
                         android:orientation="vertical">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:background="#88FFFFFF">
+                            android:orientation="vertical">
 
 
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/placePic"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="22dp"
-                                android:layout_marginTop="22dp"
-                                android:src="@drawable/red_marker">
-
-                            </de.hdodenhof.circleimageview.CircleImageView>
-                            <TextView
-                                android:id="@+id/favorite"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="+ Favorite"
-                                android:layout_gravity="center"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="7dp"
-                                android:paddingLeft="15dp"
-                                android:paddingRight="15dp"
-                                android:layout_marginBottom="15dp"
-                                android:textSize="25dp"
-                                android:textColor="#bbE91E63"
-                                android:background="@drawable/large_clear_border">
-
-                            </TextView>
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:background="@drawable/point_clear_border"
+                                android:layout_height="40dp"
+                                android:background="@drawable/clear_line_border"
                                 android:orientation="horizontal">
                                 <TextView
                                     android:layout_width="0dp"
@@ -110,9 +85,9 @@
                                     android:layout_weight="1"
                                     android:text="Top"
                                     android:gravity="center"
-                                    android:textColor="#88E91E63"
+                                    android:textColor="#FFFFFF"
                                     android:fontFamily="@font/lato_bold"
-                                    android:textSize="20dp">
+                                    android:textSize="18dp">
 
 
                                 </TextView>
@@ -122,105 +97,66 @@
                                     android:layout_weight="1"
                                     android:text="Recent"
                                     android:gravity="center"
-                                    android:textColor="#88E91E63"
+                                    android:textColor="#FFFFFF"
                                     android:fontFamily="@font/lato_bold"
-                                    android:textSize="20dp">
+                                    android:textSize="18dp">
 
                                 </TextView>
 
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/rc_messages">
+            </com.google.android.material.appbar.AppBarLayout>
 
-                    </androidx.recyclerview.widget.RecyclerView>
-                </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:id="@+id/rc_messages">
 
-            </ru.noties.scrollable.ScrollableLayout>
-        </LinearLayout>
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="50dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/point_clear_border"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.10"
-                android:orientation="horizontal"
-                android:gravity="right|bottom"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="70dp">
-                <LinearLayout
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:id="@+id/create_post"
-                    android:clickable="true"
-                    android:orientation="horizontal"
-                    android:background="@drawable/circle_purple">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="25dp"
-                        android:layout_marginRight="25dp"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginBottom="25dp"
-                        android:textSize="30sp"
-                        android:gravity="center"
-                        android:fontFamily="@font/lato_regular"
-                        android:background="@drawable/white_plus">
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
+                android:layout_height="5dp"
+                android:layout_marginTop="1dp"
+                android:background="#383845">
             </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:orientation="vertical">
             <LinearLayout
-
-                android:layout_weight="0.16"
+                android:background="#383845"
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:background="@drawable/background_bottom"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <LinearLayout
 
-                    android:layout_weight="0.08"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp">
-                </LinearLayout>
 
                 <LinearLayout
 
-                    android:layout_weight="0.08"
                     android:layout_width="fill_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:layout_weight="1">
+
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight=".6">
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="1.2"
-                            android:layout_height="match_parent">
+                            android:layout_width="30dp"
+                            android:layout_height="29dp">
                             <Button
                                 android:id="@+id/home_tab"
                                 android:layout_width="match_parent"
@@ -229,99 +165,91 @@
                             </Button>
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight=".6">
-                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:layout_weight="1">
+
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight=".6">
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="1.2"
-                            android:layout_height="match_parent">
+                            android:layout_width="30dp"
+                            android:layout_height="30dp">
                             <Button
                                 android:id="@+id/search_tab"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/ic_search_black_24dp">
+                                android:background="@drawable/radar_trans">
                             </Button>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight=".6">
                         </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:layout_weight="1">
+
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight=".6">
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="1.2"
-                            android:layout_height="match_parent">
+                            android:layout_width="30dp"
+                            android:layout_height="30dp">
                             <Button
                                 android:id="@+id/chat_tab"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/chat">
+                                android:background="@drawable/message_chat_trans">
                             </Button>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight=".6">
                         </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:layout_weight="1">
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight=".6">
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="1.2"
-                            android:layout_height="match_parent">
-                            <Button
-                                android:id="@+id/profile_tab"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/profile_icon">
-                            </Button>
-                        </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight=".6">
+                            android:layout_width="30dp"
+                            android:layout_height="27dp">
+                            <Button
+                                android:id="@+id/notification_tab"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/bells_trans">
+                            </Button>
                         </LinearLayout>
                     </LinearLayout>
 
 
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:layout_width="28dp"
+                            android:layout_height="29dp">
+                            <Button
+                                android:id="@+id/profile_tab"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/profile_icon_new_what_trans">
+                            </Button>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
                 </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="#383845">
             </LinearLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

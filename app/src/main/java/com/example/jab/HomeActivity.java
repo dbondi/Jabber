@@ -51,6 +51,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
     private Button searchTabBtn;
     private Button chatTabBtn;
     private Button profileTabBtn;
+    private Button notificationTabBtn;
 
     private HomeController controller;
     private HomeModel model;
@@ -101,13 +102,11 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
         controller = new HomeController(auth, this);
         model = new HomeModel(auth, db);
 
-
+        notificationTabBtn = findViewById(R.id.notification_tab);
         chatTabBtn = findViewById(R.id.chat_tab);
         searchTabBtn = findViewById(R.id.search_tab);
         profileTabBtn = findViewById(R.id.profile_tab);
         localLocationText = findViewById(R.id.localLocationText);
-        messageBtn = findViewById(R.id.create_post);
-        messageBtn.setVisibility(View.GONE);
 
         localLocationText.setText("\uD83D\uDD25");
 
@@ -185,8 +184,8 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
     public void onLocationChanged(Location location) {
         if (test) {
             userLocation = location;
-            userLocation.setLatitude(-89.408054);
-            userLocation.setLongitude(43.077293);
+            userLocation.setLongitude(-89.408054);
+            userLocation.setLatitude(43.077293);
             localCityLocations(userLocation, 5.0);
             localUniversityLocations(userLocation, 5.0);
         } else {
@@ -267,7 +266,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
         localCityPlaces = new ArrayList<>();
         for (Place place : cityPlaces) {
             LatLng local = place.getLocation();
-            double miles = distanceAway(location.getLatitude(), local.latitude, location.getLongitude(), local.longitude, 0.0, 0.0);
+            double miles = distanceAway(location.getLatitude(), local.latitude, location.getLongitude(), local.longitude);
             if (miles <= milesAway) {
                 localCityPlaces.add(place);
             }
@@ -278,8 +277,10 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
         localUniversityPlaces = new ArrayList<>();
         for (Place place : universityPlaces) {
             LatLng local = place.getLocation();
-            double miles = distanceAway(location.getLatitude(), local.latitude, location.getLongitude(), local.longitude, 0.0, 0.0);
-            if (miles <= milesAway) {
+            double miles = distanceAway(location.getLatitude(), local.latitude, location.getLongitude(), local.longitude);
+            if (miles <= milesAway && place.getPopulation()>666) {
+                System.out.println(miles);
+                System.out.println(place.getName());
                 localUniversityPlaces.add(place);
             }
         }
@@ -289,7 +290,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
         universityPlaces = new ArrayList<>();
         boolean firstLine = true;
         System.out.println(System.currentTimeMillis());
-        InputStream inputStream = getResources().openRawResource(R.raw.colleges);
+        InputStream inputStream = getResources().openRawResource(R.raw.college_acred);
         CSVFile csvFile = new CSVFile(inputStream);
         List universityList = csvFile.read();
         for (Object universityData : universityList) {
@@ -297,7 +298,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
             String concatUniversityData = concatUniversityDataFull.substring(1,concatUniversityDataFull.length()-1).replace(", ",",");
             String[] universityDataSplit = concatUniversityData.split(",");
             if (!firstLine) {
-                LatLng locationLocation = new LatLng( Double.parseDouble(universityDataSplit[6]),Double.parseDouble(universityDataSplit[5]));
+                LatLng locationLocation = new LatLng(Double.parseDouble(universityDataSplit[5]),Double.parseDouble(universityDataSplit[6]));
                 int pop = Integer.parseInt(universityDataSplit[4]);
                 universityPlaces.add(new Place(locationLocation, universityDataSplit[1].replace(";",","), pop, universityDataSplit[0], "Universities"));
             } else {
@@ -320,7 +321,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
             String concatCityData = concatCityDataFull.substring(1,concatCityDataFull.length()-1).replace(", ",",");
             String[] cityDataSplit = concatCityData.split(",");
             if (!firstLine) {
-                LatLng locationLocation = new LatLng( Double.parseDouble(cityDataSplit[6]),Double.parseDouble(cityDataSplit[5]));
+                LatLng locationLocation = new LatLng(Double.parseDouble(cityDataSplit[5]), Double.parseDouble(cityDataSplit[6]));
                 int pop = Integer.parseInt(cityDataSplit[4]);
                 cityPlaces.add(new Place(locationLocation, cityDataSplit[0], pop, cityDataSplit[7], "Cities"));
             } else {

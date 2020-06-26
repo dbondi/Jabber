@@ -22,11 +22,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -53,7 +55,6 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
     private ChatController controller;
     private ChatModel model;
     private RecyclerView chatView;
-    private ScrollView chatScroll;
     private ChatAdapter chatAdapter;
 
     private static Context instance;
@@ -109,7 +110,7 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_header_main);
         auth = FirebaseAuth.getInstance();
 
         randomColor = random_color(11);
@@ -117,23 +118,9 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
         instance = this;
 
         chatView = findViewById(R.id.rc_messages);
-        chatScroll = findViewById(R.id.chat_scroll);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
 
-        final ScrollableLayout scrollableLayout = findViewById(R.id.chat_scroll);
-
-        // this listener is absolute minimum that is required for `ScrollableLayout` to function
-        scrollableLayout.setCanScrollVerticallyDelegate(new CanScrollVerticallyDelegate() {
-            @Override
-            public boolean canScrollVertically(int direction) {
-                // Obtain a View that is a scroll container (RecyclerView, ListView, ScrollView, WebView, etc)
-                // and call its `canScrollVertically(int) method.
-                // Please note, that if `ViewPager is used, currently displayed View must be obtained
-                // because `ViewPager` doesn't delegate `canScrollVertically` method calls to it's children
-
-                final View view = chatView.getRootView();
-                return view.canScrollVertically(direction);
-            }
-        });
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -192,6 +179,7 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
                 optionScreenSize = optionScreenSize - 98;
                 chatAdapter = new ChatAdapter(user,getContext(),widthScreen,heightScreen,optionScreenSize,controller,false);
                 chatAdapter.update(chats);
+
                 chatView.setAdapter(chatAdapter);
 
 
@@ -219,8 +207,6 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
-        Rect scrollBounds = new Rect();
-        chatScroll.getHitRect(scrollBounds);
 
 
         /**
@@ -274,8 +260,8 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
 
         if(test){
             userLocation = location;
-            userLocation.setLatitude(-89.408054);
-            userLocation.setLongitude(43.077293);
+            userLocation.setLongitude(-89.408054);
+            userLocation.setLatitude(43.077293);
             localCityLocations(location,5.0);
             localUniversityLocations(location,5.0);
         }
@@ -306,7 +292,7 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
         localCityPlaces = new ArrayList<>();
         for(Place place: cityPlaces) {
             LatLng local = place.getLocation();
-            double miles = distanceAway(location.getLatitude(),local.latitude,location.getLongitude(),local.longitude,0.0,0.0);
+            double miles = distanceAway(location.getLatitude(),local.latitude,location.getLongitude(),local.longitude);
             if (miles<=milesAway){
                 localCityPlaces.add(place);
             }
@@ -317,8 +303,8 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
         localUniversityPlaces = new ArrayList<>();
         for(Place place: universityPlaces) {
             LatLng local = place.getLocation();
-            double miles = distanceAway(location.getLatitude(),local.latitude,location.getLongitude(),local.longitude,0.0,0.0);
-            if (miles<=milesAway){
+            double miles = distanceAway(location.getLatitude(),local.latitude,location.getLongitude(),local.longitude);
+            if (miles <= milesAway && place.getPopulation()>2666) {
                 localUniversityPlaces.add(place);
             }
         }

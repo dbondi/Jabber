@@ -187,101 +187,11 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
                // commentView_3.adapter = commentAdapter_3
                 commentView_1.layoutManager = staggeredGridLayoutManager
                 commentView_1.adapter = commentAdapter_1
-                //commentView_2.layoutManager = LinearLayoutManager(context)
-                //commentView_3.layoutManager = LinearLayoutManager(context)
-                //commentView_1.isNestedScrollingEnabled = false;
-                //commentView_2.isNestedScrollingEnabled = false;
-                //commentView_3.isNestedScrollingEnabled = false;
-
-                /*
-                val params1: ViewGroup.LayoutParams = commentView_1.getLayoutParams()
-                params1.height = 8000
-                commentView_1.setLayoutParams(params1)
-                val params2: ViewGroup.LayoutParams = commentView_2.getLayoutParams()
-                params2.height = 8000
-                commentView_1.setLayoutParams(params2)
-                val params3: ViewGroup.LayoutParams = commentView_3.getLayoutParams()
-                params3.height = 8000
-                commentView_1.setLayoutParams(params3)
-                */
-
-                //rec(commentView_1)
-                //rec(commentView_2)
-                //rec(commentView_3)
-
-
-                /*
-                val maxheight = maxOf(commentView_1.layoutParams.height,maxOf(commentView_2.layoutParams.height,commentView_3.layoutParams.height))
-
-                println("MaxHeight")
-                println(maxheight)
-
-                comments_1.add(Comment(maxheight-commentView_1.layoutParams.height))
-                comments_2.add(Comment(maxheight-commentView_2.layoutParams.height))
-                comments_3.add(Comment(maxheight-commentView_3.layoutParams.height))
-
-                commentAdapter_1!!.update(comments_1)
-                commentAdapter_2!!.update(comments_2)
-                commentAdapter_3!!.update(comments_3)
-                commentAdapter_1!!.notifyItemInserted(comments_1.size - 1);
-                commentAdapter_2!!.notifyItemInserted(comments_2.size - 1);
-                commentAdapter_3!!.notifyItemInserted(comments_3.size - 1);
-                commentAdapter_1!!.notifyDataSetChanged();
-                commentAdapter_2!!.notifyDataSetChanged();
-                commentAdapter_3!!.notifyDataSetChanged();
-
-                */
-
-
-                //commentView_1.setHasFixedSize(false)
-                //commentView_2.setHasFixedSize(false)
-                //commentView_3.setHasFixedSize(false)
-
 
             }
 
         }, messageID,user,place)
 
-        /*
-        val scrollListeners = arrayOfNulls<RecyclerView.OnScrollListener>(3)
-        scrollListeners[0] = object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                commentView_2.removeOnScrollListener(scrollListeners[1]!!)
-                commentView_2.scrollBy(dx, dy)
-                commentView_2.addOnScrollListener(scrollListeners[1]!!)
-                commentView_3.removeOnScrollListener(scrollListeners[2]!!)
-                commentView_3.scrollBy(dx, dy)
-                commentView_3.addOnScrollListener(scrollListeners[2]!!)
-            }
-        }
-        scrollListeners[1] = object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                commentView_1.removeOnScrollListener(scrollListeners[0]!!)
-                commentView_1.scrollBy(dx, dy)
-                commentView_1.addOnScrollListener(scrollListeners[0]!!)
-                commentView_3.removeOnScrollListener(scrollListeners[2]!!)
-                commentView_3.scrollBy(dx, dy)
-                commentView_3.addOnScrollListener(scrollListeners[2]!!)
-            }
-        }
-        scrollListeners[2] = object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                commentView_1.removeOnScrollListener(scrollListeners[0]!!)
-                commentView_1.scrollBy(dx, dy)
-                commentView_1.addOnScrollListener(scrollListeners[0]!!)
-                commentView_2.removeOnScrollListener(scrollListeners[1]!!)
-                commentView_2.scrollBy(dx, dy)
-                commentView_2.addOnScrollListener(scrollListeners[1]!!)
-            }
-        }
-        commentView_1.addOnScrollListener(scrollListeners[0]!!)
-        commentView_2.addOnScrollListener(scrollListeners[1]!!)
-        commentView_3.addOnScrollListener(scrollListeners[2]!!)
-
-         */
 
         Giphy.configure(this, YOUR_API_KEY)
 

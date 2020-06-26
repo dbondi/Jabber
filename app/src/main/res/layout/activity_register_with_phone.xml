@@ -220,7 +220,7 @@
                 android:layout_marginLeft="46dp"
                 android:layout_marginRight="46dp"
                 android:textSize="20dp"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
                 android:background="@drawable/round_button_white"
                 android:enabled="true"
                 android:text="@string/send_code" />

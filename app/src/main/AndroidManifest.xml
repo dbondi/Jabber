@@ -32,6 +32,7 @@
         <activity android:name=".RegisterPhoneActivity"/>
         <activity android:name=".LoginActivity"/>
         <activity android:name=".HomeActivity"/>
+        <activity android:name=".SearchTabActivity"/>
         <activity android:name=".SearchActivity"/>
         <activity
             android:name=".NewChatActivity"

@@ -77,10 +77,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.ViewHolder holder, int position) {
+        holder.setIsRecyclable(false);
+        System.out.println(position);
 
         Chat currentChat = chats.get(position);
 
         System.out.println("StartBind");
+
+        if(position != 0){
+            holder.topPartChat.setVisibility(View.GONE);
+        }
 
         double factor = ((double)currentChat.getImageHeight()+20)/((double)currentChat.getImageWidth()+80.0);
 
@@ -299,18 +305,19 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
                         currentChat.setPoleVoted(true);
                         if (holder.valueSelected == 1) {
                             currentChat.setValueVoted(1);
-                            notifyItemChanged(position);
+                            notifyDataSetChanged();
 
                         } else if (holder.valueSelected == 2) {
                             currentChat.setValueVoted(2);
-                            notifyItemChanged(position);
+                            notifyDataSetChanged();
 
                         } else if (holder.valueSelected == 3) {
                             currentChat.setValueVoted(3);
-                            notifyItemChanged(position);
+                            notifyDataSetChanged();
+
                         } else if (holder.valueSelected == 4) {
                             currentChat.setValueVoted(4);
-                            notifyItemChanged(position);
+                            notifyDataSetChanged();
                         }
 
                     }
@@ -538,6 +545,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
         private LinearLayout option3Check;
         private LinearLayout option4Check;
 
+        private LinearLayout topPartChat;
+
         private LinearLayout poll;
 
         private LinearLayout votePreCast;
@@ -591,6 +600,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
             option2Check = itemView.findViewById(R.id.option2Check);
             option3Check = itemView.findViewById(R.id.option3Check);
             option4Check = itemView.findViewById(R.id.option4Check);
+
+            topPartChat = itemView.findViewById(R.id.top_part_chat);
 
             placeText = itemView.findViewById(R.id.place);
 

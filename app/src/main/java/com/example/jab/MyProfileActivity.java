@@ -112,7 +112,7 @@ public class MyProfileActivity extends AppCompatActivity{
 
                 profileName.setText(name);
                 bio.setText(aboutInfo);
-                ageOnProfile.setText(age+" years old");
+                ageOnProfile.setText(age);
 
 
 

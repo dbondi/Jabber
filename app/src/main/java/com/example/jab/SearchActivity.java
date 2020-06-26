@@ -279,7 +279,7 @@ public class SearchActivity extends AppCompatActivity implements LocationListene
         universityPlaces = new ArrayList<>();
         boolean firstLine = true;
         System.out.println(System.currentTimeMillis());
-        InputStream inputStream = getResources().openRawResource(R.raw.colleges);
+        InputStream inputStream = getResources().openRawResource(R.raw.college_acred);
         CSVFile csvFile = new CSVFile(inputStream);
         List universityList = csvFile.read();
         for (Object universityData : universityList) {

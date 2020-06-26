@@ -10,6 +10,7 @@ import com.example.jab.HomeActivity;
 import com.example.jab.MyProfileActivity;
 import com.example.jab.ProfileActivity;
 import com.example.jab.SearchActivity;
+import com.example.jab.SearchTabActivity;
 import com.example.jab.StoriesActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -35,7 +36,7 @@ public class MyProfileController {
         bundle.putString("caller", "com.example.jab.MyProfileController");
         bundle.putParcelable("User",user);
 
-        Intent intent = new Intent(context, SearchActivity.class);
+        Intent intent = new Intent(context, SearchTabActivity.class);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
         context.startActivity(intent);

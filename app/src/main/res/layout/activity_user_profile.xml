@@ -14,40 +14,38 @@
         <LinearLayout
 
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
+            android:background="@color/colorPrimaryDark"
             android:orientation="horizontal">
             <LinearLayout
                 android:id="@+id/profileButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#88FFFFFF"
                 android:orientation="horizontal">
             </LinearLayout>
             <TextView
                 android:id="@+id/localLocationText"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="#88FFFFFF">
+                android:layout_weight="1">
             </TextView>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".4"
-                android:background="#88FFFFFF"
                 android:orientation="horizontal">
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".6"
-                android:gravity="center"
-                android:background="#88FFFFFF"
+                android:gravity="center|right"
+                android:layout_marginRight="10dp"
                 android:orientation="horizontal">
                 <LinearLayout
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:background="@drawable/settings_button">
 
                 </LinearLayout>
@@ -67,12 +65,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
+                    android:background="#000000"
                     android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
-                        android:layout_height="500dp"
+                        android:layout_height="550dp"
                         android:layout_gravity="center"
                         android:nestedScrollingEnabled="true"
                         android:orientation="horizontal"
@@ -90,13 +88,13 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
                             <TextView
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/profile_name"
                                 android:text="@string/constantine"
-                                android:textColor="#000000"
+                                android:textColor="#FFFFFF"
                                 android:textSize="20dp"
                                 android:fontFamily="@font/lato_black"
                                 android:layout_marginTop="7sp"
@@ -109,9 +107,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/age_on_profile"
-                                android:text="@string/temp_years"
-                                android:fontFamily="@font/lato_regular"
-                                android:textSize="16dp"
+                                android:text="20"
+                                android:fontFamily="@font/lato_bold"
+                                android:textSize="19dp"
+                                android:textColor="#88FFFFFF"
                                 android:layout_marginTop="7sp"
                                 android:layout_marginLeft="7sp"
                                 android:layout_marginBottom="10sp">
@@ -132,11 +131,12 @@
                                 android:layout_height="match_parent"
                                 android:id="@+id/edit_profile"
                                 android:clickable="true"
-                                android:background="@drawable/follower_border"
+                                android:background="@drawable/clear_border_round"
                                 android:layout_marginLeft="10dp"
                                 android:paddingLeft="5dp"
-                                android:paddingTop="1dp"
-                                android:paddingBottom="1dp">
+                                android:paddingTop="4dp"
+                                android:paddingBottom="5dp"
+                                android:gravity="center">
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -144,10 +144,10 @@
                                     android:paddingLeft="5dp"
                                     android:layout_gravity="center"
                                     android:paddingRight="10dp"
+                                    android:textSize="18dp"
                                     android:gravity="center"
-                                    android:textSize="20dp"
                                     android:fontFamily="@font/lato_bold"
-                                    android:textColor="#000000"
+                                    android:textColor="#FFFFFF"
                                     android:text="Edit Profile">
 
 
@@ -165,7 +165,7 @@
                         android:fontFamily="@font/lato_regular"
                         android:text="This is a temporary bio about what a person might want to talk about"
                         android:textSize="17dp"
-                        android:textColor="#000000"
+                        android:textColor="#FFFFFF"
                         android:layout_marginTop="7sp"
                         android:layout_marginLeft="7sp"
                         android:layout_marginBottom="7sp">
@@ -173,21 +173,23 @@
                     </TextView>
 
                     <TextView
+                        android:id="@+id/text_upcoming_events"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/text_upcoming_events"
+                        android:layout_marginLeft="7sp"
+                        android:layout_marginTop="7sp"
+                        android:layout_marginBottom="7sp"
                         android:fontFamily="@font/lato_bold"
                         android:text="@string/upcoming_events"
-                        android:textSize="16dp"
-                        android:layout_marginTop="7sp"
-                        android:layout_marginLeft="7sp"
-                        android:layout_marginBottom="7sp">
+                        android:textColor="#88FFFFFF"
+                        android:textSize="16dp">
 
                     </TextView>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
+                        android:background="#00FFFFFF"
                         android:id="@+id/upcoming_events_1">
 
                     </androidx.recyclerview.widget.RecyclerView>
@@ -205,6 +207,7 @@
                         android:fontFamily="@font/lato_bold"
                         android:text="@string/past_events"
                         android:textSize="16dp"
+                        android:textColor="#88FFFFFF"
                         android:layout_marginTop="7sp"
                         android:layout_marginLeft="7sp"
                         android:layout_marginBottom="7sp">
@@ -228,147 +231,131 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/point_clear_border"
         android:orientation="vertical">
         <LinearLayout
-
-            android:layout_weight="0.16"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginTop="1dp"
+            android:background="#383845">
+        </LinearLayout>
+        <LinearLayout
+            android:background="#383845"
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:background="@drawable/background_bottom"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
-            <LinearLayout
 
-                android:layout_weight="0.08"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
-            </LinearLayout>
 
             <LinearLayout
 
-                android:layout_weight="0.08"
                 android:layout_width="fill_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:layout_weight="1">
+
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".6">
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1.2"
-                        android:layout_height="match_parent">
+                        android:layout_width="30dp"
+                        android:layout_height="29dp">
                         <Button
                             android:id="@+id/home_tab"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:clickable="true"
-                            android:background="@drawable/home_icon">
+                            android:background="@drawable/home_icon_trans">
                         </Button>
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".6">
-                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:layout_weight="1">
+
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".6">
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1.2"
-                        android:layout_height="match_parent">
+                        android:layout_width="30dp"
+                        android:layout_height="30dp">
                         <Button
                             android:id="@+id/search_tab"
                             android:layout_width="match_parent"
-                            android:clickable="true"
                             android:layout_height="match_parent"
-                            android:background="@drawable/ic_search_black_24dp">
+                            android:background="@drawable/radar_trans">
                         </Button>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".6">
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:layout_weight="1">
+
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".6">
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1.2"
-                        android:layout_height="match_parent">
+                        android:layout_width="30dp"
+                        android:layout_height="30dp">
                         <Button
                             android:id="@+id/chat_tab"
                             android:layout_width="match_parent"
-                            android:clickable="true"
                             android:layout_height="match_parent"
-                            android:background="@drawable/chat">
+                            android:background="@drawable/message_chat_trans">
                         </Button>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".6">
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:layout_weight="1">
+
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".6">
+                        android:layout_width="30dp"
+                        android:layout_height="27dp">
+                        <Button
+                            android:id="@+id/notification_tab"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bells_trans">
+                        </Button>
                     </LinearLayout>
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="1">
+
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1.2"
-                        android:layout_height="match_parent">
+                        android:layout_width="28dp"
+                        android:layout_height="29dp">
                         <Button
                             android:id="@+id/profile_tab"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/profile_icon">
+                            android:background="@drawable/profile_icon_new_what">
                         </Button>
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".6">
-                    </LinearLayout>
                 </LinearLayout>
 
 
             </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#383845">
         </LinearLayout>
     </LinearLayout>
 
