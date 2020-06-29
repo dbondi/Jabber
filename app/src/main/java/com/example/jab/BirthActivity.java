@@ -88,10 +88,11 @@ public class BirthActivity extends AppCompatActivity  {
         youngAge.setVisibility(View.INVISIBLE);
         loadingBar.setVisibility(View.INVISIBLE);
 
-
-
-
         button_continue = findViewById(R.id.button_continue);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        user = bundle.getParcelable("User");
 
         button_continue.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -113,10 +114,6 @@ public class BirthActivity extends AppCompatActivity  {
             }
         });
 
-
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        user = bundle.getParcelable("User");
 
 
     }

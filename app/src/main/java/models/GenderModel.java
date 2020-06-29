@@ -38,17 +38,22 @@ public class GenderModel {
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
+        int yearcur = cal.get(Calendar.YEAR);
+        int monthcur = cal.get(Calendar.MONTH);
+        int daycur = cal.get(Calendar.DAY_OF_MONTH);
+
         userMap.put("PhotoBooleans",user.getBoolPictures());
         userMap.put("Age",new Timestamp(user.getAge(),0));
         userMap.put("Name",user.getProfileName());
         userMap.put("About",user.getAbout());
         userMap.put("Gender",user.getGender());
+        userMap.put("Creation",user.getGender());
 
         DocumentReference docReference = db.collection("Users").document(user.getUID());
-        docReference.update(userMap).addOnCompleteListener(new OnCompleteListener() {
+        docReference.set(userMap).addOnCompleteListener(new OnCompleteListener() {
             @Override
             public void onComplete(@NonNull Task task) {
-
+                System.out.println("Successfully loaded new user");
             }
         });
     }

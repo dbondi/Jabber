@@ -121,10 +121,11 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight=".9"
                                 android:background="@drawable/clear_border_round"
+                                android:layout_marginLeft="10dp"
                                 android:paddingLeft="5dp"
-                                android:paddingTop="1dp"
-                                android:gravity="center"
-                                android:paddingBottom="3dp">
+                                android:paddingTop="4dp"
+                                android:paddingBottom="5dp"
+                                android:gravity="center">
                                 <TextView
                                     android:gravity="center"
                                     android:background="@drawable/person_add_24"
@@ -153,17 +154,17 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:background="@drawable/clear_border_round"
-                                android:paddingLeft="5dp"
                                 android:layout_marginLeft="10dp"
-                                android:gravity="center"
-                                android:paddingTop="1dp"
-                                android:paddingBottom="4dp">
+                                android:paddingLeft="5dp"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="5dp"
+                                android:gravity="center">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:paddingLeft="5dp"
                                     android:layout_gravity="center"
+                                    android:paddingLeft="5dp"
                                     android:paddingRight="10dp"
                                     android:gravity="center"
                                     android:textSize="18dp"
@@ -249,6 +250,135 @@
                 </LinearLayout>
             </ScrollView>
         </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/point_clear_border"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginTop="1dp"
+            android:background="#383845">
+        </LinearLayout>
+        <LinearLayout
+            android:background="#383845"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="30dp"
+                        android:layout_height="29dp">
+                        <Button
+                            android:id="@+id/home_tab"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/home_icon_trans">
+                        </Button>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="30dp"
+                        android:layout_height="30dp">
+                        <Button
+                            android:id="@+id/search_tab"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/radar_trans">
+                        </Button>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="30dp"
+                        android:layout_height="30dp">
+                        <Button
+                            android:id="@+id/chat_tab"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/message_chat_trans">
+                        </Button>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="30dp"
+                        android:layout_height="27dp">
+                        <Button
+                            android:id="@+id/notification_tab"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bells_trans">
+                        </Button>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="28dp"
+                        android:layout_height="29dp">
+                        <Button
+                            android:id="@+id/profile_tab"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/profile_icon_new_what">
+                        </Button>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#383845">
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -177,7 +177,7 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
                  */
                 int optionScreenSize = (int) Math.round(widthScreen*.95);
                 optionScreenSize = optionScreenSize - 98;
-                chatAdapter = new ChatAdapter(user,getContext(),widthScreen,heightScreen,optionScreenSize,controller,false);
+                chatAdapter = new ChatAdapter(getContext(),widthScreen,heightScreen,optionScreenSize,controller,false,bundle);
                 chatAdapter.update(chats);
 
                 chatView.setAdapter(chatAdapter);
@@ -312,7 +312,11 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
 
     @Override
     public void onBackPressed() {
-        controller.goBack(localUniversityPlaces,localCityPlaces,user,place);
+        try {
+            controller.goBack(localUniversityPlaces,localCityPlaces,user,place);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public static interface ClickListener{

@@ -8,6 +8,7 @@ import com.example.jab.CommentActivity;
 import com.example.jab.HomeActivity;
 import com.example.jab.MyProfileActivity;
 import com.example.jab.NewChatActivity;
+import com.example.jab.ProfileActivity;
 import com.example.jab.SearchActivity;
 import com.example.jab.SearchTabActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,12 +28,16 @@ public class ChatController {
         this.context = context;
     }
 
-    public void commentSection(Place place, String postKey, UserProfile user) {
+    public void commentSection(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces,Place place, String postKey, UserProfile user) {
         Bundle bundle = new Bundle();
-
+        bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
+        bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
+        bundle.putParcelable("Place", place);
+        bundle.putString("caller", "com.example.jab.ChatActivity");
         bundle.putString("MessageID",postKey);
         bundle.putParcelable("User",user);
         bundle.putParcelable("Place",place);
+
 
         Intent intent = new Intent(context, CommentActivity.class);
         intent.putExtras(bundle);
@@ -54,13 +59,14 @@ public class ChatController {
         context.startActivity(intent);
     }
 
-    public void goBack(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user, Place place) {
+    public void goBack(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user, Place place) throws ClassNotFoundException {
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
         bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
         bundle.putParcelable("Place", place);
         bundle.putParcelable("User",user);
-        Intent intent = new Intent(context, SearchTabActivity.class);
+        String classCalled = bundle.getParcelable("caller");
+        Intent intent = new Intent(context, Class.forName(classCalled));
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
         context.startActivity(intent);
@@ -86,10 +92,26 @@ public class ChatController {
         bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
         bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
         bundle.putParcelable("Place", place);
+        bundle.putInt("HighlightNumber", 5);
         bundle.putString("caller", "com.example.jab.ChatActivity");
         bundle.putParcelable("User",user);
 
         Intent intent = new Intent(context, MyProfileActivity.class);
+        intent.putExtras(bundle);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
+        context.startActivity(intent);
+    }
+
+    public void userProfileBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user, Place place) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
+        bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
+        bundle.putParcelable("Place", place);
+        bundle.putInt("HighlightNumber", 2);
+        bundle.putString("caller", "com.example.jab.ChatActivity");
+        bundle.putParcelable("User",user);
+
+        Intent intent = new Intent(context, ProfileActivity.class);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
         context.startActivity(intent);

@@ -47,6 +47,7 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".MapActivity"/>
+        <activity android:name=".FindChatActivity"/>
         <activity android:name=".ChatActivity"/>
         <activity android:name=".PhotoLibraryActivity"/>
         <activity android:name=".CommentActivity"/>

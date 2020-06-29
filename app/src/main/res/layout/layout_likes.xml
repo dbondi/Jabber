@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:background="#000000">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="17dp"
+
+            android:paddingTop="10dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_weight=".18"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+
+                android:gravity="top|right"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="11dp"
+                    android:layout_marginTop="7dp"
+                    android:id="@+id/notification_type"
+                    android:background="@drawable/red_heart"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight=".82"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:orientation="horizontal">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingRight="2dp"
+                            android:id="@+id/image1"
+                            android:src="@drawable/good_back_red">
+                        </de.hdodenhof.circleimageview.CircleImageView>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingRight="2dp"
+                            android:id="@+id/image2"
+                            android:src="@drawable/good_back_red">
+                        </de.hdodenhof.circleimageview.CircleImageView>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingRight="2dp"
+                            android:id="@+id/image3"
+                            android:src="@drawable/good_back_red">
+                        </de.hdodenhof.circleimageview.CircleImageView>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingRight="2dp"
+                            android:id="@+id/image4"
+                            android:src="@drawable/good_back_red">
+                        </de.hdodenhof.circleimageview.CircleImageView>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingRight="2dp"
+                            android:id="@+id/image5"
+                            android:src="@drawable/good_back_red">
+                        </de.hdodenhof.circleimageview.CircleImageView>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingRight="2dp"
+                            android:id="@+id/image6"
+                            android:src="@drawable/good_back_red">
+                        </de.hdodenhof.circleimageview.CircleImageView>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingRight="2dp"
+                            android:id="@+id/image7"
+                            android:src="@drawable/good_back_red">
+                        </de.hdodenhof.circleimageview.CircleImageView>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingRight="2dp"
+                            android:id="@+id/image8"
+                            android:src="@drawable/good_back_red">
+                        </de.hdodenhof.circleimageview.CircleImageView>
+                        <RelativeLayout
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingRight="2dp"
+                                android:id="@+id/image9"
+                                android:src="@color/colorAccent">
+                            </de.hdodenhof.circleimageview.CircleImageView>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:fontFamily="@font/lato_black"
+                                android:paddingBottom="1dp"
+                                android:paddingRight="3dp"
+                                android:textColor="#FFFFFF"
+                                android:textSize="7sp"
+                                android:id="@+id/extra_notifications"
+                                android:text="+111111">
+                            </TextView>
+
+                        </RelativeLayout>
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/radar">
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/notification_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto_medium"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="30dp"
+                        android:textSize="16dp"
+                        android:textColor="#FFFFFF"
+                        android:text="DALNK and 30 others liked your tweet">
+
+                    </TextView>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/notification_chat"
+                        android:fontFamily="@font/lato_regular"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="30dp"
+                        android:textSize="16dp"
+                        android:textColor="#CCCCCC"
+                        android:maxLines="2"
+                        android:text="Hey hows it going is anyone in the local area and wants to get food okay lets add some more">
+
+                    </TextView>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CCCCCC">
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

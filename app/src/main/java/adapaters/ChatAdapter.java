@@ -2,6 +2,7 @@ package adapaters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +29,7 @@ import java.util.Map;
 
 import controllers.ChatController;
 import custom_class.Chat;
+import custom_class.Place;
 import custom_class.UserProfile;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
@@ -38,18 +41,23 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
     ChatController controller;
     boolean load = true;
     boolean mostPopular;
+    Bundle bundle;
     int ydy = 0;
 
     private UserProfile user;
+    private Place place;
+    private ArrayList<Place> localUniversityPlaces = new ArrayList<>();
+    private ArrayList<Place> localCityPlaces = new ArrayList<>();
 
-    public ChatAdapter(UserProfile user, Context context, int widthScreen, int heightScreen,int optionScreenSize, ChatController controller, boolean mostPopular){
-        this.user = user;
+    public ChatAdapter(Context context, int widthScreen, int heightScreen, int optionScreenSize, ChatController controller, boolean mostPopular, Bundle bundle){
+        user = bundle.getParcelable("User");
         this.context = context;
         this.widthScreen = widthScreen;
         this.heightScreen = heightScreen;
         this.optionScreenSize = optionScreenSize;
         this.controller = controller;
         this.mostPopular = mostPopular;
+        this.bundle = bundle;
     }
 
     private Boolean calculateLike(Chat currentChat) {
@@ -84,6 +92,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
 
         System.out.println("StartBind");
 
+        localUniversityPlaces = bundle.getParcelableArrayList("LocalUniversityPlaces");
+        localCityPlaces = bundle.getParcelableArrayList("LocalCityPlaces");
+        place = bundle.getParcelable("Place");
+
+
         if(position != 0){
             holder.topPartChat.setVisibility(View.GONE);
         }
@@ -113,7 +126,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
             holder.option3Vote.setBackgroundColor(Color.parseColor(currentChat.getColor().get(0)));
             holder.option4Vote.setBackgroundColor(Color.parseColor(currentChat.getColor().get(0)));
 
-            holder.poll.setBackgroundColor(Color.parseColor(currentChat.getColor().get(0)));
+            //holder.poll.setBackgroundColor(Color.parseColor(currentChat.getColor().get(0)));
 
             holder.castVote.setClickable(false);
 
@@ -373,10 +386,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
         holder.profilePic.getLayoutParams().height = ((int) (heightScreen*.03));
         holder.bottomBox.getLayoutParams().height = ((int) (heightScreen*.06));
 
-        holder.cardBackground.setBackgroundColor(Color.parseColor(currentChat.getColor().get(0)));
-        holder.photoBox.setBackgroundColor(Color.parseColor(currentChat.getColor().get(0)));
-        holder.bottomBox.setBackgroundColor(Color.parseColor(currentChat.getColor().get(0)));
-        holder.post_image.setBackgroundColor(Color.parseColor(currentChat.getColor().get(0)));
+        //holder.cardBackground.setCardBackgroundColor(Color.parseColor("#D5"+currentChat.getColor().get(0).substring(1)));
+        holder.cardBackground.setCardBackgroundColor(Color.parseColor(currentChat.getColor().get(0)));
 
         if(!mostPopular){
             holder.placeText.setVisibility(View.INVISIBLE);
@@ -402,7 +413,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
 
         holder.cbComment.setOnClickListener(new View.OnClickListener(){
             @Override public void onClick(View v) {
-                controller.commentSection(currentChat.getPlace(), currentChat.getMessageID(), user);
+                controller.commentSection(localUniversityPlaces,localCityPlaces,currentChat.getPlace(), currentChat.getMessageID(), user);
             }
         });
 
@@ -410,6 +421,27 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
             @Override public void onClick(View v){
                 //like
 
+            }
+        });
+
+        holder.profilePic.setOnClickListener(new View.OnClickListener(){
+            @Override public void onClick(View v){
+                if(currentChat.getUserUID().equals(user.getUID())){
+                    controller.profileBtn(localUniversityPlaces,localCityPlaces,user,place);
+                }
+                else{
+                    controller.userProfileBtn(localUniversityPlaces,localCityPlaces,user,place);
+                }
+            }
+        });
+        holder.username.setOnClickListener(new View.OnClickListener(){
+            @Override public void onClick(View v){
+                if(currentChat.getUserUID().equals(user.getUID())){
+                    controller.profileBtn(localUniversityPlaces,localCityPlaces,user,place);
+                }
+                else{
+                    controller.userProfileBtn(localUniversityPlaces,localCityPlaces,user,place);
+                }
             }
         });
 
@@ -522,7 +554,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
         private LinearLayout profileBox;
         private LinearLayout bottomBox;
         private LinearLayout photoBox;
-        private LinearLayout cardBackground;
+        private CardView cardBackground;
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
         private TextView option1Text;
@@ -575,7 +607,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
             bottomBox = itemView.findViewById(R.id.bottomBox);
             bottomBox = itemView.findViewById(R.id.bottomBox);
             photoBox = itemView.findViewById(R.id.box_image);
-            cardBackground = itemView.findViewById(R.id.cardBackground);
+            cardBackground = itemView.findViewById(R.id.card_background);
             poll = itemView.findViewById(R.id.poll);
 
             option1Text = itemView.findViewById(R.id.option_1);

@@ -5,8 +5,10 @@ import android.graphics.Bitmap
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.NonNull
 import com.example.jab.CommentActivity
 import com.giphy.sdk.core.models.Media
+import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.Timestamp.now
 import com.google.firebase.auth.FirebaseAuth
@@ -37,7 +39,7 @@ class  CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFire
                     listOfDocuments.add(document.id)
                     val commentID = document.id
                     val content = document["Content"] as String?
-                    val imageID = document["Image"] as String?
+                    val imageID = document["ImageID"] as String?
                     val gifUrl = document["GifUrl"] as String?
                     val color = document["Color"] as ArrayList<String>?
                     val location = document["Location"] as GeoPoint?
@@ -54,7 +56,7 @@ class  CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFire
                     val likeList = document["LikeList"] as ArrayList<String>?
 
                     //ArrayList<String> commentList = (ArrayList<String>) document.get("CommentList");
-                    val gsReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/Comments/${place.type}/${place.ipedsid}/${messageID}/${commentID}");
+                    val gsReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/Comments/${place.type}/${place.ipedsid}/${messageID}/${imageID}");
                     val profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/${userUID}/profilePic.jpg")
                     val comment = Comment(content, imageID, gifUrl, location, timestamp, userUID, userName, likeNumber, likeList, gsReference, profPicReference, imageWidth, imageHeight, imageBoolean, gifBoolean, stringBoolean, columnNumber, color);
                     comments.add(comment)
@@ -68,7 +70,7 @@ class  CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFire
         }
     }
 
-    fun post_string(commentPost: String, bundle: Bundle, userLocation: Location?, generateColor: ArrayList<String?>, place: Place) {
+    fun post_string(callback: CommentActivity.FirestoreCallBack,commentPost: String, bundle: Bundle, userLocation: Location?, generateColor: ArrayList<String?>, place: Place) {
 
         var user = bundle.getParcelable("User") as UserProfile?
         var timestamp = now()
@@ -104,15 +106,22 @@ class  CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFire
         val collectionRef = db.collection("Chats").document(place.type).collection(place.ipedsid).document(messageID).collection("Comments")
         collectionRef.add(course).addOnSuccessListener { documentReference ->
             Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
+            val gsReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/Comments/${place.type}/${place.ipedsid}/${messageID}/${userID}");
+            val profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/${userID}/profilePic.jpg")
+            val comment = Comment(commentPost, "", "", geoPoint, timestamp, userID, userName, 0, emptyStringArray, gsReference, profPicReference, 0, 0, imageBoolean, gifBoolean, stringBoolean, 0, color);
+
+            callback.onCallback(comment)
         }
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
+                    val comment: Comment = Comment()
+                    callback.onCallback(comment)
                 }
 
 
     }
 
-    fun post_gif(media: Media, bundle: Bundle, userLocation: Location?, generateColor: ArrayList<String?>, place: Place) {
+    fun post_gif(callback: CommentActivity.FirestoreCallBack,media: Media, bundle: Bundle, userLocation: Location?, generateColor: ArrayList<String?>, place: Place) {
 
         var content = if (media.url?.lastIndexOf("-") != -1) {
             media.url?.substring(media.url?.lastIndexOf("-")!! + 1)
@@ -154,14 +163,22 @@ class  CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFire
         val collectionRef = db.collection("Chats").document(place.type).collection(place.ipedsid).document(messageID).collection("Comments")
         collectionRef.add(course).addOnSuccessListener { documentReference ->
             Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
+            val gsReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/Comments/${place.type}/${place.ipedsid}/${messageID}/${userID}");
+            val profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/${userID}/profilePic.jpg")
+            val comment = Comment("", "", url, geoPoint, timestamp, userID, userName, 0, emptyStringArray, gsReference, profPicReference, 0, 0, imageBoolean, gifBoolean, stringBoolean, 0, color);
+
+            callback.onCallback(comment)
         }
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
+                    val comment: Comment = Comment()
+                    callback.onCallback(comment)
                 }
+
 
     }
 
-    fun post_image(bitmap: Bitmap, bundle: Bundle, userLocation: Location?, generateColor: ArrayList<String?>, place: Place) {
+    fun post_image(callback: CommentActivity.FirestoreCallBack,bitmap: Bitmap, bundle: Bundle, userLocation: Location?, generateColor: ArrayList<String?>, place: Place) {
 
         val smallBitmap = getResizedBitmap(bitmap,1000);
         val baos = ByteArrayOutputStream()
@@ -184,7 +201,9 @@ class  CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFire
         val emptyStringArray: ArrayList<String> = ArrayList<String>()
         // Create a new course object with information
         val course: HashMap<String, Any> = HashMap()
+        var uniqueId = UUID.randomUUID().toString();
         course["Timestamp"] = timestamp
+        course["ImageID"] = uniqueId
         course["Color"] = color
         course["ImageBoolean"] = imageBoolean
         course["GifBoolean"] = gifBoolean
@@ -203,14 +222,19 @@ class  CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFire
         val collectionRef = db.collection("Chats").document(place.type).collection(place.ipedsid).document(messageID).collection("Comments")
         collectionRef.add(course).addOnSuccessListener { documentReference ->
             Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
-            val ref = storage.getReference("Comments/${place.type}/${localCity}/messageID/${documentReference.id}")
+            val ref = storage.getReference("Comments/${place.type}/${place.ipedsid}/${messageID}/${uniqueId}")
             ref.putBytes(data)
+            val gsReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/Comments/${place.type}/${place.ipedsid}/${messageID}/${uniqueId}");
+            val profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/${userID}/profilePic.jpg")
+            val comment = Comment("", uniqueId, "", geoPoint, timestamp, userID, userName, 0, emptyStringArray, gsReference, profPicReference, smallBitmap!!.width, smallBitmap!!.height, imageBoolean, gifBoolean, stringBoolean, 0, color);
+
+            callback.onCallback(comment)
         }
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
+                    val comment: Comment = Comment()
+                    callback.onCallback(comment)
                 }
-
-
 
     }
 

@@ -18,14 +18,18 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ScrollView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -49,7 +53,6 @@ import custom_class.Comment
 import custom_class.HelperFunctions
 import custom_class.Place
 import custom_class.UserProfile
-import de.hdodenhof.circleimageview.CircleImageView
 import models.CommentModel
 
 class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragment.GifSelectionListener {
@@ -66,6 +69,8 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
     private var controller: CommentController? = null
     private var model: CommentModel? = null
 
+    private var commentsVar: ArrayList<Comment?>? = null
+
     private lateinit var commentView_1: RecyclerView
     private lateinit var commentView_2: RecyclerView
     private lateinit var commentView_3: RecyclerView
@@ -78,14 +83,15 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
 
     private var local_city = 0
 
-    private lateinit var add_gif_button: CircleImageView
-    private lateinit var camera_button: CircleImageView
+    private lateinit var add_gif_button: LinearLayout
+    private lateinit var camera_button: LinearLayout
 
     private lateinit var comment_something: EditText
     private lateinit var gif_box: LinearLayout
     private lateinit var camera_box: LinearLayout
     private lateinit var photo_box: LinearLayout
     private lateinit var post_button: LinearLayout
+    private lateinit var localLocationText: TextView
     private lateinit var background_color: CardView
 
     protected var userLocation: Location? = null
@@ -120,6 +126,7 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
         //commentView_2 = findViewById(R.id.comments_2)
         //commentView_3 = findViewById(R.id.comments_3)
         add_gif_button = findViewById(R.id.add_gif_button)
+        localLocationText = findViewById(R.id.localLocationText)
         //background_color = findViewById(R.id.background_color);
 
         comment_something = findViewById(R.id.comment_text)
@@ -147,20 +154,12 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
         db = FirebaseFirestore.getInstance()
 
 
+
+
         messageID = bundle.getString("MessageID").toString()
         user = bundle.getParcelable("User")!!
         place = bundle.getParcelable("Place")!!
-
-        //textRight.setLayoutParams(textRightLayoutParams);
-        local_city = getIntent().getIntExtra("LocalCity", 0)
-
-        //TODO might use later
-        //messageBtn.setBackground(getResources().getDrawable(R.drawable.round_bound_pink));
-        //val display = windowManager.defaultDisplay
-        //val size = Point()
-        //display.getSize(size)
-        //val widthScreen = size.x
-        //val heightScreen = size.y
+        localLocationText.text = place.name;
 
         //Load controller
         controller = CommentController(auth, this)
@@ -172,16 +171,21 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
 
         model!!.loadComments(object : CommentActivity.FirestoreCallBackKot {
             override fun onCallback(comments: ArrayList<Comment?>?) {
-                commentAdapter_1 = CommentAdapter(user, context)
+                val displayMetrics = DisplayMetrics()
+                windowManager.defaultDisplay.getMetrics(displayMetrics)
+                val height = displayMetrics.heightPixels
+                val width = displayMetrics.widthPixels
+                commentAdapter_1 = CommentAdapter(context,bundle,controller,width)
                 //commentAdapter_2 = CommentAdapter(user, context)
                 //commentAdapter_3 = CommentAdapter(user, context)
+                commentsVar = comments
                 //val comments_1 = getCommentsPart(comments, 1)
                 //val comments_2 = getCommentsPart(comments, 2)
                 //val comments_3 = getCommentsPart(comments, 3)
                 commentAdapter_1!!.update(comments)
                 //commentAdapter_2!!.update(comments_2)
                 //commentAdapter_3!!.update(comments_3)
-                var staggeredGridLayoutManager = StaggeredGridLayoutManager(3,LinearLayoutManager.VERTICAL)
+                var staggeredGridLayoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
                 commentView_1.adapter = commentAdapter_1
                 //commentView_2.adapter = commentAdapter_2
                // commentView_3.adapter = commentAdapter_3
@@ -238,7 +242,17 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
         post_button.setOnClickListener(View.OnClickListener {
             var comment_post = comment_something.text.toString()
             randomColor = HelperFunctions.random_color(11)
-            model!!.post_string(comment_post,bundle,userLocation,randomColor,place)
+
+            var comment = model!!.post_string(object : CommentActivity.FirestoreCallBack {
+                override fun onCallback(comment: Comment){
+                    commentsVar?.add(comment)
+                    comment_something.setText("")
+                    hideKeyboard()
+                    commentAdapter_1?.updateNew(commentsVar)
+
+                }
+            },comment_post,bundle,userLocation,randomColor,place)
+
 
 
         })
@@ -277,6 +291,10 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
         startActivityForResult(intent, REQUEST_CODE)
     }
 
+    interface FirestoreCallBack {
+        fun onCallback(comments: Comment)
+    }
+
     interface FirestoreCallBackKot {
         fun onCallback(comments: ArrayList<Comment?>?)
     }
@@ -288,7 +306,12 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
             //System.out.println(media.bitlyGifUrl)
             //messageItems.add(GifItem(media, User.Me))
             randomColor = HelperFunctions.random_color(11)
-            model!!.post_gif(media,bundle,userLocation,randomColor,place)
+            var comment = model!!.post_gif(object : CommentActivity.FirestoreCallBack {
+                override fun onCallback(comment: Comment){
+                    commentsVar?.add(comment)
+                    commentAdapter_1?.updateNew(commentsVar)
+                }
+            },media,bundle,userLocation,randomColor,place)
         }
         override fun onDismissed() {
             Log.d(TAG, "onDismissed")
@@ -353,12 +376,23 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
                                 this.contentResolver,
                                 selectedPhotoUri
                         )
-                        model!!.post_image(bitmap,bundle,userLocation,randomColor,place)
+                        var comment = model!!.post_image(object : CommentActivity.FirestoreCallBack {
+                            override fun onCallback(comment: Comment){
+                                commentsVar?.add(comment)
+                                commentAdapter_1?.updateNew(commentsVar)
+                            }
+                        },bitmap,bundle,userLocation,randomColor,place)
+
                     } else {
                         randomColor = HelperFunctions.random_color(11)
                         val source = ImageDecoder.createSource(this.contentResolver, selectedPhotoUri)
                         val bitmap = ImageDecoder.decodeBitmap(source)
-                        model!!.post_image(bitmap,bundle,userLocation,randomColor,place)
+                        var comment = model!!.post_image(object : CommentActivity.FirestoreCallBack {
+                            override fun onCallback(comment: Comment){
+                                commentsVar?.add(comment)
+                                commentAdapter_1?.updateNew(commentsVar)
+                            }
+                        },bitmap,bundle,userLocation,randomColor,place)
                     }
                 }
             } catch (e: Exception) {
@@ -367,8 +401,13 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
         }
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             randomColor = HelperFunctions.random_color(11)
-            val imageBitmap = data?.extras?.get("data") as Bitmap
-            model!!.post_image(imageBitmap,bundle,userLocation,randomColor,place)
+            val bitmap = data?.extras?.get("data") as Bitmap
+            var comment = model!!.post_image(object : CommentActivity.FirestoreCallBack {
+                override fun onCallback(comment: Comment){
+                    commentsVar?.add(comment)
+                    commentAdapter_1?.updateNew(commentsVar)
+                }
+            },bitmap,bundle,userLocation,randomColor,place)
         }
     }
 
@@ -394,6 +433,19 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
             locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
             locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1000f, this)
         }
+    }
+
+    fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+
+    fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
+
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
 

@@ -3,132 +3,141 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:clickable="true"
     android:id="@+id/message_id"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/background_color"
-        android:layout_marginRight="2dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="2dp"
-        android:orientation="horizontal"
-        android:elevation="5dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:id="@+id/card2"
         app:layout_constraintTop_toTopOf="parent"
         app:cardPreventCornerOverlap="false"
+        app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
-        app:cardBackgroundColor="#00FFFFFF"
-        app:cardCornerRadius="20dp">
-
+        app:cardBackgroundColor="#c8c8c8">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-            <LinearLayout
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/topMessage">
-                <LinearLayout
-                    android:layout_width="0dp"
+                android:id="@+id/background_color"
+                android:orientation="vertical"
+                app:cardElevation="0dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardBackgroundColor="@color/colorAccent"
+                app:cardCornerRadius="10dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="left"
-                    android:layout_weight="140">
+                    android:adjustViewBounds="true"
+                    android:id="@+id/image"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="bottom">
-
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/profilePic"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginBottom="2dp"
-                            android:layout_marginRight="2dp"
-                            android:layout_marginTop="8dp"
-                            android:src="@drawable/red_marker">
-
-                        </de.hdodenhof.circleimageview.CircleImageView>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center">
+                        android:orientation="vertical">
                         <TextView
-                            android:id="@+id/username"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/message"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="23dp"
+                            android:paddingBottom="23dp"
+                            android:paddingRight="10dp"
                             android:textColor="#FFFFFF"
-                            android:fontFamily="@font/lato_bold"
-                            android:textSize="15dp"
-                            android:text="Constantine">
-
+                            android:fontFamily="@font/lato_regular"
+                            android:textSize="16dp">
                         </TextView>
                     </LinearLayout>
 
-                </LinearLayout>
-            </LinearLayout>
 
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:id="@+id/image"/>
+                android:layout_height="match_parent"
+                android:background="#00FFFFFF"
+                android:layout_gravity="top"
+                android:id="@+id/bottomComment"
+                app:layout_constraintTop_toBottomOf="@id/background_color"
+                android:orientation="horizontal">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profilePic"
+                    android:layout_width="17sp"
+                    android:layout_height="17sp"
+                    android:layout_marginLeft="2sp"
+                    android:layout_marginBottom="2sp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="2sp"
+                    android:layout_marginTop="2sp"
+                    android:src="@drawable/red_marker">
+
+                </de.hdodenhof.circleimageview.CircleImageView>
                 <TextView
-                    android:layout_width="match_parent"
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/message"
-                    android:paddingLeft="7dp"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:paddingRight="7dp"
+                    android:layout_gravity="center"
                     android:textColor="#FFFFFF"
-                    android:fontFamily="@font/lato_regular"
-                    android:textSize="15dp">
+                    android:fontFamily="@font/lato_black"
+                    android:textSize="12sp"
+                    android:text="Constantine">
+
                 </TextView>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/bottomComment">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:gravity="right"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="100">
-                    <CheckBox
-                        android:id="@+id/like_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right">
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="7dp"
-                        android:layout_gravity="center"
-                        android:button="@drawable/favorite"
-                        android:scaleX=".8"
-                        android:scaleY=".8"
-                        android:textStyle="bold" />
+                        android:layout_gravity="right">
+
+                        <CheckBox
+                            android:id="@+id/like_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/favorite"
+
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
                     <TextView
                         android:id="@+id/like_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="7dp"
-                        android:textColor="#eeffffff"
+                        android:layout_marginRight="2dp"
+                        android:textColor="#FFFFFF"
+                        android:gravity="right"
                         android:fontFamily="@font/lato_bold"
-                        android:textSize="17dp"
+                        android:textSize="15dp"
                         android:text="17">
 
                     </TextView>
-                </LinearLayout>
 
+                </LinearLayout>
             </LinearLayout>
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

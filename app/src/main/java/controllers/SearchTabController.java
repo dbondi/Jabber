@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.jab.ChatActivity;
+import com.example.jab.FindChatActivity;
 import com.example.jab.MyProfileActivity;
 import com.example.jab.HomeActivity;
 import com.example.jab.MapActivity;
@@ -73,7 +74,7 @@ public class SearchTabController {
         }
         else if(tab.getId().equals("106")){
             bundle.putParcelable("Tab",tab);
-            Intent intent = new Intent(context, ChatActivity.class);
+            Intent intent = new Intent(context, FindChatActivity.class);
 
             intent.putExtras(savedInstanceState);
             context.startActivity(intent);
@@ -131,4 +132,5 @@ public class SearchTabController {
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
         context.startActivity(intent);
     }
+
 }

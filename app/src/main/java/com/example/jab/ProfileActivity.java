@@ -35,9 +35,13 @@ public class ProfileActivity extends AppCompatActivity{
 
     private ProfileController controller;
     private FirebaseAuth auth;
+
     private Button homeTabBtn;
     private Button chatTabBtn;
     private Button searchTabBtn;
+    private Button notificationTabBtn;
+    private Button profileTabBtn;
+
     private LinearLayout editProfile;
 
     private TextView bio;
@@ -63,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
+        setContentView(R.layout.activity_profile);
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -77,22 +81,29 @@ public class ProfileActivity extends AppCompatActivity{
         helper.attachToRecyclerView(recyclerView);
 
         controller = new ProfileController(auth, this);
+
         homeTabBtn = findViewById(R.id.home_tab);
         searchTabBtn = findViewById(R.id.search_tab);
+        chatTabBtn = findViewById(R.id.chat_tab);
+        notificationTabBtn = findViewById(R.id.notification_tab);
+        profileTabBtn = findViewById(R.id.profile_tab);
 
 
         profileName = findViewById(R.id.profile_name);
         bio = findViewById(R.id.bio);
         ageOnProfile = findViewById(R.id.age_on_profile);
-
-        editProfile = findViewById(R.id.edit_profile);
-
         model = new MyProfileModel(auth, db);
 
         instance = this;
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        Integer highlightNum = bundle.getInt("HighlightNumber");
+        System.out.println(highlightNum);
+
+        loadHighlightTab(highlightNum);
+
+
         user = bundle.getParcelable("User");
         localUniversityPlaces = bundle.getParcelableArrayList("LocalUniversityPlaces");
         localCityPlaces = bundle.getParcelableArrayList("LocalCityPlaces");
@@ -141,13 +152,54 @@ public class ProfileActivity extends AppCompatActivity{
             }
         });
 
-        editProfile.setOnClickListener(new View.OnClickListener() {
+        profileTabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controller.editProfile(localUniversityPlaces,localCityPlaces,user);
+                controller.profileBtn(localUniversityPlaces,localCityPlaces,user);
             }
         });
+
     }
+
+    private void loadHighlightTab(Integer highlightNum) {
+        if(highlightNum==1){
+            homeTabBtn.setBackground(getContext().getResources().getDrawable(R.drawable.home_icon));
+            searchTabBtn.setBackground(getContext().getResources().getDrawable(R.drawable.radar_trans));
+            chatTabBtn.setBackground(getContext().getResources().getDrawable(R.drawable.message_chat_trans));
+            notificationTabBtn.setBackground(getContext().getResources().getDrawable(R.drawable.bells_trans));
+            profileTabBtn.setBackground(getContext().getResources().getDrawable(R.drawable.profile_icon_new_what_trans));
+        }
+        if(highlightNum==2){
+            System.out.println("Load Highlighter2");
+            homeTabBtn.setBackground(getResources().getDrawable(R.drawable.home_icon_trans));
+            searchTabBtn.setBackground(getResources().getDrawable(R.drawable.radar));
+            chatTabBtn.setBackground(getResources().getDrawable(R.drawable.message_chat_trans));
+            notificationTabBtn.setBackground(getResources().getDrawable(R.drawable.bells_trans));
+            profileTabBtn.setBackground(getResources().getDrawable(R.drawable.profile_icon_new_what_trans));
+        }
+        if(highlightNum==3){
+            homeTabBtn.setBackground(getResources().getDrawable(R.drawable.home_icon_trans));
+            searchTabBtn.setBackground(getResources().getDrawable(R.drawable.radar_trans));
+            chatTabBtn.setBackground(getResources().getDrawable(R.drawable.message_chat));
+            notificationTabBtn.setBackground(getResources().getDrawable(R.drawable.bells_trans));
+            profileTabBtn.setBackground(getResources().getDrawable(R.drawable.profile_icon_new_what_trans));
+        }
+        if(highlightNum==4){
+            homeTabBtn.setBackground(getResources().getDrawable(R.drawable.home_icon_trans));
+            searchTabBtn.setBackground(getResources().getDrawable(R.drawable.radar_trans));
+            chatTabBtn.setBackground(getResources().getDrawable(R.drawable.message_chat_trans));
+            notificationTabBtn.setBackground(getResources().getDrawable(R.drawable.bells));
+            profileTabBtn.setBackground(getResources().getDrawable(R.drawable.profile_icon_new_what_trans));
+        }
+        if(highlightNum==5){
+            homeTabBtn.setBackground(getResources().getDrawable(R.drawable.home_icon_trans));
+            searchTabBtn.setBackground(getResources().getDrawable(R.drawable.radar_trans));
+            chatTabBtn.setBackground(getResources().getDrawable(R.drawable.message_chat_trans));
+            notificationTabBtn.setBackground(getResources().getDrawable(R.drawable.bells_trans));
+            profileTabBtn.setBackground(getResources().getDrawable(R.drawable.profile_icon_new_what));
+        }
+    }
+
     public static Context getContext(){
         return instance;
     }

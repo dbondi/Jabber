@@ -75,6 +75,10 @@ public class Comment {
         last = true;
     }
 
+    public Comment() {
+
+    }
+
     public String getContent() {
         return content;
     }

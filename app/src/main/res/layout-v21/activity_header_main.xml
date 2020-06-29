@@ -31,8 +31,8 @@
                     app:titleEnabled="false">
                     <androidx.appcompat.widget.Toolbar
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="#203060"
+                        android:layout_height="46dp"
+                        android:background="#000000"
                         app:layout_collapseMode="pin"
                         android:elevation="1dp"
                         android:contentInsetLeft="0dp"
@@ -63,8 +63,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#88FFFFFF"
-                        android:layout_marginTop="50dp"
+                        android:background="#33FFFFFF"
+                        android:layout_marginTop="46dp"
                         android:id="@+id/chat_top"
                         android:orientation="vertical">
 
@@ -90,7 +90,7 @@
                                     android:layout_marginTop="35dp"
                                     android:layout_marginRight="5dp"
                                     android:layout_marginBottom="25dp"
-                                    android:textColor="#203060"
+                                    android:textColor="#383845"
                                     android:background="@drawable/large_clear_border">
 
                                 </TextView>
@@ -100,7 +100,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
-                                android:background="@drawable/point_clear_border"
+                                android:background="@drawable/clear_line_border"
                                 android:orientation="horizontal">
                                 <TextView
                                     android:layout_width="0dp"
@@ -108,7 +108,7 @@
                                     android:layout_weight="1"
                                     android:text="Top"
                                     android:gravity="center"
-                                    android:textColor="#203060"
+                                    android:textColor="#383845"
                                     android:fontFamily="@font/lato_bold"
                                     android:textSize="18dp">
 
@@ -120,7 +120,7 @@
                                     android:layout_weight="1"
                                     android:text="Recent"
                                     android:gravity="center"
-                                    android:textColor="#203060"
+                                    android:textColor="#383845"
                                     android:fontFamily="@font/lato_bold"
                                     android:textSize="18dp">
 
@@ -149,20 +149,19 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/point_clear_border"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:layout_marginTop="1dp"
-                android:background="#FFFFFF">
+                android:background="#383845">
             </LinearLayout>
             <LinearLayout
-                android:background="#FFFFFF"
+                android:background="#383845"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
 
@@ -185,7 +184,7 @@
                                 android:id="@+id/home_tab"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/home_icon">
+                                android:background="@drawable/home_icon_trans">
                             </Button>
                         </LinearLayout>
 
@@ -222,7 +221,7 @@
                                 android:id="@+id/chat_tab"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/chat_message">
+                                android:background="@drawable/message_chat_trans">
                             </Button>
                         </LinearLayout>
                     </LinearLayout>
@@ -240,7 +239,7 @@
                                 android:id="@+id/notification_tab"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/bells">
+                                android:background="@drawable/bells_trans">
                             </Button>
                         </LinearLayout>
                     </LinearLayout>
@@ -254,13 +253,13 @@
                         android:layout_weight="1">
 
                         <LinearLayout
-                            android:layout_width="30dp"
+                            android:layout_width="28dp"
                             android:layout_height="29dp">
                             <Button
                                 android:id="@+id/profile_tab"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/profile_icon_new_what">
+                                android:background="@drawable/profile_icon_new_what_trans">
                             </Button>
                         </LinearLayout>
 
@@ -268,6 +267,12 @@
 
 
                 </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="#383845">
             </LinearLayout>
         </LinearLayout>
         <RelativeLayout
