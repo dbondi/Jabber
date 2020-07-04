@@ -2,6 +2,7 @@ package adapaters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import controllers.ChatController;
 import custom_class.Chat;
 import custom_class.Place;
 import custom_class.UserProfile;
+import models.ChatModel;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
     ArrayList<Chat> chats = new ArrayList<>();
@@ -39,17 +41,19 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
     int heightScreen;
     int optionScreenSize;
     ChatController controller;
+    ChatModel model;
     boolean load = true;
     boolean mostPopular;
     Bundle bundle;
     int ydy = 0;
+    Location location;
 
     private UserProfile user;
     private Place place;
     private ArrayList<Place> localUniversityPlaces = new ArrayList<>();
     private ArrayList<Place> localCityPlaces = new ArrayList<>();
 
-    public ChatAdapter(Context context, int widthScreen, int heightScreen, int optionScreenSize, ChatController controller, boolean mostPopular, Bundle bundle){
+    public ChatAdapter(Context context, int widthScreen, int heightScreen, int optionScreenSize, ChatController controller, boolean mostPopular, Bundle bundle, ChatModel model,Location location){
         user = bundle.getParcelable("User");
         this.context = context;
         this.widthScreen = widthScreen;
@@ -58,6 +62,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
         this.controller = controller;
         this.mostPopular = mostPopular;
         this.bundle = bundle;
+        this.model = model;
+        this.location = location;
     }
 
     private Boolean calculateLike(Chat currentChat) {
@@ -419,7 +425,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
 
         holder.cbLike.setOnClickListener(new View.OnClickListener(){
             @Override public void onClick(View v){
-                //like
+                model.chatLikeNotification(new ChatAdapter.FirestoreCallBack() {
+
+                    @Override
+                    public void onCallback() {
+
+                    }
+                },currentChat.getContent(),location,place,currentChat.getMessageID(),user,currentChat.getUserUID());
 
             }
         });
@@ -430,7 +442,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
                     controller.profileBtn(localUniversityPlaces,localCityPlaces,user,place);
                 }
                 else{
-                    controller.userProfileBtn(localUniversityPlaces,localCityPlaces,user,place);
+                    UserProfile chatUser = new UserProfile(currentChat.getUserUID(),currentChat.getUserName());
+                    controller.userProfileBtn(localUniversityPlaces,localCityPlaces,user,place,chatUser);
                 }
             }
         });
@@ -440,13 +453,18 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
                     controller.profileBtn(localUniversityPlaces,localCityPlaces,user,place);
                 }
                 else{
-                    controller.userProfileBtn(localUniversityPlaces,localCityPlaces,user,place);
+                    UserProfile chatUser = new UserProfile(currentChat.getUserUID(),currentChat.getUserName());
+                    controller.userProfileBtn(localUniversityPlaces,localCityPlaces,user,place,chatUser);
                 }
             }
         });
 
 
 
+    }
+
+    public interface FirestoreCallBack{
+        void onCallback();
     }
 
 

@@ -86,12 +86,13 @@ public class CommentController {
         context.startActivity(intent);
     }
 
-    public void userProfileBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user, Place place) {
+    public void userProfileBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user, Place place, UserProfile chatUser) {
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
         bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
         bundle.putParcelable("Place", place);
         bundle.putInt("HighlightNumber", 2);
+        bundle.putParcelable("ChatUser", chatUser);
         bundle.putString("caller", "com.example.jab.CommentActivity");
         bundle.putParcelable("User",user);
 

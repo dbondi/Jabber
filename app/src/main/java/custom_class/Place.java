@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.firestore.GeoPoint;
 
 public class Place implements Parcelable {
     private LatLng location;
@@ -16,6 +17,19 @@ public class Place implements Parcelable {
 
     public Place(LatLng location, String name, int population, String IPEDSID,String type) {
         this.location = location;
+        this.name = name;
+        this.population = population;
+        this.IPEDSID = IPEDSID;
+        this.type = type;
+    }
+
+    public Place(GeoPoint location, String name, int population, String IPEDSID, String type) {
+        if(location==null){
+            this.location = new LatLng(0,0);
+        }
+        else{
+            this.location = new LatLng(location.getLatitude(),location.getLongitude());
+        }
         this.name = name;
         this.population = population;
         this.IPEDSID = IPEDSID;

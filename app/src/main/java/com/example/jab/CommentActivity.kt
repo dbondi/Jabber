@@ -72,16 +72,8 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
     private var commentsVar: ArrayList<Comment?>? = null
 
     private lateinit var commentView_1: RecyclerView
-    private lateinit var commentView_2: RecyclerView
-    private lateinit var commentView_3: RecyclerView
-
-    private lateinit var scrollView: ScrollView
 
     private var commentAdapter_1: CommentAdapter? = null
-    private var commentAdapter_2: CommentAdapter? = null
-    private var commentAdapter_3: CommentAdapter? = null
-
-    private var local_city = 0
 
     private lateinit var add_gif_button: LinearLayout
     private lateinit var camera_button: LinearLayout
@@ -123,11 +115,9 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
         auth = FirebaseAuth.getInstance()
         context = this
         commentView_1 = findViewById(R.id.comments_1)
-        //commentView_2 = findViewById(R.id.comments_2)
-        //commentView_3 = findViewById(R.id.comments_3)
+
         add_gif_button = findViewById(R.id.add_gif_button)
         localLocationText = findViewById(R.id.localLocationText)
-        //background_color = findViewById(R.id.background_color);
 
         comment_something = findViewById(R.id.comment_text)
         gif_box = findViewById(R.id.gif_box)
@@ -138,7 +128,7 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
 
         post_button.visibility = View.GONE
 
-        //set gif settings
+
         settings.showConfirmationScreen = true
         settings.rating = RatingType.r
         settings.renditionType = RenditionType.fixedWidth
@@ -175,20 +165,11 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
                 windowManager.defaultDisplay.getMetrics(displayMetrics)
                 val height = displayMetrics.heightPixels
                 val width = displayMetrics.widthPixels
-                commentAdapter_1 = CommentAdapter(context,bundle,controller,width)
-                //commentAdapter_2 = CommentAdapter(user, context)
-                //commentAdapter_3 = CommentAdapter(user, context)
+                commentAdapter_1 = CommentAdapter(context,bundle,controller,width,model,userLocation,messageID)
+
                 commentsVar = comments
-                //val comments_1 = getCommentsPart(comments, 1)
-                //val comments_2 = getCommentsPart(comments, 2)
-                //val comments_3 = getCommentsPart(comments, 3)
                 commentAdapter_1!!.update(comments)
-                //commentAdapter_2!!.update(comments_2)
-                //commentAdapter_3!!.update(comments_3)
                 var staggeredGridLayoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
-                commentView_1.adapter = commentAdapter_1
-                //commentView_2.adapter = commentAdapter_2
-               // commentView_3.adapter = commentAdapter_3
                 commentView_1.layoutManager = staggeredGridLayoutManager
                 commentView_1.adapter = commentAdapter_1
 
@@ -250,8 +231,11 @@ class CommentActivity : AppCompatActivity(), LocationListener, GiphyDialogFragme
                     hideKeyboard()
                     commentAdapter_1?.updateNew(commentsVar)
 
+                    model!!.commentMessageNotification(comment.content,userLocation,place,comment.commentID,messageID,user,comment.userUID)
+
                 }
             },comment_post,bundle,userLocation,randomColor,place)
+
 
 
 

@@ -55,9 +55,10 @@ public class FindChatActivity extends AppCompatActivity implements LocationListe
     private static final String TAG = "FindChatActivity";
 
     private Button homeTabBtn;
-    private Button chatTabBtn;
+    private Button directMessageTabBtn;
     private Button profileTabBtn;
     private Button searchTabBtn;
+
     private boolean test = true;
 
     protected Location userLocation;
@@ -106,7 +107,7 @@ public class FindChatActivity extends AppCompatActivity implements LocationListe
         model = new SearchModel(auth);
 
         homeTabBtn = findViewById(R.id.home_tab);
-        chatTabBtn = findViewById(R.id.chat_tab);
+        directMessageTabBtn = findViewById(R.id.direct_message_tab);
         searchTabBtn = findViewById(R.id.search_tab);
         profileTabBtn = findViewById(R.id.profile_tab);
 
@@ -123,7 +124,7 @@ public class FindChatActivity extends AppCompatActivity implements LocationListe
             }
         });
 
-        chatTabBtn.setOnClickListener(new View.OnClickListener() {
+        directMessageTabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 controller.chatBtn();

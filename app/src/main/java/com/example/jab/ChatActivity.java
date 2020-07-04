@@ -67,11 +67,13 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
 
     private Place place;
     private LinearLayout messageBtn;
+
     private Button searchTabBtn;
-    private Button chatTabBtn;
-    private Button storiesTabBtn;
+    private Button directMessageTabBtn;
     private Button profileTabBtn;
+    private Button notificationTabBtn;
     private Button homeTabBtn;
+
     private LinearLayout chatTop;
 
     protected Location userLocation;
@@ -93,11 +95,15 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
         controller = new ChatController(auth, this);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        user = bundle.getParcelable("User");
-        localUniversityPlaces = bundle.getParcelableArrayList("LocalUniversityPlaces");
-        localCityPlaces = bundle.getParcelableArrayList("LocalCityPlaces");
-        System.out.println("On Resume On Resume");
-        place = bundle.getParcelable("Place");
+        if (bundle != null) {
+            user = bundle.getParcelable("User");
+        }
+        if (bundle != null) {
+            localUniversityPlaces = bundle.getParcelableArrayList("LocalUniversityPlaces");
+            localCityPlaces = bundle.getParcelableArrayList("LocalCityPlaces");
+            place = bundle.getParcelable("Place");
+        }
+
         messageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,11 +134,13 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
         db = FirebaseFirestore.getInstance();
         //storage = FirebaseStorage.getInstance("gs://jabdatabase.appspot.com/MessageFolder");
 
-        chatTabBtn = findViewById(R.id.chat_tab);
         searchTabBtn = findViewById(R.id.search_tab);
-        localLocationText = findViewById(R.id.localLocationText);
+        directMessageTabBtn = findViewById(R.id.direct_message_tab);
         homeTabBtn = findViewById(R.id.home_tab);
         profileTabBtn = findViewById(R.id.profile_tab);
+        notificationTabBtn = findViewById(R.id.notification_tab);
+
+        localLocationText = findViewById(R.id.localLocationText);
         placeText = findViewById(R.id.place);
         chatTop = findViewById(R.id.chat_top);
 
@@ -150,10 +158,13 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
 
         messageBtn.setLayoutParams(messageBtnLayoutParams);
 
-        localUniversityPlaces = bundle.getParcelableArrayList("LocalUniversityPlaces");
-        localCityPlaces = bundle.getParcelableArrayList("LocalCityPlaces");
-        place = bundle.getParcelable("Place");
-        user = bundle.getParcelable("User");
+        if (bundle != null) {
+            localUniversityPlaces = bundle.getParcelableArrayList("LocalUniversityPlaces");
+            localCityPlaces = bundle.getParcelableArrayList("LocalCityPlaces");
+            place = bundle.getParcelable("Place");
+            user = bundle.getParcelable("User");
+        }
+
 
         localLocationText.setText(place.getName());
 
@@ -177,7 +188,7 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
                  */
                 int optionScreenSize = (int) Math.round(widthScreen*.95);
                 optionScreenSize = optionScreenSize - 98;
-                chatAdapter = new ChatAdapter(getContext(),widthScreen,heightScreen,optionScreenSize,controller,false,bundle);
+                chatAdapter = new ChatAdapter(getContext(),widthScreen,heightScreen,optionScreenSize,controller,false,bundle,model,userLocation);
                 chatAdapter.update(chats);
 
                 chatView.setAdapter(chatAdapter);
@@ -198,12 +209,28 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
                 controller.homeBtn(localUniversityPlaces,localCityPlaces,user,place);
             }
         });
-
-
+        directMessageTabBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.directMessageTabBtn(localUniversityPlaces,localCityPlaces,user,place);
+            }
+        });
         profileTabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 controller.profileBtn(localUniversityPlaces,localCityPlaces,user,place);
+            }
+        });
+        notificationTabBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.notificationTabBtn(localUniversityPlaces,localCityPlaces,user,place);
+            }
+        });
+        searchTabBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.searchTabBtn(localUniversityPlaces,localCityPlaces,user,place);
             }
         });
 
@@ -304,7 +331,7 @@ public class ChatActivity extends AppCompatActivity implements LocationListener 
         for(Place place: universityPlaces) {
             LatLng local = place.getLocation();
             double miles = distanceAway(location.getLatitude(),local.latitude,location.getLongitude(),local.longitude);
-            if (miles <= milesAway && place.getPopulation()>2666) {
+            if (miles <= milesAway && place.getPopulation()>666) {
                 localUniversityPlaces.add(place);
             }
         }

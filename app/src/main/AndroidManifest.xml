@@ -32,6 +32,7 @@
         <activity android:name=".RegisterPhoneActivity"/>
         <activity android:name=".LoginActivity"/>
         <activity android:name=".HomeActivity"/>
+        <activity android:name=".NotificationActivity"/>
         <activity android:name=".SearchTabActivity"/>
         <activity android:name=".SearchActivity"/>
         <activity
@@ -48,6 +49,8 @@
         </activity>
         <activity android:name=".MapActivity"/>
         <activity android:name=".FindChatActivity"/>
+        <activity android:name=".DirectMessageSearchActivity"/>
+        <activity android:name=".DirectMessageActivity"/>
         <activity android:name=".ChatActivity"/>
         <activity android:name=".PhotoLibraryActivity"/>
         <activity android:name=".CommentActivity"/>

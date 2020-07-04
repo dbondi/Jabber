@@ -34,9 +34,12 @@ public class MyProfileActivity extends AppCompatActivity{
 
     private MyProfileController controller;
     private FirebaseAuth auth;
+
     private Button homeTabBtn;
-    private Button chatTabBtn;
+    private Button directMessageTabBtn;
     private Button searchTabBtn;
+    private Button notificationTabBtn;
+
     private LinearLayout editProfile;
 
     private TextView bio;
@@ -70,14 +73,17 @@ public class MyProfileActivity extends AppCompatActivity{
 
         recyclerView = findViewById(R.id.profilePictures);
 
-        LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(horizontalLayoutManagaer);
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(horizontalLayoutManager);
         SnapHelper helper = new LinearSnapHelper();
         helper.attachToRecyclerView(recyclerView);
 
         controller = new MyProfileController(auth, this);
+
         homeTabBtn = findViewById(R.id.home_tab);
         searchTabBtn = findViewById(R.id.search_tab);
+        directMessageTabBtn =findViewById(R.id.direct_message_tab);
+        notificationTabBtn = findViewById(R.id.notification_tab);
 
 
         profileName = findViewById(R.id.profile_name);
@@ -129,17 +135,30 @@ public class MyProfileActivity extends AppCompatActivity{
         homeTabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controller.homeBtn(localUniversityPlaces,localCityPlaces,user);
+                controller.homeTabBtn(localUniversityPlaces,localCityPlaces,user);
             }
         });
 
         searchTabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controller.searchBtn(localUniversityPlaces,localCityPlaces,user);
+                controller.searchTabBtn(localUniversityPlaces,localCityPlaces,user);
             }
         });
 
+        notificationTabBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.notificationTabBtn(localUniversityPlaces,localCityPlaces,user);
+            }
+        });
+
+        directMessageTabBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.directMessageTabBtn(localUniversityPlaces,localCityPlaces,user);
+            }
+        });
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

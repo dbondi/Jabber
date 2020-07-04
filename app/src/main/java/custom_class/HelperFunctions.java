@@ -1,6 +1,8 @@
 package custom_class;
 
+import android.content.Context;
 import android.location.Location;
+import android.util.TypedValue;
 import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -262,9 +264,7 @@ public class HelperFunctions
         }
     }
 
-
-
-
-
-
+    public static int spToPx(float sp, Context context) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
+    }
 }

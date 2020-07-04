@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="72sp"
+            android:background="#111111"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:id="@+id/friend_requests"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp">
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_weight=".6"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+                        <LinearLayout
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="@drawable/left_arrow">
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_weight=".6"
+                        android:layout_width="0dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:layout_height="match_parent">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/friend_requests_photo"
+                            android:src="@color/colorOrange">
+
+                        </de.hdodenhof.circleimageview.CircleImageView>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginLeft="6sp"
+                        android:layout_weight="4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0sp"
+                            android:layout_weight="1">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Spencer"
+                                android:textColor="#FFFFFF"
+                                android:fontFamily="@font/calibri_bold"
+                                android:textSize="19dp"
+                                android:gravity="bottom">
+                            </TextView>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0sp"
+                            android:layout_weight="1">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/friend_requests_text"
+                                android:text="Last active none"
+                                android:textColor="#AAAAAA"
+                                android:fontFamily="@font/lato_regular"
+                                android:textSize="16dp"
+                                android:gravity="top">
+                            </TextView>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp">
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="#CCCCCC">
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="72dp"
+        android:gravity="bottom"
+        android:background="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/direct_messages"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp"
+                android:id="@+id/new_post"
+                android:background="#000000"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:weightSum="1"
+                        android:orientation="horizontal">
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginLeft="9sp"
+                            android:layout_marginRight="9sp"
+                            android:minHeight="36dp"
+                            android:orientation="horizontal"
+                            android:background="@drawable/custom_border">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:layout_marginBottom="5sp">
+                                <EditText
+                                    android:id="@+id/comment_text"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="16dp"
+                                    android:paddingRight="12dp"
+                                    android:background="@android:color/transparent"
+                                    android:fontFamily="@font/lato_regular"
+                                    android:gravity="start|bottom"
+                                    android:hint="Message... "
+                                    android:inputType="textMultiLine"
+                                    android:textColor="#FFFFFF"
+                                    android:textColorHint="#FFFFFF"
+                                    android:textSize="20dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                </EditText>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="@font/calibri_bold"
+                                    android:text="Send"
+                                    android:id="@+id/send_button"
+                                    android:layout_marginRight="15dp"
+                                    android:textSize="20dp"
+                                    android:textColor="@color/colorAccent"
+                                    android:gravity="right|bottom">
+
+                                </TextView>
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="36sp"
+                                android:layout_height="36sp"
+                                android:id="@+id/add_gif_button"
+                                android:background="@drawable/white_gif_button"
+                                android:layout_marginRight="4sp"
+                                android:clickable="true"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintRight_toLeftOf="@id/camera_button"
+                                android:orientation="horizontal">
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="24sp"
+                                android:layout_height="24sp"
+                                android:id="@+id/camera_button"
+                                android:layout_marginRight="10sp"
+                                android:layout_marginBottom="6sp"
+                                android:clickable="true"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintRight_toLeftOf="@id/photo_library_button"
+                                android:background="@drawable/white_camera_button"
+                                android:orientation="horizontal">
+
+                            </LinearLayout>
+                            <LinearLayout
+
+                                android:layout_width="24sp"
+                                android:layout_height="24dp"
+                                android:gravity="top"
+                                android:layout_marginRight="10sp"
+                                android:layout_marginBottom="6sp"
+                                android:clickable="true"
+                                android:id="@+id/photo_library_button"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:background="@drawable/white_library_button"
+                                android:orientation="vertical">
+
+                            </LinearLayout>
+
+
+
+
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="5dp"
+                            android:layout_height="match_parent">
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/giphy"
+                android:orientation="horizontal">
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

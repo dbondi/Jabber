@@ -39,6 +39,7 @@ public class UserProfile implements Parcelable {
     public UserProfile(String UID, String profileName) {
         this.UID = UID;
         this.profileName = profileName;
+        age = 0;
     }
 
     public UserProfile() {

@@ -58,7 +58,7 @@ public class SearchTabActivity extends AppCompatActivity implements LocationList
     private static final String TAG = "SearchTabActivity";
 
     private Button homeTabBtn;
-    private Button chatTabBtn;
+    private Button directMessageTabBtn;
     private Button notificationTabBtn;
     private Button profileTabBtn;
     private boolean test = true;
@@ -104,7 +104,7 @@ public class SearchTabActivity extends AppCompatActivity implements LocationList
         model = new SearchTabModel(auth);
 
         homeTabBtn = findViewById(R.id.home_tab);
-        chatTabBtn = findViewById(R.id.chat_tab);
+        directMessageTabBtn = findViewById(R.id.direct_message_tab);
         notificationTabBtn = findViewById(R.id.notification_tab);
         profileTabBtn = findViewById(R.id.profile_tab);
 
@@ -130,12 +130,20 @@ public class SearchTabActivity extends AppCompatActivity implements LocationList
             }
         });
 
-        chatTabBtn.setOnClickListener(new View.OnClickListener() {
+        notificationTabBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controller.chatTabBtn(localUniversityPlaces, localCityPlaces, user);
+                controller.notificationTabBtn(localUniversityPlaces, localCityPlaces, user);
             }
         });
+
+        directMessageTabBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.directMessageTabBtn(localUniversityPlaces, localCityPlaces, user);
+            }
+        });
+
 
 
 

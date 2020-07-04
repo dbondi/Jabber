@@ -120,6 +120,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight=".9"
+                                android:id="@+id/add_friend"
+                                android:clickable="true"
                                 android:background="@drawable/clear_border_round"
                                 android:layout_marginLeft="10dp"
                                 android:paddingLeft="5dp"
@@ -153,9 +155,11 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:id="@+id/go_to_message"
                                 android:background="@drawable/clear_border_round"
                                 android:layout_marginLeft="10dp"
                                 android:paddingLeft="5dp"
+                                android:clickable="true"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="5dp"
                                 android:gravity="center">
@@ -323,7 +327,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp">
                         <Button
-                            android:id="@+id/chat_tab"
+                            android:id="@+id/direct_message_tab"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/message_chat_trans">

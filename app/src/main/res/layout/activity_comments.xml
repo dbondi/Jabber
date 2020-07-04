@@ -38,15 +38,8 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="46dp"
-            android:background="#000000"
+            android:background="#111111"
             android:orientation="horizontal">
-            <LinearLayout
-                android:id="@+id/profileButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-            </LinearLayout>
             <TextView
                 android:id="@+id/localLocationText"
                 android:layout_width="0dp"
@@ -58,19 +51,6 @@
                 android:fontFamily="@font/lato_black"
                 android:gravity="center">
             </TextView>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight=".2"
-                android:orientation="horizontal">
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight=".8"
-                android:orientation="horizontal">
-
-            </LinearLayout>
         </LinearLayout>
 
 

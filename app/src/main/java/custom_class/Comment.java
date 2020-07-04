@@ -9,6 +9,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+
 public class Comment {
 
     //All comment data
@@ -47,8 +48,9 @@ public class Comment {
     private ArrayList<String> color;
     private Integer height;
     private boolean last;
+    private String commentID;
 
-    public Comment(String content, String imageID, String gifUrl, GeoPoint location, Timestamp timestamp, String userUID, String userName, Integer likeNumber, ArrayList<String> likeList, StorageReference gsReference, StorageReference profPicReference, Integer imageWidth, Integer imageHeight, Boolean imageBool, Boolean gifBoolean, Boolean stringBoolean, Integer columnNumber, ArrayList<String> color) {
+    public Comment(String content, String imageID, String gifUrl, GeoPoint location, Timestamp timestamp, String userUID, String userName, Integer likeNumber, ArrayList<String> likeList, StorageReference gsReference, StorageReference profPicReference, Integer imageWidth, Integer imageHeight, Boolean imageBool, Boolean gifBoolean, Boolean stringBoolean, Integer columnNumber, ArrayList<String> color, String commentID) {
         this.content = content;
         this.imageID = imageID;
         this.gifUrl = gifUrl;
@@ -67,6 +69,7 @@ public class Comment {
         this.stringBoolean = stringBoolean;
         this.columnNumber = columnNumber;
         this.color = color;
+        this.commentID = commentID;
         height = 0;
         last = false;
     }
@@ -245,5 +248,13 @@ public class Comment {
 
     public void setLast(boolean last) {
         this.last = last;
+    }
+
+    public String getCommentID() {
+        return commentID;
+    }
+
+    public void setCommentID(String commentID) {
+        this.commentID = commentID;
     }
 }

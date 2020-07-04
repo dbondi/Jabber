@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.jab.ChatActivity;
+import com.example.jab.DirectMessageSearchActivity;
 import com.example.jab.FindChatActivity;
 import com.example.jab.MyProfileActivity;
 import com.example.jab.HomeActivity;
 import com.example.jab.MapActivity;
+import com.example.jab.NotificationActivity;
 import com.example.jab.SearchActivity;
 import com.example.jab.SearchTabActivity;
 import com.example.jab.StoriesActivity;
@@ -102,15 +104,27 @@ public class SearchTabController {
         context.startActivity(intent);
     }
 
-
-    public void chatTabBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user) {
+    public void notificationTabBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user) {
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
         bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
         bundle.putString("caller", "com.example.jab.SearchTabActivity");
         bundle.putParcelable("User",user);
 
-        Intent intent = new Intent(context, ChatActivity.class);
+        Intent intent = new Intent(context, NotificationActivity.class);
+        intent.putExtras(bundle);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
+        context.startActivity(intent);
+    }
+
+    public void directMessageTabBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
+        bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
+        bundle.putString("caller", "com.example.jab.SearchTabActivity");
+        bundle.putParcelable("User",user);
+
+        Intent intent = new Intent(context, DirectMessageSearchActivity.class);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
         context.startActivity(intent);
@@ -123,11 +137,24 @@ public class SearchTabController {
         bundle.putString("caller", "com.example.jab.SearchTabActivity");
         bundle.putParcelable("User",user);
 
+        Intent intent = new Intent(context, HomeActivity.class);
+        intent.putExtras(bundle);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
+        context.startActivity(intent);
+    }
+
+    public void searchTabBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
+        bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
+        bundle.putString("caller", "com.example.jab.SearchTabActivity");
+        bundle.putParcelable("User",user);
+
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         final int cacheSize = maxMemory / 8;
 
 
-        Intent intent = new Intent(context, HomeActivity.class);
+        Intent intent = new Intent(context, SearchTabActivity.class);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
         context.startActivity(intent);

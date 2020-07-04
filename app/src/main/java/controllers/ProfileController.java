@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.jab.ChatActivity;
+import com.example.jab.DirectMessageActivity;
+import com.example.jab.DirectMessageSearchActivity;
 import com.example.jab.MyProfileActivity;
 import com.example.jab.HomeActivity;
 import com.example.jab.MapActivity;
+import com.example.jab.NotificationActivity;
 import com.example.jab.SearchActivity;
 import com.example.jab.SearchTabActivity;
 import com.example.jab.StoriesActivity;
@@ -28,34 +31,22 @@ public class ProfileController {
         this.context = context;
     }
 
-    public void notificationBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user) {
+    public void messageUserBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user, UserProfile chatUser) {
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
         bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
         bundle.putString("caller", "com.example.jab.ProfileActivity");
+        bundle.putParcelable("ChatUser",chatUser);
         bundle.putParcelable("User",user);
 
-        //Intent intent = new Intent(context, Notfi.class);
-        //intent.putExtras(bundle);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
-        //context.startActivity(intent);
-    }
-
-    public void searchBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
-        bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
-        bundle.putString("caller", "com.example.jab.ProfileActivity");
-        bundle.putParcelable("User",user);
-
-        Intent intent = new Intent(context, SearchTabActivity.class);
+        Intent intent = new Intent(context, DirectMessageActivity.class);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
         context.startActivity(intent);
     }
 
 
-    public void profileBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user) {
+    public void profileTabBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user) {
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
         bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
@@ -68,7 +59,20 @@ public class ProfileController {
         context.startActivity(intent);
     }
 
-    public void homeBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user) {
+    public void notificationTabBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
+        bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
+        bundle.putString("caller", "com.example.jab.ProfileActivity");
+        bundle.putParcelable("User",user);
+
+        Intent intent = new Intent(context, NotificationActivity.class);
+        intent.putExtras(bundle);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
+        context.startActivity(intent);
+    }
+
+    public void homeTabBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user) {
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
         bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
@@ -76,6 +80,32 @@ public class ProfileController {
         bundle.putParcelable("User",user);
 
         Intent intent = new Intent(context, HomeActivity.class);
+        intent.putExtras(bundle);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
+        context.startActivity(intent);
+    }
+
+    public void directMessageTabBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
+        bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
+        bundle.putString("caller", "com.example.jab.ProfileActivity");
+        bundle.putParcelable("User",user);
+
+        Intent intent = new Intent(context, DirectMessageSearchActivity.class);
+        intent.putExtras(bundle);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
+        context.startActivity(intent);
+    }
+
+    public void searchTabBtn(ArrayList<Place> localUniversityPlaces, ArrayList<Place> localCityPlaces, UserProfile user) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("LocalUniversityPlaces",localUniversityPlaces);
+        bundle.putParcelableArrayList("LocalCityPlaces", localCityPlaces);
+        bundle.putString("caller", "com.example.jab.ProfileActivity");
+        bundle.putParcelable("User",user);
+
+        Intent intent = new Intent(context, SearchTabActivity.class);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION );
         context.startActivity(intent);

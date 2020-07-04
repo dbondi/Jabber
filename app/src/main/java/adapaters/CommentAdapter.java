@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -34,6 +35,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.jab.ChatActivity;
 import com.example.jab.CommentActivity;
 import com.example.jab.CommentActivity;
 import com.example.jab.GlideApp;
@@ -42,9 +44,11 @@ import com.example.jab.R;
 import java.util.ArrayList;
 
 import controllers.CommentController;
+import custom_class.Chat;
 import custom_class.Comment;
 import custom_class.Place;
 import custom_class.UserProfile;
+import models.CommentModel;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>{
     ArrayList<Comment> comments = new ArrayList<>();
@@ -52,19 +56,25 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     Context context;
     boolean boolPhoto;
     CommentController controller;
+    CommentModel model;
     int width;
 
     private UserProfile user;
     private Place place;
     private ArrayList<Place> localUniversityPlaces = new ArrayList<>();
     private ArrayList<Place> localCityPlaces = new ArrayList<>();
+    private Location location;
+    private String chatID;
 
-    public CommentAdapter(Context context, Bundle bundle, CommentController controller,int width) {
+    public CommentAdapter(Context context, Bundle bundle, CommentController controller,int width, CommentModel model, Location location,String chatID) {
         user = bundle.getParcelable("User");
         this.bundle = bundle;
         this.context = context;
         this.controller = controller;
         this.width = width;
+        this.model = model;
+        this.location = location;
+        this.chatID = chatID;
     }
 
     private Boolean calculateLike(Comment currentChat) {
@@ -177,12 +187,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.likeNumber.setText(Integer.toString(currentChat.getLikeNumber()));
 
         holder.cbLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //like
+             @Override
+             public void onClick(View v) {
+                 model.commentLikeNotification(new CommentAdapter.FirestoreCallBack() {
 
-            }
-        });
+                     @Override
+                     public void onCallback() {
+
+                     }
+                 }, currentChat.getContent(),location,place,currentChat.getCommentID(),chatID,user,currentChat.getUserUID());
+             }
+         });
 
         holder.profilePic.setOnClickListener(new View.OnClickListener(){
             @Override public void onClick(View v){
@@ -190,7 +205,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                     controller.profileBtn(localUniversityPlaces,localCityPlaces,user,place);
                 }
                 else{
-                    controller.userProfileBtn(localUniversityPlaces,localCityPlaces,user,place);
+                    UserProfile chatUser = new UserProfile(currentChat.getUserUID(),currentChat.getUserName());
+                    controller.userProfileBtn(localUniversityPlaces,localCityPlaces,user,place,chatUser);
                 }
             }
         });
@@ -200,7 +216,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                     controller.profileBtn(localUniversityPlaces,localCityPlaces,user,place);
                 }
                 else{
-                    controller.userProfileBtn(localUniversityPlaces,localCityPlaces,user,place);
+                    UserProfile chatUser = new UserProfile(currentChat.getUserUID(),currentChat.getUserName());
+                    controller.userProfileBtn(localUniversityPlaces,localCityPlaces,user,place,chatUser);
                 }
             }
         });
@@ -213,6 +230,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         });
 
 
+    }
+
+    public interface FirestoreCallBack{
+        void onCallback();
     }
 
 

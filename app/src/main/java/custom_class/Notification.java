@@ -7,55 +7,54 @@ import java.util.ArrayList;
 
 public class Notification {
 
-    //chat content
-    private int likeNumber;
     private String content;
 
-    private String privateMessageContent;
+    private String chatID;
+    private String commentID;
+    private String responseID;
+
     private Boolean privateMessage;
 
-    private Boolean commentLike;
-    private Boolean commentMessage;
-
     private Boolean chatLike;
-    private Boolean chatMessage;
+    private Boolean commentLike;
+    private Boolean responseLike;
+
+    private Boolean commentMessage;
+    private Boolean responseMessage;
 
     private Boolean friendRequest;
     private Boolean eventInvite;
     private Boolean eventReminder;
     private Boolean otherNotification;
 
-    private ArrayList<StorageReference> notificationPics;
-    private ArrayList<String> notificationNames;
-    private ArrayList<Timestamp> notificationTimes;
+    private ArrayList<String> userIds;
+    private ArrayList<StorageReference> userPics;
+    private ArrayList<String> userNames;
+    private ArrayList<Timestamp> userTimes;
 
     private Timestamp lastNotification;
+    private Place place;
 
-    public Notification(int likeNumber, String content, String privateMessageContent, Boolean privateMessage, Boolean commentLike, Boolean commentMessage, Boolean chatLike, Boolean chatMessage, Boolean friendRequest, Boolean eventInvite, Boolean eventReminder, Boolean otherNotification, ArrayList<StorageReference> notificationPics, ArrayList<String> notificationNames, ArrayList<Timestamp> notificationTimes, Timestamp lastNotification) {
-        this.likeNumber = likeNumber;
+    public Notification(String content, String chatID, String commentID, String responseID, Boolean privateMessage, Boolean chatLike, Boolean commentLike, Boolean responseLike, Boolean commentMessage, Boolean responseMessage, Boolean friendRequest, Boolean eventInvite, Boolean eventReminder, Boolean otherNotification, ArrayList<String> userIds, ArrayList<StorageReference> userPics, ArrayList<String> userNames, ArrayList<Timestamp> userTimes, Place place) {
         this.content = content;
-        this.privateMessageContent = privateMessageContent;
+        this.chatID = chatID;
+        this.commentID = commentID;
+        this.responseID = responseID;
         this.privateMessage = privateMessage;
-        this.commentLike = commentLike;
-        this.commentMessage = commentMessage;
         this.chatLike = chatLike;
-        this.chatMessage = chatMessage;
+        this.commentLike = commentLike;
+        this.responseLike = responseLike;
+        this.commentMessage = commentMessage;
+        this.responseMessage = responseMessage;
         this.friendRequest = friendRequest;
         this.eventInvite = eventInvite;
         this.eventReminder = eventReminder;
         this.otherNotification = otherNotification;
-        this.notificationPics = notificationPics;
-        this.notificationNames = notificationNames;
-        this.notificationTimes = notificationTimes;
-        this.lastNotification = lastNotification;
-    }
-
-    public int getLikeNumber() {
-        return likeNumber;
-    }
-
-    public void setLikeNumber(int likeNumber) {
-        this.likeNumber = likeNumber;
+        this.userIds = userIds;
+        this.userPics = userPics;
+        this.userNames = userNames;
+        this.userTimes = userTimes;
+        this.place = place;
     }
 
     public String getContent() {
@@ -66,12 +65,28 @@ public class Notification {
         this.content = content;
     }
 
-    public String getPrivateMessageContent() {
-        return privateMessageContent;
+    public String getChatID() {
+        return chatID;
     }
 
-    public void setPrivateMessageContent(String privateMessageContent) {
-        this.privateMessageContent = privateMessageContent;
+    public void setChatID(String chatID) {
+        this.chatID = chatID;
+    }
+
+    public String getCommentID() {
+        return commentID;
+    }
+
+    public void setCommentID(String commentID) {
+        this.commentID = commentID;
+    }
+
+    public String getResponseID() {
+        return responseID;
+    }
+
+    public void setResponseID(String responseID) {
+        this.responseID = responseID;
     }
 
     public Boolean getPrivateMessage() {
@@ -82,12 +97,28 @@ public class Notification {
         this.privateMessage = privateMessage;
     }
 
+    public Boolean getChatLike() {
+        return chatLike;
+    }
+
+    public void setChatLike(Boolean chatLike) {
+        this.chatLike = chatLike;
+    }
+
     public Boolean getCommentLike() {
         return commentLike;
     }
 
     public void setCommentLike(Boolean commentLike) {
         this.commentLike = commentLike;
+    }
+
+    public Boolean getResponseLike() {
+        return responseLike;
+    }
+
+    public void setResponseLike(Boolean responseLike) {
+        this.responseLike = responseLike;
     }
 
     public Boolean getCommentMessage() {
@@ -98,20 +129,12 @@ public class Notification {
         this.commentMessage = commentMessage;
     }
 
-    public Boolean getChatLike() {
-        return chatLike;
+    public Boolean getResponseMessage() {
+        return responseMessage;
     }
 
-    public void setChatLike(Boolean chatLike) {
-        this.chatLike = chatLike;
-    }
-
-    public Boolean getChatMessage() {
-        return chatMessage;
-    }
-
-    public void setChatMessage(Boolean chatMessage) {
-        this.chatMessage = chatMessage;
+    public void setResponseMessage(Boolean responseMessage) {
+        this.responseMessage = responseMessage;
     }
 
     public Boolean getFriendRequest() {
@@ -146,28 +169,36 @@ public class Notification {
         this.otherNotification = otherNotification;
     }
 
-    public ArrayList<StorageReference> getNotificationPics() {
-        return notificationPics;
+    public ArrayList<String> getUserIds() {
+        return userIds;
     }
 
-    public void setNotificationPics(ArrayList<StorageReference> notificationPics) {
-        this.notificationPics = notificationPics;
+    public void setUserIds(ArrayList<String> userIds) {
+        this.userIds = userIds;
     }
 
-    public ArrayList<String> getNotificationNames() {
-        return notificationNames;
+    public ArrayList<StorageReference> getUserPics() {
+        return userPics;
     }
 
-    public void setNotificationNames(ArrayList<String> notificationNames) {
-        this.notificationNames = notificationNames;
+    public void setUserPics(ArrayList<StorageReference> userPics) {
+        this.userPics = userPics;
     }
 
-    public ArrayList<Timestamp> getNotificationTimes() {
-        return notificationTimes;
+    public ArrayList<String> getUserNames() {
+        return userNames;
     }
 
-    public void setNotificationTimes(ArrayList<Timestamp> notificationTimes) {
-        this.notificationTimes = notificationTimes;
+    public void setUserNames(ArrayList<String> userNames) {
+        this.userNames = userNames;
+    }
+
+    public ArrayList<Timestamp> getUserTimes() {
+        return userTimes;
+    }
+
+    public void setUserTimes(ArrayList<Timestamp> userTimes) {
+        this.userTimes = userTimes;
     }
 
     public Timestamp getLastNotification() {
@@ -178,4 +209,11 @@ public class Notification {
         this.lastNotification = lastNotification;
     }
 
+    public Place getPlace() {
+        return place;
+    }
+
+    public void setPlace(Place place) {
+        this.place = place;
+    }
 }

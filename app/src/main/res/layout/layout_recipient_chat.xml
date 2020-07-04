@@ -22,7 +22,7 @@
                 android:paddingTop="2dp"
                 android:id="@+id/card_margins">
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profilePic"
+                    android:id="@+id/profile_pic"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginLeft="2dp"
@@ -42,7 +42,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/chat_name"
+                    android:id="@+id/chat_message"
                     android:paddingLeft="12dp"
                     android:paddingBottom="8dp"
                     android:paddingRight="12dp"

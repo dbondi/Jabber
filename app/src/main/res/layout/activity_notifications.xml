@@ -7,139 +7,105 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#000000"
             android:layout_marginBottom="40dp"
             android:orientation="vertical">
-
-
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/chat_scroll"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fitsSystemWindows="true">
-
-                <com.google.android.material.appbar.CollapsingToolbarLayout
-                    android:id="@+id/chat_scroll_tool"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fitsSystemWindows="true"
-                    app:expandedTitleGravity="top"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-                    app:titleEnabled="false">
-                    <androidx.appcompat.widget.Toolbar
-                        android:layout_width="match_parent"
-                        android:layout_height="91dp"
-                        android:background="#000000"
-                        app:layout_collapseMode="pin"
-                        android:elevation="1dp"
-                        android:contentInsetLeft="0dp"
-                        android:contentInsetStart="0dp"
-                        app:contentInsetLeft="0dp"
-                        app:contentInsetStart="0dp"
-                        android:contentInsetRight="0dp"
-                        android:contentInsetEnd="0dp"
-                        app:contentInsetRight="0dp"
-                        app:contentInsetEnd="0dp"
-                        android:id="@+id/tool_bar">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="46dp"
-                                android:gravity="center_vertical">
-
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:text="Notifications"
-                                    android:textColor="#FFFFFF"
-                                    android:fontFamily="@font/lato_bold"
-                                    android:textSize="18sp">
-
-                                </TextView>
-
-
-
-
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="10dp"
-                                android:gravity="center_vertical">
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="34dp"
-                                android:orientation="horizontal">
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:text="All"
-                                    android:gravity="center"
-                                    android:textColor="#FFFFFF"
-                                    android:fontFamily="@font/lato_bold"
-                                    android:textSize="15dp">
-
-
-                                </TextView>
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:text="Mentions"
-                                    android:gravity="center"
-                                    android:textColor="#FFFFFF"
-                                    android:fontFamily="@font/lato_bold"
-                                    android:textSize="15dp">
-
-                                </TextView>
-
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="#CCCCCC">
-
-                            </LinearLayout>
-                        </LinearLayout>
-                    </androidx.appcompat.widget.Toolbar>
-
-                </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-            </com.google.android.material.appbar.AppBarLayout>
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="91dp">
+                android:layout_height="91dp"
+                android:background="#111111"
+                app:layout_collapseMode="pin"
+                android:elevation="1dp"
+                android:contentInsetLeft="0dp"
+                android:contentInsetStart="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                android:contentInsetRight="0dp"
+                android:contentInsetEnd="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetEnd="0dp"
+                android:id="@+id/tool_bar">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
-                    <androidx.recyclerview.widget.RecyclerView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/notification_boxes"
-                        android:orientation="vertical">
-                    </androidx.recyclerview.widget.RecyclerView>
+                        android:layout_height="46dp"
+                        android:gravity="center_vertical">
 
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Notifications"
+                            android:textColor="#FFFFFF"
+                            android:fontFamily="@font/lato_bold"
+                            android:textSize="18sp">
+
+                        </TextView>
+
+
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:gravity="center_vertical">
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="34dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="All"
+                            android:gravity="center"
+                            android:textColor="#FFFFFF"
+                            android:fontFamily="@font/lato_bold"
+                            android:textSize="15dp">
+
+
+                        </TextView>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Mentions"
+                            android:gravity="center"
+                            android:textColor="#FFFFFF"
+                            android:fontFamily="@font/lato_bold"
+                            android:textSize="15dp">
+
+                        </TextView>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#CCCCCC">
+
+                    </LinearLayout>
                 </LinearLayout>
+            </LinearLayout>
 
-            </ScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/notification_boxes"
+                android:orientation="vertical">
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
 
 
-
-
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -213,7 +179,7 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp">
                             <Button
-                                android:id="@+id/chat_tab"
+                                android:id="@+id/direct_message_tab"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@drawable/message_chat_trans">

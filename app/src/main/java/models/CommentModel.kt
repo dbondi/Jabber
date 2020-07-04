@@ -1,14 +1,13 @@
 package models
 
+import adapaters.CommentAdapter
 import android.content.Context
 import android.graphics.Bitmap
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
-import androidx.annotation.NonNull
 import com.example.jab.CommentActivity
 import com.giphy.sdk.core.models.Media
-import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.Timestamp.now
 import com.google.firebase.auth.FirebaseAuth
@@ -18,6 +17,7 @@ import com.google.firebase.storage.FirebaseStorage
 import custom_class.Comment
 import custom_class.Place
 import custom_class.UserProfile
+import org.jetbrains.annotations.Nullable
 import java.io.ByteArrayOutputStream
 import java.util.*
 import kotlin.collections.ArrayList
@@ -57,8 +57,8 @@ class  CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFire
 
                     //ArrayList<String> commentList = (ArrayList<String>) document.get("CommentList");
                     val gsReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/Comments/${place.type}/${place.ipedsid}/${messageID}/${imageID}");
-                    val profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/${userUID}/profilePic.jpg")
-                    val comment = Comment(content, imageID, gifUrl, location, timestamp, userUID, userName, likeNumber, likeList, gsReference, profPicReference, imageWidth, imageHeight, imageBoolean, gifBoolean, stringBoolean, columnNumber, color);
+                    val profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/$userUID/PhotoReferences/pic1")
+                    val comment = Comment(content, imageID, gifUrl, location, timestamp, userUID, userName, likeNumber, likeList, gsReference, profPicReference, imageWidth, imageHeight, imageBoolean, gifBoolean, stringBoolean, columnNumber, color, commentID);
                     comments.add(comment)
                 }
                 callback.onCallback(comments)
@@ -79,7 +79,7 @@ class  CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFire
         var gifBoolean = false
         var stringBoolean = true
         var userID = user?.uid
-        var userName = "Dan"//user?.profileName
+        var userName = user?.profileName
         var geoPoint = GeoPoint(userLocation?.latitude!!, userLocation?.longitude!!)
         var messageID = bundle.getString("MessageID").toString()
 
@@ -107,8 +107,8 @@ class  CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFire
         collectionRef.add(course).addOnSuccessListener { documentReference ->
             Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
             val gsReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/Comments/${place.type}/${place.ipedsid}/${messageID}/${userID}");
-            val profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/${userID}/profilePic.jpg")
-            val comment = Comment(commentPost, "", "", geoPoint, timestamp, userID, userName, 0, emptyStringArray, gsReference, profPicReference, 0, 0, imageBoolean, gifBoolean, stringBoolean, 0, color);
+            val profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/$userID/PhotoReferences/pic1")
+            val comment = Comment(commentPost, "", "", geoPoint, timestamp, userID, userName, 0, emptyStringArray, gsReference, profPicReference, 0, 0, imageBoolean, gifBoolean, stringBoolean, 0, color, "");
 
             callback.onCallback(comment)
         }
@@ -164,8 +164,8 @@ class  CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFire
         collectionRef.add(course).addOnSuccessListener { documentReference ->
             Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
             val gsReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/Comments/${place.type}/${place.ipedsid}/${messageID}/${userID}");
-            val profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/${userID}/profilePic.jpg")
-            val comment = Comment("", "", url, geoPoint, timestamp, userID, userName, 0, emptyStringArray, gsReference, profPicReference, 0, 0, imageBoolean, gifBoolean, stringBoolean, 0, color);
+            val profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/$userID/PhotoReferences/pic1")
+            val comment = Comment("", "", url, geoPoint, timestamp, userID, userName, 0, emptyStringArray, gsReference, profPicReference, 0, 0, imageBoolean, gifBoolean, stringBoolean, 0, color,"");
 
             callback.onCallback(comment)
         }
@@ -225,8 +225,8 @@ class  CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFire
             val ref = storage.getReference("Comments/${place.type}/${place.ipedsid}/${messageID}/${uniqueId}")
             ref.putBytes(data)
             val gsReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/Comments/${place.type}/${place.ipedsid}/${messageID}/${uniqueId}");
-            val profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/${userID}/profilePic.jpg")
-            val comment = Comment("", uniqueId, "", geoPoint, timestamp, userID, userName, 0, emptyStringArray, gsReference, profPicReference, smallBitmap!!.width, smallBitmap!!.height, imageBoolean, gifBoolean, stringBoolean, 0, color);
+            val profPicReference = storage.getReferenceFromUrl("gs://jabdatabase.appspot.com/UserData/$userID/PhotoReferences/pic1")
+            val comment = Comment("", uniqueId, "", geoPoint, timestamp, userID, userName, 0, emptyStringArray, gsReference, profPicReference, smallBitmap!!.width, smallBitmap!!.height, imageBoolean, gifBoolean, stringBoolean, 0, color, "");
 
             callback.onCallback(comment)
         }
@@ -235,6 +235,81 @@ class  CommentModel(private val auth: FirebaseAuth, private val db: FirebaseFire
                     val comment: Comment = Comment()
                     callback.onCallback(comment)
                 }
+
+    }
+
+    fun commentLikeNotification(callback:  CommentAdapter.FirestoreCallBack?, content:  String?, userLocation: @Nullable Location?, place:  Place?, commentID:  String?, chatID:  String?, user:  UserProfile?, userUID: String?) {
+
+        val userID = user?.uid
+
+        val colRef = db.collection("Users").document(userUID!!).collection("Notifications")
+
+        val notif: HashMap<String, Any?> = HashMap()
+        val profPicReference = "gs://jabdatabase.appspot.com/UserData/$userID/PhotoReferences/pic1"
+
+        notif.set("Content",content)
+        notif.set("ChatID",chatID)
+        notif.set("CommentID", commentID)
+        notif.set("ResponseID", "")
+        notif.set("PrivateMessage", false)
+        notif.set("ChatLike", false)
+        notif.set("CommentLike", true)
+        notif.set("ResponseLike", false)
+        notif.set("CommentMessage", false)
+        notif.set("ResponseMessage", false)
+        notif.set("FriendRequest", false)
+        notif.set("EventInvite", false)
+        notif.set("EventReminder", false)
+        notif.set("OtherNotification", false)
+        notif.set("UserId", userID)
+        notif.set("UserPic", profPicReference)
+        notif.set("UserName", user?.profileName)
+        notif.set("UserTime", now())
+        notif.set("PlaceLocation", GeoPoint(place?.location!!.latitude,place.location.longitude))
+        notif.set("PlaceName", place.name)
+        notif.set("PlaceIPEDSID", place.ipedsid)
+        notif.set("PlaceType", place.type)
+
+
+        colRef.document(UUID.randomUUID().toString()).set(notif)
+
+
+    }
+
+    fun commentMessageNotification(content: String, userLocation: @Nullable Location?, place: Place, commentID: String, chatID: String, user: UserProfile, userUID: String) {
+
+        val userID = user.uid
+
+        val colRef = db.collection("Users").document(userUID).collection("Notifications")
+
+        val notif: HashMap<String, Any?> = HashMap()
+        val profPicReference = "gs://jabdatabase.appspot.com/UserData/$userID/PhotoReferences/pic1"
+
+        notif.set("Content",content)
+        notif.set("ChatID",chatID)
+        notif.set("CommentID", commentID)
+        notif.set("ResponseID", "")
+        notif.set("PrivateMessage", false)
+        notif.set("ChatLike", false)
+        notif.set("CommentLike", false)
+        notif.set("ResponseLike", false)
+        notif.set("CommentMessage", true)
+        notif.set("ResponseMessage", false)
+        notif.set("FriendRequest", false)
+        notif.set("EventInvite", false)
+        notif.set("EventReminder", false)
+        notif.set("OtherNotification", false)
+        notif.set("UserId", userID)
+        notif.set("UserPic", profPicReference)
+        notif.set("UserName", user.profileName)
+        notif.set("UserTime", now())
+        notif.set("PlaceLocation", GeoPoint(place.location.latitude,place.location.longitude))
+        notif.set("PlaceName", place.name)
+        notif.set("PlaceIPEDSID", place.ipedsid)
+        notif.set("PlaceType", place.type)
+
+
+        colRef.document(UUID.randomUUID().toString()).set(notif)
 
     }
 
